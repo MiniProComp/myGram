@@ -219,7 +219,8 @@ def addSpot(request):
         spottype = request.POST['spottype']
         spotname = request.POST['spotname']
         spotlocation = request.POST['spotlocation']
-        spotimage = request.POST['spotimage']
+        spotimage = request.FILES['spotimage']
+        fss = FileSystemStorage('media/spotimage/')
         spotdescription = request.POST['spotdescription']
 
         ins = Spot.objects.create(spotid=spotid, spottype=spottype, spotname=spotname,
