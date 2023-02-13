@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class Grampanchayat(models.Model):
     gramid = models.IntegerField(primary_key=True)
-    gramname = models.CharField(max_length=50)
+    gramname = models.CharField(max_length=50, unique=True)
     gramaddress = models.TextField(max_length=100)
     gramemail = models.EmailField()
     gramcontact = models.CharField(max_length=10)
