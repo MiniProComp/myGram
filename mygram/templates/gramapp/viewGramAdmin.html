@@ -1,0 +1,35 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} gramdetails {% endblock title %}
+{% block companyactive %} active {% endblock companyactive %}
+
+{% block head %}
+    <style>
+        .container{
+            width: 600px;
+            }
+
+    </style>
+{% endblock head %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col md-6">
+          <a href="{% url 'viewgram' %}" class="btn btn-dark mt-2">Back</a>
+            <div class="card m-2" style="width: 20rem;">
+                <img class="card-img-top" src="{{eachGramAdmin.gramadminphoto.url}}" style="width: 20rem;" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title m-1"></h5>
+                    <h5 class="card-title m-1">{{eachGramAdmin.grampanchayat}}</h5>
+                    <h6 class="card-subtitle m-1">Admin Name:- {{eachUser.first_name}} {{eachUser.last_name}}</h6>
+                    <h6 class="card-text m-1">Email:- {{eachUser.email}}</h6>
+                    <h6 class="card-text m-1">mob- {{eachGramAdmin.gramadminmobno}}</h6>
+                  <a href="{% url 'deletegramadmin' eachGramAdmin.pk %}" class="btn btn-danger mt-2">Delete</a>
+                  <a href="#" class="btn btn-primary mt-2">Update</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

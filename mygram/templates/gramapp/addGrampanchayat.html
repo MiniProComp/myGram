@@ -1,0 +1,45 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} addgram {% endblock title %}
+{% block companyactive %} active {% endblock companyactive %}
+{% block head %}
+    <style>
+        .container{
+            width: 600px;
+            border-style: groove;
+            }
+    </style>
+{% endblock head %}
+
+{% block body %}
+</br>
+<center><h2 >Add Gram Details</h2></center>
+<form class="container" method="post" action="" enctype="multipart/form-data">
+
+<center>
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="gramname" class="form-label">Gram Name</label>
+        <input type="text" class="form-control" id="gramname" name="gramname" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="gramcontact" class="form-label">Gram Contact No.</label>
+        <input type="text" class="form-control" id="gramcontact" name="gramcontact" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="gramemail" class="form-label">Gram Email</label>
+        <input type="email" class="form-control" id="gramemail" name="gramemail" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="gramaddress" class="form-label"> Addrass</label>
+        <input type="text" class="form-control" id="gramaddress" name="gramaddress" autocomplete="off" required>
+    </div>
+
+    <button class="btn btn-primary " type="submit" >Submit</button>
+</center>
+</form>
+{% endblock body %}

@@ -1,0 +1,68 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} addadmin {% endblock title %}
+{% block gramactive %} active {% endblock gramactive %}
+{% block head %}
+    <style>
+        .container{
+            width: 600px;
+            border-style: groove;
+            }
+
+    </style>
+{% endblock head %}
+
+{% block body %}
+</br>
+<center><h2 >Add Admin Details</h2></center>
+<form class="container" method="post" action="" enctype="multipart/form-data">
+
+<center>
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="gramadminfname" class="form-label">Admin First Name</label>
+        <input type="text" class="form-control" id="gramadminfname" name="gramadminfname" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="gramadminlname" class="form-label">Admin Last Name</label>
+        <input type="text" class="form-control" id="gramadminlname" name="gramadminlname" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="gramadminmobno" class="form-label">Admin Mob No</label>
+        <input type="text" class="form-control" id="gramadminmobno" name="gramadminmobno" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="gramadminphoto" class="form-label">Admin Photo</label>
+        <input type="file" accept="image/*" class="form-control" id="gramadminphoto" name="gramadminphoto" required>
+    </div>
+
+    <div class="form-group">
+        <label for="gramadminemail" class="form-label">Admin Email</label>
+        <input type="text" class="form-control" id="gramadminemail" name="gramadminemail" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="gramadminusername" class="form-label">Admin Username</label>
+        <input type="text" class="form-control" id="gramadminusername" name="gramadminusername" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="gramadminpass" class="form-label">Admin Password</label>
+        <input type="password" class="form-control" id="gramadminpass" name="gramadminpass" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="gramadmincnfmpass" class="form-label">Admin Confirm Password</label>
+        <input type="password" class="form-control" id="gramadmincnfmpass" name="gramadmincnfmpass" autocomplete="off" required>
+    </div>
+
+
+
+    <button class="btn btn-primary " type="submit" >Submit</button>
+</center>
+</form>
+{% endblock body %}

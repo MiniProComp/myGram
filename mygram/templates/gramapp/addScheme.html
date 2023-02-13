@@ -1,0 +1,110 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} addscheme {% endblock title %}
+{% block companyactive %} active {% endblock companyactive %}
+{% block head %}
+    <style>
+        .container{
+            width: 600px;
+            border-style: groove;
+            }
+
+    </style>
+{% endblock head %}
+
+{% block body %}
+</br>
+<center><h2 >Scheme</h2></center>
+<form class="container" method="post" action="" enctype="multipart/form-data">
+
+<center>
+    {% csrf_token %}
+<!--    <label for="vibhag" class="form-label"> Select vibhag</label>-->
+<!--    <select name="vibhag" id="vibhag">-->
+<!--         <option value="Havelinagar">Havelinagar</option>-->
+<!--         <option value=""></option>-->
+<!--    </select><br>-->
+<!--    <label for="vadi" class="form-label">Select vadi </label>-->
+<!--    <select name="vadi" id="vadi">-->
+<!--         <option value="Patelvadi">Patelvadi</option>-->
+<!--         <option value=""></option>-->
+<!--    </select>-->
+
+    <div class="form-group">
+        <label for="companyid" class="form-label">Scheme Id:</label>
+        <input type="text" class="form-control" value="" id="companyid" >
+    </div>
+
+    <div class="form-group">
+        <label for="companyname" class="form-label">Scheme Name:</label>
+        <input type="text" class="form-control" id="companyname" name="companyname" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="companydesc" class="form-label">Scheme Description:</label>
+        <input type="text" class="form-control" id="companydesc" name="companydesc" autocomplete="off" required>
+    </div>
+<!--    <fieldset data-role="controlgroup">-->
+<!--      <legend>Member gender:</legend>-->
+<!--        <label for="male">Male</label>-->
+<!--        <input type="radio" name="gender" id="male" value="male" checked><br>-->
+<!--        <label for="female">Female</label>-->
+<!--        <input type="radio" name="gender" id="female" value="female">-->
+<!--      </fieldset>-->
+
+
+    <div class="form-group">
+        <label for="companyaddress" class="form-label">Scheme Eligibility:</label>
+        <input type="text" class="form-control" id="companyaddress" name="companyaddress" autocomplete="off" required>
+    </div>
+     <div class="form-group">
+        <label for="birthday">Scheme Start Date:</label>
+        <input type="date" id="birthday" name="birthday">  <!--type="date" is not supported in Internet Explorer 11 or prior Safari 14.1.-->
+        <input type="submit">
+    </div>
+     <div class="form-group">
+        <label for="birthday">Scheme End Date:</label>
+        <input type="date" id="birthday" name="birthday">  <!--type="date" is not supported in Internet Explorer 11 or prior Safari 14.1.-->
+        <input type="submit">
+    </div>
+
+    <div class="form-group">
+        <label for="companyemail" class="form-label">Scheme Type:</label>
+        <input type="email" class="form-control" id="companyemail" name="companyemail" autocomplete="off" required>
+    </div>
+
+
+    <div class="form-group">
+        <label for="companywebsite" class="form-label">Scheme Benefits:</label>
+        <input type="text" class="form-control" id="companywebsite" name="companywebsite" autocomplete="off" required>
+    </div>
+
+
+    <div class="form-group">
+        <label for="companywebsite" class="form-label">Scheme More Info/Link:</label>
+        <input type="text" class="form-control" id="companywebsite" name="companywebsite" autocomplete="off" required>
+    </div>
+<!--    <div class="form-group">-->
+<!--        <label for="companywebsite" class="form-label">Authority Qualification</label>-->
+<!--        <input type="text" class="form-control" id="companywebsite" name="companywebsite" autocomplete="off" required>-->
+<!--    </div>-->
+
+<!--    <div class="form-group">-->
+<!--        <label for="companywebsite" class="form-label">No.Of Family Members:</label>-->
+<!--        <input type="text" class="form-control" id="companywebsite" name="companywebsite" autocomplete="off" required>-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--        <label for="companylogo" class="form-label">Spot Images:</label>-->
+<!--        <input type="file" accept="image/*" class="form-control" id="companylogo" name="companylogo" required>-->
+<!--    </div>-->
+
+<!--    <div class="form-group">-->
+<!--        <label for="ownername" class="form-label">Spot Description:</label>-->
+<!--        <input type="text" class="form-control" id="ownername" name="ownername" autocomplete="off" required>-->
+<!--    </div>-->
+
+
+    <button class="btn btn-primary " type="submit" >Submit</button>
+</center>
+</form>
+{% endblock body %}

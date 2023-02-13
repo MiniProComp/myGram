@@ -1,0 +1,50 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} gramdetails {% endblock title %}
+{% block companyactive %} active {% endblock companyactive %}
+
+{% block head %}
+    <style>
+        .container{
+            width: 600px;
+            }
+
+    </style>
+{% endblock head %}
+
+
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col md-6">
+          <a href="{% url 'viewgram' %}" class="btn btn-dark mt-2">Back</a>
+            <div class="card m-2" style="width: 20rem;">
+                <div class="card-body">
+                    <h5 class="card-title m-1"></h5>
+                    <h5 class="card-title m-1">{{eachGram.gramname}} ({{eachGram.gramid}})</h5>
+                    <h6 class="card-subtitle m-1">{{eachGram.gramaddress}}</h6>
+                    <h6 class="card-text m-1">{{eachGram.gramemail}}</h6>
+                    <p class="card-text m-1">{{eachGram.gramcontact}}</p>
+
+                    <a href="{% url 'deletegram' eachGram.pk %}" class="btn btn-danger mt-2">Delete</a>
+                    <a href="{}" class="btn btn-primary mt-2">Update</a>
+                    {% if gramAdmin %}
+                    {% for gramAdmin in gramAdmin %}
+                    {% if eachGram == gramAdmin.grampanchayat %}
+                    <a href="{% url 'viewGramAdmin' gramAdmin.pk %}" class="btn btn-info mt-2">Gram Admin Details</a>
+
+
+                    {% endif %}
+                    {% endfor %}
+                    {% else %}
+                    <a href="{% url 'addgramadmin' eachGram.pk %}" class="btn btn-info mt-2">Add Admin</a>
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

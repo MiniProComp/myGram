@@ -1,0 +1,68 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} addhousetax {% endblock title %}
+{% block companyactive %} active {% endblock companyactive %}
+{% block head %}
+    <style>
+        .container{
+            width: 600px;
+            border-style: groove;
+            }
+
+    </style>
+{% endblock head %}
+
+{% block body %}
+</br>
+<center><h2 >add House Tax</h2></center>
+<form class="container" method="post" action="" enctype="multipart/form-data">
+
+<center>
+    {% csrf_token %}
+
+
+    <div class="form-group">
+        <label for="housetypeid" class="form-label">House Type Id:</label>
+        <input type="text" class="form-control" value="housetypeid" id="housetypeid" readonly>
+    </div>
+
+
+    <div class="form-group">
+            <label for="housetype" class="form-label">House Type:</label>
+            <select name="housetype" id="housetype" >
+                <option value="rcc">RCC</option>
+                <option value="loadbearing">Load Bearing</option>
+            </select >
+        </div>
+
+    <div class="form-group">
+        <label for="hosetaxrate" class="form-label">Rate(rupees/sq. feet) </label>
+        <input type="text" class="form-control" id="hosetaxrate" name="hosetaxrate" autocomplete="off" required>
+    </div>
+<!--    <fieldset data-role="controlgroup">-->
+<!--      <legend>Member gender:</legend>-->
+<!--        <label for="male">Male</label>-->
+<!--        <input type="radio" name="gender" id="male" value="male" checked><br>-->
+<!--        <label for="female">Female</label>-->
+<!--        <input type="radio" name="gender" id="female" value="female">-->
+<!--      </fieldset>-->
+
+
+<!--    <div class="form-group">-->
+<!--        <label for="companyaddress" class="form-label">Spot Location:</label>-->
+<!--        <input type="text" class="form-control" id="companyaddress" name="companyaddress" autocomplete="off" required>-->
+<!--    <div class="form-group">-->
+<!--        <label for="companylogo" class="form-label">Spot Images:</label>-->
+<!--        <input type="file" accept="image/*" class="form-control" id="companylogo" name="companylogo" required>-->
+<!--    </div>-->
+
+<!--    <div class="form-group">-->
+<!--        <label for="ownername" class="form-label">Spot Description:</label>-->
+<!--        <input type="text" class="form-control" id="ownername" name="ownername" autocomplete="off" required>-->
+<!--    </div>-->
+
+
+    <button class="btn btn-primary " type="submit" >Submit</button>
+</center>
+</form>
+{% endblock body %}

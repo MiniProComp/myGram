@@ -1,0 +1,73 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} addauthority {% endblock title %}
+{% block companyactive %} active {% endblock companyactive %}
+{% block head %}
+    <style>
+        .container{
+            width: 600px;
+            border-style: groove;
+            }
+
+    </style>
+{% endblock head %}
+
+{% block body %}
+</br>
+<center><h2 >grampanchayat Authority/workers info.</h2></center>
+<form class="container" method="post" action="" enctype="multipart/form-data">
+
+<center>
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="companyid" class="form-label">Authority Id</label>
+        <input type="text" class="form-control" value="{{companyid}}" id="companyid" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="companyname" class="form-label">Authority Name :</label>
+        <input type="text" class="form-control" id="companyname" name="companyname" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="companydesc" class="form-label">Authority :</label>
+        <input type="text" class="form-control" id="companydesc" name="companydesc" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="companyaddress" class="form-label">Authority Contact:</label>
+        <input type="text" class="form-control" id="companyaddress" name="companyaddress" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="companyemail" class="form-label">Authority Email:</label>
+        <input type="email" class="form-control" id="companyemail" name="companyemail" autocomplete="off" required>
+    </div>
+
+
+    <div class="form-group">
+        <label for="companywebsite" class="form-label">Authority Aadhar No.:</label>
+        <input type="text" class="form-control" id="companywebsite" name="companywebsite" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="birthday">Authority Birthdate:</label>
+        <input type="date" id="birthday" name="birthday">  <!--type="date" is not supported in Internet Explorer 11 or prior Safari 14.1.-->
+        <input type="submit">
+    </div>
+
+    <div class="form-group">
+        <label for="companywebaasite" class="form-label">Authority Department:</label>
+        <input type="text" class="form-control" id="companywebaasite" name="companywebsite" autocomplete="off" required>
+    </div>
+    <div class="form-group">
+        <label for="companywebasite" class="form-label">Authority Qualification</label>
+        <input type="text" class="form-control" id="companywebasite" name="companywebsite" autocomplete="off" required>
+    </div>
+
+
+    <button class="btn btn-primary " type="submit" >Submit</button>
+</center>
+</form>
+{% endblock body %}

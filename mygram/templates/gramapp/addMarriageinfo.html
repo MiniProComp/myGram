@@ -1,0 +1,68 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} addmarriageinfo. {% endblock title %}
+{% block companyactive %} active {% endblock companyactive %}
+{% block head %}
+    <style>
+        .container{
+            width: 600px;
+            border-style: groove;
+            }
+
+    </style>
+{% endblock head %}
+
+{% block body %}
+</br>
+<center><h2 >Marriage Information</h2></center>
+<form class="container" method="post" action="" enctype="multipart/form-data">
+
+<center>
+    {% csrf_token %}
+
+
+    <div class="form-group">
+        <label for="marriageid" class="form-label">Marriage Id:</label>
+        <input type="text" class="form-control" value="{{marriageid}}" id="marriageid" >
+    </div>
+
+    <div class="form-group">
+        <label for="groomname" class="form-label">Groom Name:</label>
+        <input type="text" class="form-control" id="groomname" name="groomname" autocomplete="off" required>
+    </div>
+     <div class="form-group">
+        <label for="bridenamebeforemarraige" class="form-label">Bride Name Before Marriage:</label>
+        <input type="text" class="form-control" id="bridenamebeforemarraige" name="bridenamebeforemarraige" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="bridenameaftermarraige" class="form-label">Bride Name After Marriage:</label>
+        <input type="text" class="form-control" id="bridenameaftermarraige" name="bridenameaftermarraige" autocomplete="off" required>
+    </div>
+
+     <div class="form-group">
+        <label for="solemnizedate">Solemnizes On(Date):</label>
+        <input type="date" id="solemnizedate" name="solemnizedate">  <!--type="date" is not supported in Internet Explorer 11 or prior Safari 14.1.-->
+        <input type="submit">
+    </div>
+
+    <div class="form-group">
+        <label for="marriageplace" class="form-label">Marriage Place:</label>
+        <input type="text" class="form-control" id="marriageplace" name="marriageplace" autocomplete="off" required>
+    </div>
+
+
+    <div class="form-group">
+        <label for="registeredon" class="form-label">Registered On:</label>
+        <input type="text" class="form-control" id="registeredon" name="registeredon" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="marriageproof" class="form-label">Marraige Proof Certificate  :</label>
+        <input type="file" accept="image/*" class="form-control" id="marriageproof" name="marriageproof" required>
+    </div>
+
+    <button class="btn btn-primary " type="submit" >Submit</button>
+</center>
+</form>
+{% endblock body %}
