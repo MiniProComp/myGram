@@ -67,8 +67,11 @@ def deletegram(request, pk):
     gram = Grampanchayat.objects.get(gramid=pk)
 
     try:
-        eachGramAdmin = Gramadmin.objects.all().filter(grampanchayat=gram)
+        eachGramAdmin = Gramadmin.objects.get(grampanchayat=gram)
+
+        user = User.objects.all().filter(username=eachGramAdmin.user)
         eachGramAdmin.delete()
+        user.delete()
         gram.delete()
     except:
         gram.delete()
@@ -114,7 +117,7 @@ def addgramadmin(request, pk):
         # server.send_message(msg)
         # server.quit()
         messages.success(request, '''SPOC Successfully added...''')
-        return render(request, 'gramapp/home1.html')
+        return redirect('home1')
     else:
         context = {'eachGram': eachGram}
         return render(request, 'gramapp/addgramadmin.html', context)
@@ -129,6 +132,8 @@ def viewGramAdmin(request, pk):
 
 def deletegramadmin(request, pk):
     eachGramAdmin = Gramadmin.objects.get(gramadminid=pk)
+    user = User.objects.all().filter(username=eachGramAdmin.user)
+    user.delete()
     eachGramAdmin.delete()
     messages.success(request, '''Grampanchayat Admin Successfully deleted...''')
     return redirect('home1')
