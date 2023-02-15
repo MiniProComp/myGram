@@ -45,7 +45,7 @@ def addgram(request):
         ins.save()
 
         messages.success(request, '''Grampanchayat Successfully added...''')
-        return render(request, 'gramapp/home1.html')
+        return redirect('home1')
     else:
         return render(request, 'gramapp/addGrampanchayat.html', locals())
 
