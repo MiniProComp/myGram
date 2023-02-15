@@ -22,11 +22,8 @@ urlpatterns = [
     path('addComplaint/', views.addComplaint, name='addComplaint'),
     path('addFamily/', views.addFamily, name='addFamily'),
     path('addFamilymember/', views.addFamilymember, name='addFamilymember'),
-    path('addHouse/', views.addHouse, name='addHouse'),
-    path('addHousetax/', views.addHousetax, name='addHousetax'),
-    path('addMarriageinfo/', views.addMarriageinfo, name='addMarriageinfo'),
+
     path('addScheme/', views.addScheme, name='addScheme'),
-    path('addSpot/', views.addSpot, name='addSpot'),
     path('waterConnectioninfo/', views.waterConnectioninfo, name='waterConnectioninfo'),
     path('addWatertax/', views.addWatertax, name='addWatertax'),
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .models import Grampanchayat, Gramadmin, Child,Spot,Housetaxinfo,House
+from .models import Grampanchayat, Gramadmin, Child
 from django.db.models import Max
 # from .forms import
 from django.contrib.auth.models import User
@@ -171,67 +171,11 @@ def addFamily(request):
 def addFamilymember(request):
     return render(request, 'gramapp/addFamilymember.html')
 
-def addHouse(request):
-    houseid = 1001 if House.objects.count() == 0 else House.objects.aggregate(max=Max('houseid'))[
-                                                                     "max"] + 1
-    if request.method == "POST":
-        vibhag = request.POST['vibhag']
-        vadi = request.POST['vadi']
-        housetype = request.POST['housetype']
-        housedimension = request.POST['housedimension']
-        ownername = request.POST['ownername']
 
-        ins = House.objects.create(houseid=houseid, vibhag=vibhag, vadi=vadi, housetype=housetype,
-                                   housedimension=housedimension, ownername=ownername,)
-        ins.save()
-
-        messages.success(request, '''New House Is Successfully added...''')
-        return render(request, 'gramapp/home1.html')
-    else:
-        return render(request, 'gramapp/addHouse.html', locals())
-
-
-
-def addHousetax(request):
-    housetypeid = 1001 if Housetaxinfo.objects.count() == 0 else Housetaxinfo.objects.aggregate(max=Max('housetypeid'))["max"] + 1
-    if request.method == "POST":
-        housetype = request.POST['housetype']
-        hosetaxrate = request.POST['hosetaxrate']
-
-        ins = Housetaxinfo.objects.create(housetypeid=housetypeid, housetype=housetype, hosetaxrate=hosetaxrate)
-        ins.save()
-
-        messages.success(request, '''Tax Related Inforation Is Successfully added...''')
-        return render(request, 'gramapp/home1.html')
-    else:
-        return render(request, 'gramapp/addHousetax.html', locals())
-
-
-def addMarriageinfo(request):
-    return render(request, 'gramapp/addMarriageinfo.html')
 
 def addScheme(request):
     return render(request, 'gramapp/addScheme.html')
 
-def addSpot(request):
-    spotid = 11001 if Spot.objects.count() == 0 else Spot.objects.aggregate(max=Max('spotid'))["max"] + 1
-    if request.method == "POST":
-        spottype = request.POST['spottype']
-        spotname = request.POST['spotname']
-        spotlocation = request.POST['spotlocation']
-        spotimage = request.FILES['spotimage']
-        fss = FileSystemStorage('media/spotimage/')
-        spotdescription = request.POST['spotdescription']
-
-        ins = Spot.objects.create(spotid=spotid, spottype=spottype, spotname=spotname,
-                                  spotlocation=spotlocation,
-                                  spotimage=spotimage, spotdescription=spotdescription)
-        ins.save()
-
-        messages.success(request, '''Spot Successfully added...''')
-        return render(request, 'gramapp/home1.html')
-    else:
-        return render(request, 'gramapp/addSpot.html', locals())
 
 
 def waterConnectioninfo(request):
