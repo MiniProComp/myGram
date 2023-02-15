@@ -23,6 +23,23 @@ class Gramadmin(models.Model):
         return self.user.username
 
 
+class FamilyHead(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    grampanchayat = models.ForeignKey("Grampanchayat", on_delete=models.CASCADE)
+    familyheadid = models.IntegerField(primary_key=True)
+    familyheadgender = models.CharField(max_length=6)
+    familyheadmobno = models.CharField(max_length=10)
+    familyheadadharno = models.CharField(max_length=12)
+    familyheadpanno = models.CharField(max_length=10)
+    familyheadphoto = models.FileField(upload_to='family_head/', null=True)
+    familyincome = models.CharField(max_length=15)
+    rationcardtype = models.CharField(max_length=10)
+    rationcardno = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.user.username
+
+
 class Child(models.Model):
     childid = models.IntegerField(primary_key=True)
     childname = models.CharField(max_length=10)

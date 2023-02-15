@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .models import Grampanchayat, Gramadmin, Child
+from .models import Grampanchayat, Gramadmin, Child, FamilyHead
 from django.db.models import Max
 # from .forms import
 from django.contrib.auth.models import User
@@ -92,32 +92,35 @@ def addgramadmin(request, pk):
         gramadminusername = request.POST['gramadminusername']
         gramadminpass = request.POST['gramadminpass']
         gramadmincnfmpass = request.POST['gramadmincnfmpass']
+        if gramadminpass == gramadmincnfmpass:
+            myuser = User.objects.create_user(gramadminusername, gramadminemail, gramadminpass)
+            myuser.first_name = (gramadminfname)
+            myuser.last_name = (gramadminlname)
+            myuser.save()
 
-        myuser = User.objects.create_user(gramadminusername, gramadminemail, gramadminpass)
-        myuser.first_name = (gramadminfname)
-        myuser.last_name = (gramadminlname)
-        myuser.save()
+            ins = Gramadmin.objects.create(user=myuser, grampanchayat=eachGram, gramadminid=gramadminid,
+                                           gramadminmobno=gramadminmobno, gramadminphoto=gramadminphoto)
+            ins.save()
 
-        ins = Gramadmin.objects.create(user=myuser, grampanchayat=eachGram, gramadminid=gramadminid,
-                                  gramadminmobno=gramadminmobno, gramadminphoto=gramadminphoto)
-        ins.save()
-
-        # msg = EmailMessage()
-        # msg['Subject'] = 'spoc username and password '
-        # msg['From'] = 'compliPro'
-        # msg['To'] = spocemail
-        # msg.set_content(
-        #     "Hello! \n" + spocfname + " " + spoclname + "\n This is an auto generated message from compliPro \n "
-        #                                                 "Don't share this with anyone \n"
-        #                                                 "Your username is: " + spocusername +
-        #     "\nPassword is:" + spocpass +
-        #     " \nURL:")
-        # server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-        # server.login("miniprojectsecomp@gmail.com", "btkfbakhglqhasoo")
-        # server.send_message(msg)
-        # server.quit()
-        messages.success(request, '''SPOC Successfully added...''')
-        return redirect('home1')
+            # msg = EmailMessage()
+            # msg['Subject'] = 'spoc username and password '
+            # msg['From'] = 'compliPro'
+            # msg['To'] = spocemail
+            # msg.set_content(
+            #     "Hello! \n" + spocfname + " " + spoclname + "\n This is an auto generated message from compliPro \n "
+            #                                                 "Don't share this with anyone \n"
+            #                                                 "Your username is: " + spocusername +
+            #     "\nPassword is:" + spocpass +
+            #     " \nURL:")
+            # server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+            # server.login("miniprojectsecomp@gmail.com", "btkfbakhglqhasoo")
+            # server.send_message(msg)
+            # server.quit()
+            messages.success(request, '''Family Head Successfully added...''')
+            return redirect('home1')
+        else:
+            messages.error(request, '''Password does not match''')
+            return redirect('addgramadmin')
     else:
         context = {'eachGram': eachGram}
         return render(request, 'gramapp/addgramadmin.html', context)
@@ -170,8 +173,68 @@ def addAuthority(request):
 def addComplaint(request):
     return render(request, 'gramapp/addComplaint.html')
 
-def addFamily(request):
-    return render(request, 'gramapp/addFamily.html')
+
+def addFamilyHead(request):
+    familyheadid = 100001 if FamilyHead.objects.count() == 0 else FamilyHead.objects.aggregate(max=Max('familyheadid'))["max"] + 1
+    grampanchayat = Grampanchayat.objects.all()
+    if request.method == "POST" and request.FILES['familyheadphoto']:
+        current_user = request.user
+        if current_user.is_superuser:
+            selectedgramid = request.POST['gram']
+            gram = Grampanchayat.objects.get(gramid=selectedgramid)
+        else:
+            gramAdmin = Gramadmin.objects.get(user=current_user)
+            adminGram = gramAdmin.grampanchayat
+            gram = Grampanchayat.objects.get(gramname=adminGram)
+
+        familyheadphoto = request.FILES['familyheadphoto']
+        fss = FileSystemStorage('media/family_head/')
+        familyheadfname = request.POST['familyheadfname']
+        familyheadlname = request.POST['familyheadlname']
+        familyheadgender = request.POST['familyheadgender']
+        familyheadmobno = request.POST['familyheadmobno']
+        familyheademail = request.POST['familyheademail']
+        familyheadadharno = request.POST['familyheadadharno']
+        familyheadpanno = request.POST['familyheadpanno']
+        familyincome = request.POST['familyincome']
+        rationcardtype = request.POST['rationcardtype']
+        rationcardno = request.POST['rationcardno']
+
+        familyheadusername = request.POST['familyheadusername']
+        familyheadpass = request.POST['familyheadpass']
+        familyheadcnfmpass = request.POST['familyheadcnfmpass']
+
+        myuser = User.objects.create_user(familyheadusername, familyheademail, familyheadpass)
+        myuser.first_name = (familyheadfname)
+        myuser.last_name = (familyheadlname)
+        myuser.save()
+
+        ins = FamilyHead.objects.create(user=myuser, grampanchayat=gram, familyheadid=familyheadid,
+                                  familyheadgender=familyheadgender, familyheadmobno=familyheadmobno, familyheadadharno=familyheadadharno,
+                                    familyheadpanno=familyheadpanno, familyheadphoto=familyheadphoto, familyincome=familyincome,
+                                       rationcardtype=rationcardtype, rationcardno=rationcardno)
+        ins.save()
+
+        # msg = EmailMessage()
+        # msg['Subject'] = 'spoc username and password '
+        # msg['From'] = 'compliPro'
+        # msg['To'] = spocemail
+        # msg.set_content(
+        #     "Hello! \n" + spocfname + " " + spoclname + "\n This is an auto generated message from compliPro \n "
+        #                                                 "Don't share this with anyone \n"
+        #                                                 "Your username is: " + spocusername +
+        #     "\nPassword is:" + spocpass +
+        #     " \nURL:")
+        # server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        # server.login("miniprojectsecomp@gmail.com", "btkfbakhglqhasoo")
+        # server.send_message(msg)
+        # server.quit()
+        messages.success(request, '''Family Head Successfully added...''')
+        return redirect('home1')
+    else:
+        context = {'grampanchayat': grampanchayat}
+        return render(request, 'gramapp/addFamilyHead.html', context)
+
 
 def addFamilymember(request):
     return render(request, 'gramapp/addFamilymember.html')

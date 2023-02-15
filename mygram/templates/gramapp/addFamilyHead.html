@@ -1,0 +1,110 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} addfamilyhead {% endblock title %}
+{% block familyactive %} active {% endblock familyactive %}
+{% block head %}
+    <style>
+        .container{
+            width: 600px;
+            border-style: groove;
+            }
+
+    </style>
+{% endblock head %}
+
+{% block body %}
+</br>
+<center><h2 >Add Family Head Details</h2></center>
+<form class="container" method="post" action="" enctype="multipart/form-data">
+
+<center>
+    {% csrf_token %}
+    {% if user.is_superuser %}
+    <div>
+         <label for="gram" class="form-label">Select Grampanchayat</label>
+        <select name="gram" id="gram">
+                {% for gram in grampanchayat %}
+                    <option value="{{ gram.gramid }}"> {{ gram.gramname }}</option>
+                {% endfor %}
+        </select>
+    </div>
+    {% endif %}
+
+    <div class="form-group">
+        <label for="familyheadfname" class="form-label">Family Head First Name</label>
+        <input type="text" class="form-control" id="familyheadfname" name="familyheadfname" autocomplete="off" required>
+    </div>
+
+     <div class="form-group">
+        <label for="familyheadlname" class="form-label">Family Head Last Name</label>
+        <input type="text" class="form-control" id="familyheadlname" name="familyheadlname" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Family Head Gender</label><br>
+        <input type="radio" name="familyheadgender" id="male" value="male" checked>
+        <label for="male">Male</label><br>
+        <input type="radio" name="familyheadgender" id="female" value="female">
+        <label for="female">Female</label>
+    </div>
+
+    <div class="form-group">
+        <label for="familyheadmobno" class="form-label">Family Head Mob No.</label>
+        <input type="tel" class="form-control" id="familyheadmobno" name="familyheadmobno" pattern="[0-9]{10}" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="familyheademail" class="form-label">Family Head Email</label>
+        <input type="email" class="form-control" id="familyheademail" name="familyheademail" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="familyheadadharno" class="form-label">Family Head Aadhar Number</label>
+        <input type="tel" class="form-control" id="familyheadadharno" name="familyheadadharno" pattern="[0-9]{4}[0-9]{4}[0-9]{4}" placeholder="XXXX-XXXX-XXXX" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="familyheadpanno" class="form-label">Family Head PAN Number (optional)</label>
+        <input type="tel" class="form-control" id="familyheadpanno" name="familyheadpanno" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" placeholder="XXXXX-1111-X" autocomplete="off">
+    </div>
+
+    <div class="form-group">
+        <label for="familyheadphoto" class="form-label">Family Head Photo</label>
+        <input type="file" accept="image/*" class="form-control" id="familyheadphoto" name="familyheadphoto" required>
+    </div>
+
+    <div class="form-group">
+        <label for="familyincome" class="form-label">Family Income</label>
+        <input type="number" class="form-control" id="familyincome" name="familyincome" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="rationcardtype" class="form-label">Ration Card Type</label>
+        <input type="text" class="form-control" id="rationcardtype" name="rationcardtype" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="rationcardno" class="form-label">Ration Card No.</label>
+        <input type="text" class="form-control" id="rationcardno" name="rationcardno" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="familyheadusername" class="form-label">Family Head Username</label>
+        <input type="text" class="form-control" id="familyheadusername" name="familyheadusername" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="familyheadpass" class="form-label">Family Head Password</label>
+        <input type="password" class="form-control" id="familyheadpass" name="familyheadpass" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="familyheadcnfmpass" class="form-label">Family Head Confirm Password</label>
+        <input type="password" class="form-control" id="familyheadcnfmpass" name="familyheadcnfmpass" autocomplete="off" required>
+    </div>
+
+
+    <button class="btn btn-primary " type="submit" >Submit</button>
+</center>
+</form>
+{% endblock body %}

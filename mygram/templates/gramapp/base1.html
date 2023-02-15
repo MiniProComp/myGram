@@ -33,18 +33,31 @@
                 </li>
 
                 {% if user.is_superuser %}
-                <li class="nav-item dropdown {% block companyactive %}  {% endblock companyactive %}">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                <li class="nav-item dropdown {% block gramactive %}  {% endblock gramactive %}">
+                    <a class="nav-link dropdown-toggle" href="#" id="grampanchayat" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         Grampanchayat
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="dropdown-menu" aria-labelledby="grampanchayat">
                         <a class="dropdown-item" href="{% url 'addgram' %}">Add Grampanchayat</a>
                         <a class="dropdown-item" href="{% url 'viewgram' %}">View Grampanchayat</a>
                     </div>
                 </li>
                 {% endif %}
                 {% if user.is_staff %}
+                <li class="nav-item dropdown {% block familyactive %}  {% endblock familyactive %}">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Family
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{% url 'addFamilyHead' %}">Add Family Head</a>
+                        <a class="dropdown-item" href="{% url 'addFamilymember' %}">Add Family Member</a>
+                        <a class="dropdown-item" href="{% url 'addFamilymember' %}">View Family</a>
+
+                    </div>
+                </li>
+
 
                 <li class="nav-item dropdown {% block Menu %}  {% endblock Menu %}">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink4" data-toggle="dropdown"
@@ -53,8 +66,6 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{% url 'addBirthDetails' %}">Add Birth Details</a>
-                        <a class="dropdown-item" href="{% url 'addFamily' %}">Add Family</a>
-                        <a class="dropdown-item" href="{% url 'addFamilymember' %}">Add Family Member</a>
                         <a class="dropdown-item" href="">Add House</a>
                         <a class="dropdown-item" href="">Add Marriage Info</a>
                         <a class="dropdown-item" href="{% url 'addScheme' %}">Add Scheme</a>
@@ -74,34 +85,7 @@
                         <a class="dropdown-item" href="{% url 'addWatertax' %}">Add Water Tax</a>
                     </div>
                 {% endif %}
-                {% for group in request.user.groups.all %}
-                {% if group.name == 'spoc' %}
-                <li class="nav-item dropdown {% block empactive %}  {% endblock empactive %}">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink3" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        Employees
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
-                        <a class="dropdown-item" href="">Add Employee</a>
-                        <a class="dropdown-item" href="{% url 'addBirthDetails/<int:pk>/' %}">Add Birth Details</a>
 
-
-                    </div>
-                </li>
-                <li class="nav-item dropdown {% block mycompanyactive %}  {% endblock mycompanyactive %}">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        MyCompany
-                    </a>
-                    <div class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink2">
-                        <a class="dropdown-item" href="">Add Sub Org</a>
-                        <a class="dropdown-item" href="">Add Sub Sub Org</a>
-                        <a class="dropdown-item" href="">Add Department</a>
-
-                    </div>
-                </li>
-                {% endif %}
-                {% endfor %}
                 <li class="nav-item {% block aboutactive %}  {% endblock aboutactive %}">
                     <a class="nav-link" href="/about">About</a>
                 </li>

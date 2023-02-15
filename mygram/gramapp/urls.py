@@ -20,7 +20,7 @@ urlpatterns = [
     path('addBirthDetails/', views.addBirthDetails, name='addBirthDetails'),
     path('addAuthority/', views.addAuthority, name='addAuthority'),
     path('addComplaint/', views.addComplaint, name='addComplaint'),
-    path('addFamily/', views.addFamily, name='addFamily'),
+    path('addFamilyHead/', views.addFamilyHead, name='addFamilyHead'),
     path('addFamilymember/', views.addFamilymember, name='addFamilymember'),
 
     path('addScheme/', views.addScheme, name='addScheme'),
