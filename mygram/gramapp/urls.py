@@ -14,13 +14,13 @@ urlpatterns = [
     path('gramdetail/<int:pk>/', views.gramdetail, name='gramdetail'),
     path('deletegram/<int:pk>/', views.deletegram, name='deletegram'),
     path('addgramadmin/<int:pk>/', views.addgramadmin, name='addgramadmin'),
-    path('viewGramAdmin/<int:pk>/', views.viewGramAdmin, name='viewGramAdmin'),
+    path('viewgramadmin/<int:pk>/', views.viewGramAdmin, name='viewgramadmin'),
     path('deletegramadmin/<int:pk>/', views.deletegramadmin, name='deletegramadmin'),
 
     path('addBirthDetails/', views.addBirthDetails, name='addBirthDetails'),
     path('addAuthority/', views.addAuthority, name='addAuthority'),
     path('addComplaint/', views.addComplaint, name='addComplaint'),
-    path('addFamilyHead/', views.addFamilyHead, name='addFamilyHead'),
+    path('addfamilyhead/', views.addFamilyHead, name='addfamilyhead'),
     path('addFamilymember/', views.addFamilymember, name='addFamilymember'),
 
     path('addScheme/', views.addScheme, name='addScheme'),

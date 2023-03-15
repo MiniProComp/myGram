@@ -40,6 +40,36 @@ class FamilyHead(models.Model):
         return self.user.username
 
 
+class Familymembers(models.Model):
+    grampanchayat = models.ForeignKey("Grampanchayat", on_delete=models.CASCADE)
+    family = models.ForeignKey("FamilyHead", on_delete=models.CASCADE)
+    familymemberid = models.IntegerField()
+    familymembername = models.CharField(max_length=40)
+    relation = models.CharField(max_length=20)
+    gender = models.CharField(max_length=10)
+    birthdate = models.DateField()
+    aadharnop = models.CharField(max_length=12)
+    familymemberphoto = models.FileField(upload_to='familyhead/', null=True)
+
+    def __str__(self):
+        return self.familyyheadname
+
+
+class Authority(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    grampanchayat = models.ForeignKey("Grampanchayat", on_delete=models.CASCADE)
+    authorityid = models.IntegerField(primary_key=True)
+    authority = models.CharField(max_length=20)
+    department = models.CharField(max_length=20)
+    aadharnop = models.CharField(max_length=12)
+    qualification = models.CharField(max_length=20)
+    authoritynmobno = models.CharField(max_length=10)
+    authorityphoto = models.FileField(upload_to='authority/', null=True)
+
+    def __str__(self):
+        return self.user.username
+
+
 class Child(models.Model):
     childid = models.IntegerField(primary_key=True)
     childname = models.CharField(max_length=10)
@@ -54,23 +84,16 @@ class Child(models.Model):
     def __str__(self):
         return self.user.childname
 
-class HouseTaxInfo(models.Model):
-    housetypeid = models.IntegerField(primary_key=True)
-    housetype = models.CharField(max_length=10)
-    hosetaxrate = models.CharField(max_length=10)
 
-    def __str__(self):
-        return self.user.housetype
+class WaterTax(models.Model):
+    watertaxid = models.IntegerField(primary_key=True)
+    waterconnectiontype = models.CharField(max_length=10)
+    watertaxrate = models.CharField(max_length=20)
 
-class House(models.Model):
-    houseid = models.IntegerField(primary_key=True)
-    region = models.CharField(max_length=10)
-    subregion = models.CharField(max_length=10)
-    housetype = models.CharField(max_length=10)
-    housedimension = models.CharField(max_length=10)
-    ownername = models.CharField(max_length=10)
 
-    def __str__(self):
-        return self.user.housetype
+class WaterConnection(models.Model):
+    waterconnectionid = models.IntegerField(primary_key=True)
+    ownername = models.ForeignKey("FamilyHead", on_delete=models.CASCADE)
+    waterconnectiontype = models.CharField(max_length=10)
 
 

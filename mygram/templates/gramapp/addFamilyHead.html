@@ -21,13 +21,13 @@
     {% csrf_token %}
     {% if user.is_superuser %}
     <div>
-         <label for="gram" class="form-label">Select Grampanchayat</label>
-        <select name="gram" id="gram">
+         <label for="gram" class="form-label">Select Grampanchayat</label><br>
+        <select name="gram" id="gram" class="form-control">
                 {% for gram in grampanchayat %}
                     <option value="{{ gram.gramid }}"> {{ gram.gramname }}</option>
                 {% endfor %}
         </select>
-    </div>
+    </div><br>
     {% endif %}
 
     <div class="form-group">
