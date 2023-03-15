@@ -57,7 +57,7 @@
 
 
 
-<p id="demo"></p>
+
 
 
         <script>
@@ -79,7 +79,7 @@
                 district1.on('change', function () {
                 var selected_district = district.options[district.selectedIndex].text;
 
-                document.getElementById("demo").innerHTML =selected_district;
+
                     taluka.html($options1.filter('[value="' + selected_district + '"]'));
                 }).trigger('change');
             });
