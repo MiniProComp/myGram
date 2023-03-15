@@ -237,7 +237,16 @@ def addFamilyHead(request):
 
 
 def addFamilymember(request):
-    return render(request, 'gramapp/addFamilymember.html')
+    # familymemberid = 100001 if FamilyHead.objects.count() == 0 else FamilyHead.objects.aggregate(max=Max('familymemberid'))["max"] + 1
+    grampanchayat = Grampanchayat.objects.all()
+    familyhead = FamilyHead.objects.all()
+    # current_user = request.user
+    # gramAdmin = Gramadmin.objects.get(user=current_user)
+    # adminGram = gramAdmin.grampanchayat
+    # gram = Grampanchayat.objects.get(gramname=adminGram)
+    # familyheads = FamilyHead.objects.all().filter(grampanchayat=gram)
+    context = {'grampanchayat': grampanchayat, 'familyhead': familyhead}
+    return render(request, 'gramapp/addFamilymember.html', context)
 
 
 

@@ -1,70 +1,62 @@
 {% extends 'gramapp/base1.html' %}
 
 {% block title %} addfamilymember {% endblock title %}
-{% block companyactive %} active {% endblock companyactive %}
+{% block familyactive %} active {% endblock familyactive %}
 {% block head %}
-    <style>
-        .container{
-            width: 600px;
-            border-style: groove;
-            }
 
-    </style>
+
+<style>
+    .container {
+        width: 600px;
+        border-style: groove;
+    }
+</style>
 {% endblock head %}
 
 {% block body %}
-</br>
-<center><h2 >Add Family Member Details</h2></center>
-<form class="container" method="post" action="" enctype="multipart/form-data">
+<br>
+<form method="post" class="container" action="{% url 'addFamilymember' %}">
+    <center>
+        {% csrf_token %}
+        <br>
 
-<center>
-    {% csrf_token %}
+        <div class="card body">
+            <div class="row">
+                <select name="dept" id="department" class="form-control">
+                    <option value="0">--Select Department--</option>
+                    {% for item in grampanchayat %}
+                    <option value="{{ item.gramname }}">{{ item.gramname }}</option>
+                    {% endfor %}
+                </select>
 
-    <div class="form-group">
-        <label for="mem" class="form-label">Member Id:</label>
-        <input type="text" class="form-control" id="companyname" name="companyname" autocomplete="off" required>
-    </div>
-
-    <div class="form-group">
-        <label for="companydesc" class="form-label">Member Name:</label>
-        <input type="text" class="form-control" id="companydesc" name="companydesc" autocomplete="off" required>
-    </div>
-    <fieldset data-role="controlgroup">
-      <legend>Member gender:</legend>
-
-        <input type="radio" name="gender" id="male" value="male" checked>
-        <label for="male">Male</label><br>
-        <input type="radio" name="gender" id="female" value="female">
-        <label for="female">Female</label>
-
-    </fieldset>
+                <select name="emp" id="Employee" class="form-control">
+                    <option value="0">--Select Staff--</option>
+                    {% for item in familyhead %}
+                    <option value="{{ item.grampanchayat }}">{{ item.user }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
 
 
-    <div class="form-group">
-        <label for="companyaddress" class="form-label">Member Contact:</label>
-        <input type="text" class="form-control" id="companyaddress" name="companyaddress" autocomplete="off" required>
-    </div>
 
-    <div class="form-group">
-        <label for="companyemail" class="form-label">Member Adhar:</label>
-        <input type="email" class="form-control" id="companyemail" name="companyemail" autocomplete="off" required>
-    </div>
-    <div class="form-group">
-        <label for="birthday">Member Birthdate:</label>
-        <input type="date" id="birthday" name="birthday">
-        <input type="submit">
-    </div>
 
-    <div class="form-group">
-        <label for="companywebsite" class="form-label">Member Relation With Head:</label>
-        <input type="text" class="form-control" id="companywebsite" name="companywebsite" autocomplete="off" required>
-    </div>
-    <div class="form-group">
-        <label for="companylogo" class="form-label">Member Photo</label>
-        <input type="file" accept="image/*" class="form-control" id="companylogo" name="companylogo" required>
-    </div>
 
-    <button class="btn btn-primary " type="submit" >Submit</button>
-</center>
+        <script>
+
+            $(document).ready(function () {
+
+                var department = $("#department");
+                var Employee = $("#Employee");
+                var $options = Employee.find('option');
+                department.on('change', function () {
+                    Employee.html($options.filter('[value="' + this.value + '"]'));
+                }).trigger('change');
+
+
+            });
+        </script>
+
+    </center>
 </form>
 {% endblock body %}
