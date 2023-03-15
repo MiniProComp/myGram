@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .models import Grampanchayat, Gramadmin, Child, FamilyHead
+from .models import  State, District, Taluka, Grampanchayat, Gramadmin, Child, FamilyHead
 from django.db.models import Max
 # from .forms import
 from django.contrib.auth.models import User
@@ -34,6 +34,9 @@ def handlelogout(request):
 
 
 def addgram(request):
+    states = State.objects.all()
+    districts = District.objects.all()
+    talukas = Taluka.objects.all()
     gramid = 1001 if Grampanchayat.objects.count() == 0 else Grampanchayat.objects.aggregate(max=Max('gramid'))["max"] + 1
     if request.method == "POST":
         gramname = request.POST['gramname']
@@ -47,6 +50,7 @@ def addgram(request):
         messages.success(request, '''Grampanchayat Successfully added...''')
         return redirect('home1')
     else:
+        context = {'states': states, 'districts': districts, 'talukas': talukas}
         return render(request, 'gramapp/addGrampanchayat.html', locals())
 
 

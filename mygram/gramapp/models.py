@@ -2,7 +2,36 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class State(models.Model):
+    state_id = models.IntegerField(primary_key=True)
+    state_name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.state_name
+
+class District(models.Model):
+    district_id = models.IntegerField(primary_key=True)
+    state_name = models.ForeignKey("State", on_delete=models.CASCADE)
+    district_name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.district_name
+
+
+class Taluka(models.Model):
+    taluka_id = models.IntegerField(primary_key=True)
+    state_name = models.ForeignKey("State", on_delete=models.CASCADE)
+    district_name = models.ForeignKey("District", on_delete=models.CASCADE)
+    taluka_name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.taluka_name
+
+
 class Grampanchayat(models.Model):
+    state_name = models.ForeignKey("State", on_delete=models.CASCADE)
+    district_name = models.ForeignKey("District", on_delete=models.CASCADE)
+    taluka_name = models.ForeignKey("Taluka", on_delete=models.CASCADE)
     gramid = models.IntegerField(primary_key=True)
     gramname = models.CharField(max_length=50, unique=True)
     gramaddress = models.TextField(max_length=100)
