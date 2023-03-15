@@ -26,5 +26,7 @@ urlpatterns = [
     path('addScheme/', views.addScheme, name='addScheme'),
     path('waterConnectioninfo/', views.waterConnectioninfo, name='waterConnectioninfo'),
     path('addWatertax/', views.addWatertax, name='addWatertax'),
+    path('addHousetax/', views.addHousetax, name='addHousetax'),
+    path('addHouse/', views.addHouse, name='addHouse'),
 
 ]

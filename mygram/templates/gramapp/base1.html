@@ -66,7 +66,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{% url 'addBirthDetails' %}">Add Birth Details</a>
-                        <a class="dropdown-item" href="">Add House</a>
+                        <a class="dropdown-item" href="{% url 'addHouse' %}">Add House</a>
                         <a class="dropdown-item" href="">Add Marriage Info</a>
                         <a class="dropdown-item" href="{% url 'addScheme' %}">Add Scheme</a>
                         <a class="dropdown-item" href="">Add Spot</a>
@@ -81,7 +81,7 @@
                         Tax Information
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="">Add House Tax</a>
+                        <a class="dropdown-item" href="{% url 'addHousetax' %}">Add House Tax</a>
                         <a class="dropdown-item" href="{% url 'addWatertax' %}">Add Water Tax</a>
                     </div>
                 {% endif %}

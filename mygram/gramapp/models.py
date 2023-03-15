@@ -54,3 +54,23 @@ class Child(models.Model):
     def __str__(self):
         return self.user.childname
 
+class HouseTaxInfo(models.Model):
+    housetypeid = models.IntegerField(primary_key=True)
+    housetype = models.CharField(max_length=10)
+    hosetaxrate = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.user.housetype
+
+class House(models.Model):
+    houseid = models.IntegerField(primary_key=True)
+    region = models.CharField(max_length=10)
+    subregion = models.CharField(max_length=10)
+    housetype = models.CharField(max_length=10)
+    housedimension = models.CharField(max_length=10)
+    ownername = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.user.housetype
+
+
