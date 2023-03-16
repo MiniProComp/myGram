@@ -261,3 +261,10 @@ def waterConnectioninfo(request):
 def addWatertax(request):
     return render(request, 'gramapp/addWatertax.html')
 
+
+def addHouse(request):
+    return render(request, 'gramapp/addHouse.html')
+
+
+def addHousetax(request):
+    return render(request, 'gramapp/addHousetax.html')

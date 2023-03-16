@@ -21,71 +21,71 @@
     <center>
         {% csrf_token %}
 
-        <div class="card body">
+<!--        <div class="card body">-->
 
-            <div>
-                <label for="state" class="form-label">State Name</label>
-                <select name="dept" id="state" class="form-control">
-                    <option value="0">--Select State--</option>
-                    {% for item in states %}
-                    <option value="{{ item.state_name }}">{{ item.state_name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+<!--            <div>-->
+<!--                <label for="state" class="form-label">State Name</label>-->
+<!--                <select name="dept" id="state" class="form-control">-->
+<!--                    <option value="0">&#45;&#45;Select State&#45;&#45;</option>-->
+<!--                    {% for item in states %}-->
+<!--                    <option value="{{ item.state_name }}">{{ item.state_name }}</option>-->
+<!--                    {% endfor %}-->
+<!--                </select>-->
+<!--            </div>-->
 
-            <div>
-                <label for="district" class="form-label">District Name</label>
-                <select name="emp" id="district" class="form-control">
-                    <option value="0">--Select District--</option>
-                    {% for item in districts %}
-                    <option value="{{ item.state_name }}">{{ item.district_name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+<!--            <div>-->
+<!--                <label for="district" class="form-label">District Name</label>-->
+<!--                <select name="emp" id="district" class="form-control">-->
+<!--                    <option value="0">&#45;&#45;Select District&#45;&#45;</option>-->
+<!--                    {% for item in districts %}-->
+<!--                    <option value="{{ item.state_name }}">{{ item.district_name }}</option>-->
+<!--                    {% endfor %}-->
+<!--                </select>-->
+<!--            </div>-->
 
-            <div>
-                <label for="taluka" class="form-label">Taluka Name</label>
-                <select name="emp" id="taluka" class="form-control">
-                    <option value="0">--Select Taluka--</option>
-                    {% for item in talukas %}
-                    <option value="{{ item.district_name }}">{{ item.taluka_name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+<!--            <div>-->
+<!--                <label for="taluka" class="form-label">Taluka Name</label>-->
+<!--                <select name="emp" id="taluka" class="form-control">-->
+<!--                    <option value="0">&#45;&#45;Select Taluka&#45;&#45;</option>-->
+<!--                    {% for item in talukas %}-->
+<!--                    <option value="{{ item.district_name }}">{{ item.taluka_name }}</option>-->
+<!--                    {% endfor %}-->
+<!--                </select>-->
+<!--            </div>-->
 
-        </div>
-
-
+<!--        </div>-->
 
 
 
 
-        <script>
-
-            $(document).ready(function () {
-
-                var state = $("#state");
-                var district1 = $("#district");
 
 
-                var taluka = $("#taluka");
-                var $options = district1.find('option');
-                var $options1 = taluka.find('option');
+<!--        <script>-->
 
-                state.on('change', function () {
-                    district1.html($options.filter('[value="' + this.value + '"]'));
-                }).trigger('change');
+<!--            $(document).ready(function () {-->
 
-                district1.on('change', function () {
-                var selected_district = district.options[district.selectedIndex].text;
+<!--                var state = $("#state");-->
+<!--                var district1 = $("#district");-->
 
 
-                    taluka.html($options1.filter('[value="' + selected_district + '"]'));
-                }).trigger('change');
-            });
+<!--                var taluka = $("#taluka");-->
+<!--                var $options = district1.find('option');-->
+<!--                var $options1 = taluka.find('option');-->
+
+<!--                state.on('change', function () {-->
+<!--                    district1.html($options.filter('[value="' + this.value + '"]'));-->
+<!--                }).trigger('change');-->
+
+<!--                district1.on('change', function () {-->
+<!--                var selected_district = district.options[district.selectedIndex].text;-->
 
 
-        </script>
+<!--                    taluka.html($options1.filter('[value="' + selected_district + '"]'));-->
+<!--                }).trigger('change');-->
+<!--            });-->
+
+
+<!--        </script>-->
 
 
         <div class="form-group">
@@ -104,8 +104,8 @@
         </div>
 
         <div class="form-group">
-            <label for="gramaddress" class="form-label"> Addrass</label>
-            <input type="text" class="form-control" id="gramaddress" name="gramaddress" autocomplete="off" required>
+            <label for="gramaddress" class="form-label"> PIN Code</label>
+            <input type="number" class="form-control" id="gramaddress" name="gramaddress" autocomplete="off" required>
         </div>
 
         <button class="btn btn-primary " type="submit">Submit</button>

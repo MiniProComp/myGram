@@ -29,9 +29,9 @@ class Taluka(models.Model):
 
 
 class Grampanchayat(models.Model):
-    state_name = models.ForeignKey("State", on_delete=models.CASCADE)
-    district_name = models.ForeignKey("District", on_delete=models.CASCADE)
-    taluka_name = models.ForeignKey("Taluka", on_delete=models.CASCADE)
+    # state_name = models.ForeignKey("State", on_delete=models.CASCADE)
+    # district_name = models.ForeignKey("District", on_delete=models.CASCADE)
+    # taluka_name = models.ForeignKey("Taluka", on_delete=models.CASCADE)
     gramid = models.IntegerField(primary_key=True)
     gramname = models.CharField(max_length=50, unique=True)
     gramaddress = models.TextField(max_length=100)
@@ -128,21 +128,4 @@ class WaterConnection(models.Model):
     def __str__(self):
         return self.user.ownername
 
-class House(models.Model):
-    houseid = models.IntegerField(primary_key=True)
-    ownername = models.ForeignKey("FamilyHead", on_delete=models.CASCADE)
-    grampanchayat = models.ForeignKey("Grampanchayat", on_delete=models.CASCADE)
-    housetype = models.CharField(max_length=10)
-    housedimension = models.CharField(max_length=10)
-
-    def __str__(self):
-        return self.user.ownername
-
-class HouseTax(models.Model):
-    housetypeid = models.IntegerField(primary_key=True)
-    housetype = models.ForeignKey("FamilyHead", on_delete=models.CASCADE)
-    hosetaxrate = models.CharField(max_length=10)
-
-    def __str__(self):
-        return self.user.housetype
 
