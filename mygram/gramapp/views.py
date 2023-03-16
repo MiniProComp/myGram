@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .models import Grampanchayat, Gramadmin, Child, FamilyHead,House
+from .models import Grampanchayat, Gramadmin, Child, FamilyHead
 from django.db.models import Max
 # from .forms import
 from django.contrib.auth.models import User
@@ -260,25 +260,4 @@ def waterConnectioninfo(request):
 
 def addWatertax(request):
     return render(request, 'gramapp/addWatertax.html')
-def addHousetax(request):
-    return render(request, 'gramapp/addHousetax.html')
-def addHouse(request):
-    # houseid = 1001 if House.objects.count() == 0 else House.objects.aggregate(max=Max('houseid'))["max"] + 1
-    if request.method == "POST":
-        ownername = request.POST['ownername']
-        housetype = request.POST['housetype']
-        housedimension = request.POST['housedimension']
-
-
-
-
-        ins = Child.objects.create(houseid=houseid, region=region, subregion=subregion, housetype=housetype,
-                                   housedimension=housedimension, ownername=ownername)
-        ins.save()
-
-        messages.success(request, '''New House Registration Successfully added...''')
-        return redirect(request, 'gramapp/home1.html')
-    else:
-        return render(request, 'gramapp/addHouse.html', locals())
-
 
