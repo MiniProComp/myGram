@@ -1,0 +1,62 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} gramdetails {% endblock title %}
+{% block companyactive %} active {% endblock companyactive %}
+
+{% block head %}
+    <style>
+        .container{
+            width: 600px;
+            }
+        .card-body{
+            align: center;
+            width: 80%;
+            border-style: groove;
+        }
+    </style>
+{% endblock head %}
+
+
+
+{% block body %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col md-6">
+          <a href="{% url 'viewFamily' %}" class="btn btn-dark mt-2">Back</a>
+            <div class="card row ml-4" style="width: 20rem;">
+                <div>
+                <strong>Family Head</strong>
+
+                <div class="card-body row ml-4">
+                    <img class="card-img-top" src="{{familyhead.familyheadphoto.url}}" style="width: 60%;" alt="Card image cap">
+                    <h5 class="card-title m-1"></h5>
+                    <h5 class="card-title m-1">Name:- {{familyhead.user.first_name}} {{familyhead.user.last_name}}</h5>
+                    <h6 class="card-subtitle m-1">Gender:- {{familyhead.familyheadgender}}</h6>
+                    <h6 class="card-text m-1">Email:- {{familyhead.user.email}}</h6>
+                    <h6 class="card-text m-1">Mob No.:- {{familyhead.familyheadmobno}}</h6>
+                    <h6 class="card-text m-1">Birthdate:- {{familyhead.birthdate}}</h6>
+                  <a href="" class="btn btn-danger mt-2">Delete</a>
+                  <a href="#" class="btn btn-primary mt-2">Update</a>
+                </div>
+                </div>
+                <div><br>
+                    {% for familymember in familymembers %}
+                    <strong>Family Head's {{familymember.relation}}</strong>
+
+                <div class="card-body row ml-4">
+                    <img class="card-img-top" src="{{familymember.familymemberphoto.url}}" style="width: 60%;" alt="Card image cap">
+                    <h5 class="card-title m-1"></h5>
+                    <h5 class="card-title m-1">Name:- {{familymember.familymembername}} {{familyhead.user.last_name}}</h5>
+                    <h6 class="card-subtitle m-1">Gender:- {{familymember.gender}}</h6>
+                    <h6 class="card-text m-1">Birthdate:- {{familymember.birthdate}}</h6>
+                  <a href="" class="btn btn-danger mt-2">Delete</a>
+                  <a href="#" class="btn btn-primary mt-2">Update</a>
+                    {% endfor %}
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

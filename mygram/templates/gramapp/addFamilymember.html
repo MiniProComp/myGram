@@ -15,47 +15,68 @@
 
 {% block body %}
 <br>
-<form method="post" class="container" action="{% url 'addFamilymember' %}">
+<form method="post" class="container" action="" enctype="multipart/form-data">
     <center>
         {% csrf_token %}
         <br>
+  <div>
+         <label for="familyhead" class="form-label">Select Family Head</label><br>
+        <select name="familyhead" id="familyhead" class="form-control">
+                {% for familyhead in familyheads %}
+                    <option value="{{ familyhead.familyheadid }}"> {{ familyhead.user }}</option>
+                {% endfor %}
+        </select>
+    </div><br>
 
-        <div class="card body">
-            <div class="row">
-                <select name="dept" id="department" class="form-control">
-                    <option value="0">--Select Department--</option>
-                    {% for item in grampanchayat %}
-                    <option value="{{ item.gramname }}">{{ item.gramname }}</option>
-                    {% endfor %}
-                </select>
+    <div class="form-group">
+        <label class="form-label">Relation With Family Head</label><br>
+        <input type="radio" name="relation" id="wife" value="wife">
+        <label for="wife">Wife</label><br>
+        <input type="radio" name="relation" id="son" value="son">
+        <label for="son">Son</label><br>
+        <input type="radio" name="relation" id="daughter" value="daughter">
+        <label for="daughter">Daughter</label>
+    </div>
 
-                <select name="emp" id="Employee" class="form-control">
-                    <option value="0">--Select Staff--</option>
-                    {% for item in familyhead %}
-                    <option value="{{ item.grampanchayat }}">{{ item.user }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
+    <div class="form-group">
+        <label for="familymemberfname" class="form-label">Family Member First Name</label>
+        <input type="text" class="form-control" id="familymemberfname" name="familymemberfname" autocomplete="off" required>
+    </div>
+
+<!--     <div class="form-group">-->
+<!--        <label for="familyheadlname" class="form-label">Family Head Last Name</label>-->
+<!--        <input type="text" class="form-control" id="familyheadlname" name="familyheadlname" autocomplete="off" required>-->
+<!--    </div>-->
+
+    <div class="form-group">
+        <label class="form-label">Family Member Gender</label><br>
+        <input type="radio" name="familymembergender" id="male" value="male" checked>
+        <label for="male">Male</label><br>
+        <input type="radio" name="familymembergender" id="female" value="female">
+        <label for="female">Female</label>
+    </div>
+
+     <div class="form-group">
+        <label for="birthdate" class="form-label">Family Head Birthdate</label>
+        <input type="date" class="form-control" id="birthdate" name="birthdate" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="familyheadadharno" class="form-label">Family Head Aadhar Number</label>
+        <input type="tel" class="form-control" id="familyheadadharno" name="familyheadadharno" pattern="[0-9]{4}[0-9]{4}[0-9]{4}" placeholder="XXXX-XXXX-XXXX" autocomplete="off" required>
+    </div>
+
+
+    <div class="form-group">
+        <label for="familymemberphoto" class="form-label">Family Member Photo</label>
+        <input type="file" accept="image/*" class="form-control" id="familymemberphoto" name="familymemberphoto" required>
+    </div>
+
+
+    <button class="btn btn-primary " type="submit" >Submit</button>
 
 
 
-
-
-        <script>
-
-            $(document).ready(function () {
-
-                var department = $("#department");
-                var Employee = $("#Employee");
-                var $options = Employee.find('option');
-                department.on('change', function () {
-                    Employee.html($options.filter('[value="' + this.value + '"]'));
-                }).trigger('change');
-
-
-            });
-        </script>
 
     </center>
 </form>

@@ -57,6 +57,7 @@ class FamilyHead(models.Model):
     grampanchayat = models.ForeignKey("Grampanchayat", on_delete=models.CASCADE)
     familyheadid = models.IntegerField(primary_key=True)
     familyheadgender = models.CharField(max_length=6)
+    birthdate = models.DateField()
     familyheadmobno = models.CharField(max_length=10)
     familyheadadharno = models.CharField(max_length=12)
     familyheadpanno = models.CharField(max_length=10)
@@ -78,10 +79,10 @@ class Familymembers(models.Model):
     gender = models.CharField(max_length=10)
     birthdate = models.DateField()
     aadharnop = models.CharField(max_length=12)
-    familymemberphoto = models.FileField(upload_to='familyhead/', null=True)
+    familymemberphoto = models.FileField(upload_to='family_member/', null=True)
 
     def __str__(self):
-        return self.familyyheadname
+        return self.familymembername
 
 
 class Authority(models.Model):
