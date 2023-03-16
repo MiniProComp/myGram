@@ -265,11 +265,11 @@ def addHousetax(request):
 def addHouse(request):
     # houseid = 1001 if House.objects.count() == 0 else House.objects.aggregate(max=Max('houseid'))["max"] + 1
     if request.method == "POST":
-        region = request.POST['region']
-        subregion = request.POST['subregion']
+        ownername = request.POST['ownername']
         housetype = request.POST['housetype']
         housedimension = request.POST['housedimension']
-        ownername = request.POST['ownername']
+
+
 
 
         ins = Child.objects.create(houseid=houseid, region=region, subregion=subregion, housetype=housetype,

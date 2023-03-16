@@ -96,4 +96,24 @@ class WaterConnection(models.Model):
     ownername = models.ForeignKey("FamilyHead", on_delete=models.CASCADE)
     waterconnectiontype = models.CharField(max_length=10)
 
+    def __str__(self):
+        return self.user.ownername
+
+class House(models.Model):
+    houseid = models.IntegerField(primary_key=True)
+    ownername = models.ForeignKey("FamilyHead", on_delete=models.CASCADE)
+    grampanchayat = models.ForeignKey("Grampanchayat", on_delete=models.CASCADE)
+    housetype = models.CharField(max_length=10)
+    housedimension = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.user.ownername
+
+class HouseTax(models.Model):
+    housetypeid = models.IntegerField(primary_key=True)
+    housetype = models.ForeignKey("FamilyHead", on_delete=models.CASCADE)
+    hosetaxrate = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.user.housetype
 
