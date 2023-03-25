@@ -8,7 +8,7 @@ from django.db.models import Max
 from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
 from email.message import EmailMessage
-# import pywhatkit
+import pywhatkit
 
 
 # Create your views here.
