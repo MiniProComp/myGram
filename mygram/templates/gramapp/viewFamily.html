@@ -16,11 +16,11 @@
         {% if familyheads %}
     {% for familyhead in familyheads %}
         <div class="col md-6">
-            <div class="card m-2" style="width: 18rem;">
+            <div class="card m-2" style="width: 20rem;">
                 <div class="card-body">
                     <h5 class="card-title m-1">Name:- {{familyhead.user.first_name}} {{familyhead.user.last_name}}</h5>
                     <h4 class="card-subtitle m-1">{{familyhead.familyheadmobno}}</h4>
-                    <p class="card-text m-1">{{familyhead.user}}</p>
+                    <p class="card-text m-1">{{familyhead.familyheadgender}}</p>
                     <a href="{% url 'viewFamilyDetails' familyhead.familyheadid %}" class="btn btn-primary mt-2">Details</a>
                 </div>
             </div>
@@ -28,7 +28,7 @@
             {% endfor %}
 
 {% else %}
- <h4>No Grampanchayat</h4>
+ <h4>No Families</h4>
 {% endif %}
     </div>
 </div>

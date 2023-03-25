@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-
     <!--  ajax  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -16,7 +15,6 @@
 
     <title>{% block title %} {% endblock title %}</title>
     {% block head %} {% endblock head %}
-
 </head>
 
 <body>
@@ -24,11 +22,6 @@
         <a class="navbar-brand" href="{% url 'home1' %}">
             <img src="media/logo/mygram logo.png" width="70" height="35" class="d-inline-block align-top" alt="">
         </a>
-<!--        <a class="navbar-brand" href="{% url 'home1' %}">myGram</a>-->
-<!--        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"-->
-<!--            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
-<!--            <span class="navbar-toggler-icon"></span>-->
-<!--        </button>-->
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
@@ -76,7 +69,6 @@
                         <a class="dropdown-item" href="">Add Marriage Info</a>
                         <a class="dropdown-item" href="{% url 'addScheme' %}">Add Scheme</a>
                         <a class="dropdown-item" href="">Add Spot</a>
-<!--                      grammdetail should be mentioned-->
                         <a class="dropdown-item" href="{% url 'waterConnectioninfo' %}">Add Water Connection info</a>
                     </div>
 
@@ -90,7 +82,7 @@
                         <a class="dropdown-item" href="{% url 'addHousetax' %}">Add House Tax</a>
                         <a class="dropdown-item" href="{% url 'addWatertax' %}">Add Water Tax</a>
                     </div>
-                {% endif %}
+                    {% endif %}
                     {% endif %}
 
                 <li class="nav-item {% block aboutactive %}  {% endblock aboutactive %}">
@@ -102,7 +94,7 @@
 
 
 
-        {% if user.is_authenticated %}
+            {% if user.is_authenticated %}
             <ul class="navbar-nav mr-2">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href='#' id="navbarDropdown" role="button"
@@ -133,11 +125,7 @@
     </div>
     {% endfor %}
 
-
-
-
     {% block js %} {% endblock js %}
-
     <!-- Login Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
         <div class="modal-dialog">
@@ -171,197 +159,198 @@
         </div>
     </div>
 
-{% block body %} {% endblock body %}
-
+    {% block body %} {% endblock body %}
+    <br>
     <!-- Footer -->
-<footer class="bg-dark text-center text-white">
-  <!-- Grid container -->
-  <div class="container p-4">
+    <footer class="bg-dark text-center text-white">
+        <!-- Grid container -->
+        <div class="p-4">
 
-<!--    &lt;!&ndash; Section: Social media &ndash;&gt;-->
-<!--    <section class="mb-4 bg-dark p-4">-->
-<!--    &lt;!&ndash; Facebook &ndash;&gt;-->
-<!--<a class="btn text-white" style="background-color: #3b5998;" href="#!" role="button">-->
-<!--  <i class="fab fa-facebook-f"></i>-->
-<!--</a>-->
+            <!--    &lt;!&ndash; Section: Social media &ndash;&gt;-->
+            <!--    <section class="mb-4 bg-dark p-4">-->
+            <!--    &lt;!&ndash; Facebook &ndash;&gt;-->
+            <!--<a class="btn text-white" style="background-color: #3b5998;" href="#!" role="button">-->
+            <!--  <i class="fab fa-facebook-f"></i>-->
+            <!--</a>-->
 
 
-<!--    &lt;!&ndash; Twitter &ndash;&gt;-->
-<!--    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-twitter"></i></a>-->
+            <!--    &lt;!&ndash; Twitter &ndash;&gt;-->
+            <!--    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-twitter"></i></a>-->
 
-<!--    &lt;!&ndash; Google &ndash;&gt;-->
-<!--    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-google"></i></a>-->
+            <!--    &lt;!&ndash; Google &ndash;&gt;-->
+            <!--    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-google"></i></a>-->
 
-<!--    &lt;!&ndash; Instagram &ndash;&gt;-->
-<!--    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-instagram"></i></a>-->
+            <!--    &lt;!&ndash; Instagram &ndash;&gt;-->
+            <!--    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-instagram"></i></a>-->
 
-<!--    &lt;!&ndash; Linkedin &ndash;&gt;-->
-<!--    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>-->
+            <!--    &lt;!&ndash; Linkedin &ndash;&gt;-->
+            <!--    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>-->
 
-<!--    &lt;!&ndash; Github &ndash;&gt;-->
-<!--    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-github"></i></a>-->
-<!--  </section>-->
-  <!-- Section: Dark variant -->
-    <!-- Section: Form -->
-    <section class="">
-      <form action="">
-        <!--Grid row-->
-        <div class="row d-flex justify-content-center">
-          <!--Grid column-->
-          <div class="col-auto">
-            <p class="pt-2">
-              <strong>Enter email for update</strong>
-            </p>
-          </div>
-          <!--Grid column-->
+            <!--    &lt;!&ndash; Github &ndash;&gt;-->
+            <!--    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-github"></i></a>-->
+            <!--  </section>-->
+            <!-- Section: Dark variant -->
+            <!-- Section: Form -->
+            <section class="">
+                <form action="">
+                    <!--Grid row-->
+                    <div class="row d-flex justify-content-center">
+                        <!--Grid column-->
+                        <div class="col-auto">
+                            <p class="pt-2">
+                                <strong>Enter email for update</strong>
+                            </p>
+                        </div>
+                        <!--Grid column-->
 
-          <!--Grid column-->
-          <div class="col-md-5 col-12">
-            <!-- Email input -->
-            <div class="form-outline form-white mb-4">
-              <input type="email" id="form5Example21" class="form-control" />
-              <label class="form-label" for="form5Example21">Email address</label>
+                        <!--Grid column-->
+                        <div class="col-md-5 col-12">
+                            <!-- Email input -->
+                            <div class="form-outline form-white mb-4">
+                                <input type="email" id="form5Example21" class="form-control" autocomplete="off" />
+                                <label class="form-label" for="form5Example21">Email address</label>
+                            </div>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-auto">
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-outline-light mb-4">
+                                Subscribe
+                            </button>
+                        </div>
+                        <!--Grid column-->
+                    </div>
+                    <!--Grid row-->
+                </form>
+            </section>
+            <!-- Section: Form -->
+
+            <!-- Section: Text -->
+            <section class="mb-4">
+                <p>
+
+                    Sindhudurg Shikshan Prasarak Mandal's College of Engineering, Kankavli.</br>
+
+                    A/P-Harkul Budruk, Tal- Kankavli. Dist-Sindhudurg.Maharashtra. 416602</br>
+
+                    PHONE: 91-2367-299214(office)/ 299442(Principal)</br>
+
+                    Email :sspmcoe@gmail.com Web: https://www.sspmcoe.ac.in Exam section : sspmcoeexam@gmail.com</br>
+
+                    Name & Address of the Principal- Dr.Aneesh Gangal, A/P-Harkul Budruk, Tal- Kankavli.
+                    Dist-Sindhudurg.Maharashtra. 416602</br>
+                    Email:principal@sspmcoe.ac.in.</br>
+                    PHONE: 91-2367-299214/299442/299112<br><br>
+
+                </p>
+            </section>
+            <!-- Section: Text -->
+
+            <!-- Section: Links -->
+            <!--    <section class="">-->
+            <!--      &lt;!&ndash;Grid row&ndash;&gt;-->
+            <!--      <div class="row">-->
+            <!--        &lt;!&ndash;Grid column&ndash;&gt;-->
+            <!--        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">-->
+            <!--          <h5 class="text-uppercase">Links</h5>-->
+
+            <!--          <ul class="list-unstyled mb-0">-->
+            <!--            <li>-->
+            <!--              <a href="#!" class="text-white">Link 1</a>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--              <a href="#!" class="text-white">Link 2</a>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--              <a href="#!" class="text-white">Link 3</a>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--              <a href="#!" class="text-white">Link 4</a>-->
+            <!--            </li>-->
+            <!--          </ul>-->
+            <!--        </div>-->
+            <!--        &lt;!&ndash;Grid column&ndash;&gt;-->
+
+            <!--        &lt;!&ndash;Grid column&ndash;&gt;-->
+            <!--        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">-->
+            <!--          <h5 class="text-uppercase">Links</h5>-->
+
+            <!--          <ul class="list-unstyled mb-0">-->
+            <!--            <li>-->
+            <!--              <a href="#!" class="text-white">Link 1</a>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--              <a href="#!" class="text-white">Link 2</a>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--              <a href="#!" class="text-white">Link 3</a>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--              <a href="#!" class="text-white">Link 4</a>-->
+            <!--            </li>-->
+            <!--          </ul>-->
+            <!--        </div>-->
+            <!--        &lt;!&ndash;Grid column&ndash;&gt;-->
+
+            <!--        &lt;!&ndash;Grid column&ndash;&gt;-->
+            <!--        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">-->
+            <!--          <h5 class="text-uppercase">Links</h5>-->
+
+            <!--          <ul class="list-unstyled mb-0">-->
+            <!--            <li>-->
+            <!--              <a href="#!" class="text-white">Link 1</a>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--              <a href="#!" class="text-white">Link 2</a>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--              <a href="#!" class="text-white">Link 3</a>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--              <a href="#!" class="text-white">Link 4</a>-->
+            <!--            </li>-->
+            <!--          </ul>-->
+            <!--        </div>-->
+            <!--        &lt;!&ndash;Grid column&ndash;&gt;-->
+
+            <!--        &lt;!&ndash;Grid column&ndash;&gt;-->
+            <!--        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">-->
+            <!--          <h5 class="text-uppercase">Links</h5>-->
+
+            <!--          <ul class="list-unstyled mb-0">-->
+            <!--            <li>-->
+            <!--              <a href="#!" class="text-white">Link 1</a>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--              <a href="#!" class="text-white">Link 2</a>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--              <a href="#!" class="text-white">Link 3</a>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--              <a href="#!" class="text-white">Link 4</a>-->
+            <!--            </li>-->
+            <!--          </ul>-->
+            <!--        </div>-->
+            <!--        &lt;!&ndash;Grid column&ndash;&gt;-->
+            <!--      </div>-->
+            <!--      &lt;!&ndash;Grid row&ndash;&gt;-->
+            <!--    </section>-->
+            <!--    &lt;!&ndash; Section: Links &ndash;&gt;-->
+            <!--  </div>-->
+            <!--  &lt;!&ndash; Grid container &ndash;&gt;-->
+
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                © 2023 Copyright:
+                <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
             </div>
-          </div>
-          <!--Grid column-->
-
-          <!--Grid column-->
-          <div class="col-auto">
-            <!-- Submit button -->
-            <button type="submit" class="btn btn-outline-light mb-4">
-              Subscribe
-            </button>
-          </div>
-          <!--Grid column-->
         </div>
-        <!--Grid row-->
-      </form>
-    </section>
-    <!-- Section: Form -->
-
-    <!-- Section: Text -->
-    <section class="mb-4">
-      <p>
-
-            Sindhudurg Shikshan Prasarak Mandal's College of Engineering, Kankavli.</br>
-
-            A/P-Harkul Budruk, Tal- Kankavli. Dist-Sindhudurg.Maharashtra. 416602</br>
-
-            PHONE: 91-2367-299214(office)/ 299442(Principal)</br>
-
-            Email :sspmcoe@gmail.com Web: https://www.sspmcoe.ac.in Exam section : sspmcoeexam@gmail.com</br>
-
-            Name & Address of the Principal- Dr.Aneesh Gangal, A/P-Harkul Budruk, Tal- Kankavli. Dist-Sindhudurg.Maharashtra. 416602</br>
-            Email:principal@sspmcoe.ac.in.</br>
-            PHONE: 91-2367-299214/299442/299112<br><br>
-
-      </p>
-    </section>
-    <!-- Section: Text -->
-
-    <!-- Section: Links -->
-<!--    <section class="">-->
-<!--      &lt;!&ndash;Grid row&ndash;&gt;-->
-<!--      <div class="row">-->
-<!--        &lt;!&ndash;Grid column&ndash;&gt;-->
-<!--        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">-->
-<!--          <h5 class="text-uppercase">Links</h5>-->
-
-<!--          <ul class="list-unstyled mb-0">-->
-<!--            <li>-->
-<!--              <a href="#!" class="text-white">Link 1</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <a href="#!" class="text-white">Link 2</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <a href="#!" class="text-white">Link 3</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <a href="#!" class="text-white">Link 4</a>-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--        </div>-->
-<!--        &lt;!&ndash;Grid column&ndash;&gt;-->
-
-<!--        &lt;!&ndash;Grid column&ndash;&gt;-->
-<!--        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">-->
-<!--          <h5 class="text-uppercase">Links</h5>-->
-
-<!--          <ul class="list-unstyled mb-0">-->
-<!--            <li>-->
-<!--              <a href="#!" class="text-white">Link 1</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <a href="#!" class="text-white">Link 2</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <a href="#!" class="text-white">Link 3</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <a href="#!" class="text-white">Link 4</a>-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--        </div>-->
-<!--        &lt;!&ndash;Grid column&ndash;&gt;-->
-
-<!--        &lt;!&ndash;Grid column&ndash;&gt;-->
-<!--        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">-->
-<!--          <h5 class="text-uppercase">Links</h5>-->
-
-<!--          <ul class="list-unstyled mb-0">-->
-<!--            <li>-->
-<!--              <a href="#!" class="text-white">Link 1</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <a href="#!" class="text-white">Link 2</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <a href="#!" class="text-white">Link 3</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <a href="#!" class="text-white">Link 4</a>-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--        </div>-->
-<!--        &lt;!&ndash;Grid column&ndash;&gt;-->
-
-<!--        &lt;!&ndash;Grid column&ndash;&gt;-->
-<!--        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">-->
-<!--          <h5 class="text-uppercase">Links</h5>-->
-
-<!--          <ul class="list-unstyled mb-0">-->
-<!--            <li>-->
-<!--              <a href="#!" class="text-white">Link 1</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <a href="#!" class="text-white">Link 2</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <a href="#!" class="text-white">Link 3</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <a href="#!" class="text-white">Link 4</a>-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--        </div>-->
-<!--        &lt;!&ndash;Grid column&ndash;&gt;-->
-<!--      </div>-->
-<!--      &lt;!&ndash;Grid row&ndash;&gt;-->
-<!--    </section>-->
-<!--    &lt;!&ndash; Section: Links &ndash;&gt;-->
-<!--  </div>-->
-<!--  &lt;!&ndash; Grid container &ndash;&gt;-->
-
-  <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    © 2023 Copyright:
-    <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-  </div>
-      </div>
-  <!-- Copyright -->
-</footer>
-<!-- Footer -->
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

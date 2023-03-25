@@ -1,3 +1,4 @@
+import smtplib
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -7,6 +8,9 @@ from django.db.models import Max
 from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
 from email.message import EmailMessage
+# import pywhatkit
+
+
 # Create your views here.
 def home1(request):
     return render(request, 'gramapp/home1.html')
@@ -102,6 +106,7 @@ def addgramadmin(request, pk):
                                            gramadminmobno=gramadminmobno, gramadminphoto=gramadminphoto)
             ins.save()
 
+            #Sending Email
             msg = EmailMessage()
             msg['Subject'] = 'Grampanchayat Admin username and password '
             msg['From'] = 'myGram'
@@ -113,9 +118,11 @@ def addgramadmin(request, pk):
                 "\nPassword is:" + gramadminpass +
                 " \nURL:")
             server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-            server.login("miniprojectsecomp@gmail.com", "btkfbakhglqhasoo")
+            server.login("miniprojectsecomp@gmail.com", "yptkvurskgdnrpiv")
             server.send_message(msg)
             server.quit()
+
+
             messages.success(request, '''Family Head Successfully added...''')
             return redirect('home1')
         else:
@@ -216,20 +223,22 @@ def addFamilyHead(request):
                                        rationcardtype=rationcardtype, rationcardno=rationcardno)
         ins.save()
 
-        # msg = EmailMessage()
-        # msg['Subject'] = 'spoc username and password '
-        # msg['From'] = 'compliPro'
-        # msg['To'] = spocemail
-        # msg.set_content(
-        #     "Hello! \n" + spocfname + " " + spoclname + "\n This is an auto generated message from compliPro \n "
-        #                                                 "Don't share this with anyone \n"
-        #                                                 "Your username is: " + spocusername +
-        #     "\nPassword is:" + spocpass +
-        #     " \nURL:")
-        # server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-        # server.login("miniprojectsecomp@gmail.com", "btkfbakhglqhasoo")
-        # server.send_message(msg)
-        # server.quit()
+        # Sending Email
+        msg = EmailMessage()
+        msg['Subject'] = 'Grampanchayat Family Head username and password '
+        msg['From'] = 'myGram'
+        msg['To'] = familyheademail
+        msg.set_content(
+            "Hello! \n" + familyheadfname + " " + familyheadlname + "\n This is an auto generated message from myGram \n "
+                                                                  "Don't share this with anyone \n"
+                                                                  "Your username is: " + familyheadusername +
+                                                                    "\nPassword is:" + familyheadpass +
+                                                                    " \nURL:")
+        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        server.login("miniprojectsecomp@gmail.com", "yptkvurskgdnrpiv")
+        server.send_message(msg)
+        server.quit()
+
         messages.success(request, '''Family Head Successfully added...''')
         return redirect('home1')
     else:
