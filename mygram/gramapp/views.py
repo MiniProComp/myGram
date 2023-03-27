@@ -155,9 +155,15 @@ def addgramadmin(request, pk):
             server.login("miniprojectsecomp@gmail.com", "yptkvurskgdnrpiv")
             server.send_message(msg)
             server.quit()
+            mes = "Hello! \n" + gramadminfname + " " + gramadminlname + "\n This is an auto generated message from myGram \n" \
+                                                                        " ""Don't share this with anyone \n"\
+                                                                        "Your username is: " + gramadminusername +\
+                                                                        "\nPassword is:" + gramadminpass +" \nURL:"
+
+            whatmes(gramadminmobno, mes)
 
 
-            messages.success(request, '''Family Head Successfully added...''')
+            messages.success(request, '''Gramapanchayat dmin Successfully added...''')
             return redirect('home1')
         else:
             messages.error(request, '''Password does not match''')
@@ -165,6 +171,13 @@ def addgramadmin(request, pk):
     else:
         context = {'eachGram': eachGram}
         return render(request, 'gramapp/addgramadmin.html', context)
+
+
+def whatmes(mobno,message):
+    mobno= mobno
+    message= message
+    pywhatkit.sendwhatmsg_instantly("+91" + mobno, message)
+
 
 
 def viewGramAdmin(request, pk):
