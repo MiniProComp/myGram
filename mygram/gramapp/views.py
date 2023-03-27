@@ -2,7 +2,7 @@ import smtplib
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .models import Grampanchayat, Gramadmin, Child, FamilyHead, Familymembers
+from .models import Grampanchayat, Gramadmin, Child, FamilyHead, Familymembers, House
 from django.db.models import Max
 # from .forms import
 from django.contrib.auth.models import User
@@ -13,6 +13,14 @@ import pywhatkit
 
 # Create your views here.
 def home1(request):
+    if request.method == "POST":
+        receiver = request.POST["subscriber"]
+        print(receiver)
+        sender = "myGram"
+        subject = "Subscribed to myGram"
+        content = "Hello! You have successfully subscribed to myGram"
+        sendmail(subject, sender, receiver, content)
+
     return render(request, 'gramapp/home1.html')
 
 
@@ -37,22 +45,48 @@ def handlelogout(request):
     return redirect('home1')
 
 
+def sendmail(subject, sender, receiver, content):
+    msg = EmailMessage()
+    msg['Subject'] = subject
+    msg['From'] = sender
+    msg['To'] = receiver
+    msg.set_content(content)
+    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    server.login("miniprojectsecomp@gmail.com", "yptkvurskgdnrpiv")
+    server.send_message(msg)
+    server.quit()
+
+
+def subscribe(request):
+    receiver = request.POST["email"]
+    print(receiver)
+    # sender = "myGram"
+    # subject = "Subscribed to myGram"
+    # content = "Hello! You have successfully subscribed to myGram"
+    # sendmail(subject, sender, receiver, content)
+    return None
+
 def addgram(request):
-    gramid = 1001 if Grampanchayat.objects.count() == 0 else Grampanchayat.objects.aggregate(max=Max('gramid'))["max"] + 1
-    if request.method == "POST":
-        gramname = request.POST['gramname']
-        gramaddress = request.POST['gramaddress']
-        gramemail = request.POST['gramemail']
-        gramcontact = request.POST['gramcontact']
+    current_user = request.user
+    if current_user.is_superuser:
+        gramid = 1001 if Grampanchayat.objects.count() == 0 else Grampanchayat.objects.aggregate(max=Max('gramid'))[
+                                                                     "max"] + 1
+        if request.method == "POST":
+            gramname = request.POST['gramname']
+            gramaddress = request.POST['gramaddress']
+            gramemail = request.POST['gramemail']
+            gramcontact = request.POST['gramcontact']
 
-        ins = Grampanchayat.objects.create(gramid=gramid, gramname=gramname, gramaddress=gramaddress, gramemail=gramemail, gramcontact=gramcontact)
-        ins.save()
+            ins = Grampanchayat.objects.create(gramid=gramid, gramname=gramname, gramaddress=gramaddress,
+                                               gramemail=gramemail, gramcontact=gramcontact)
+            ins.save()
 
-        messages.success(request, '''Grampanchayat Successfully added...''')
-        return redirect('home1')
+            messages.success(request, '''Grampanchayat Successfully added...''')
+            return redirect('home1')
+        else:
+            return render(request, 'gramapp/addGrampanchayat.html', locals())
     else:
-        return render(request, 'gramapp/addGrampanchayat.html', locals())
-
+        return render(request, 'gramapp/pageNotFound.html')
 
 
 def viewgram(request):
@@ -97,7 +131,7 @@ def addgramadmin(request, pk):
         gramadminpass = request.POST['gramadminpass']
         gramadmincnfmpass = request.POST['gramadmincnfmpass']
         if gramadminpass == gramadmincnfmpass:
-            myuser = User.objects.create_user(gramadminusername, gramadminemail, gramadminpass)
+            myuser = User.objects.create_user(gramadminusername, gramadminemail, gramadminpass, is_staff=True)
             myuser.first_name = (gramadminfname)
             myuser.last_name = (gramadminlname)
             myuser.save()
@@ -315,15 +349,30 @@ def addWatertax(request):
 def addHousetax(request):
     return render(request, 'gramapp/addHousetax.html')
 
+
 def addHouse(request):
+    houseid = 200001 if House.objects.count() == 0 else House.objects.aggregate(max=Max('houseid'))["max"] + 1
+
+    if request.method == "POST":
+        houseno = request.POST['houseno']
+        current_user = request.user
+        gramadmin = Gramadmin.objects.get(user=current_user)
+        admingram = gramadmin.grampanchayat
+        gram = Grampanchayat.objects.get(gramname=admingram)
+        region = request.POST['region']
+        subregion = request.POST['subregion']
+        housetype = request.POST['housetype']
+        housearea = request.POST['housearea']
+        ownername = request.POST['ownername']
+
+        ins = House.objects.create(houseno=houseno, gram=gram, houseid=houseid, region=region, subregion=subregion,
+                                           housetype=housetype, housearea=housearea,
+                                           ownername=ownername)
+        ins.save()
+        messages.success(request, '''House Successfully added...''')
+        return redirect('home1')
+    else:
+        print("no")
     return render(request, 'gramapp/addHouse.html')
 
 
-
-
-def addHouse(request):
-    return render(request, 'gramapp/addHouse.html')
-
-
-def addHousetax(request):
-    return render(request, 'gramapp/addHousetax.html')

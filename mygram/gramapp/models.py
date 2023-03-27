@@ -130,3 +130,15 @@ class WaterConnection(models.Model):
         return self.user.ownername
 
 
+class House(models.Model):
+    houseid = models.IntegerField(primary_key=True)
+    houseno = models.IntegerField(unique=True)
+    gram = models.ForeignKey("Grampanchayat", on_delete=models.CASCADE)
+    region = models.CharField(max_length=20)
+    subregion = models.CharField(max_length=20)
+    housetype = models.CharField(max_length=20)
+    housearea = models.IntegerField()
+    ownername = models.CharField(max_length=20)
+
+
+

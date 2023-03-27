@@ -192,7 +192,8 @@
             <!-- Section: Dark variant -->
             <!-- Section: Form -->
             <section class="">
-                <form action="">
+                <form method="post" action="">
+                    {% csrf_token %}
                     <!--Grid row-->
                     <div class="row d-flex justify-content-center">
                         <!--Grid column-->
@@ -207,8 +208,8 @@
                         <div class="col-md-5 col-12">
                             <!-- Email input -->
                             <div class="form-outline form-white mb-4">
-                                <input type="email" id="form5Example21" class="form-control" autocomplete="off" />
-                                <label class="form-label" for="form5Example21">Email address</label>
+                                <input type="email" name="subscriber" id="subscriber" class="form-control" autocomplete="off" />
+                                <label class="form-label" for="subscriber">Email address</label>
                             </div>
                         </div>
                         <!--Grid column-->
@@ -231,17 +232,17 @@
             <section class="mb-4">
                 <p>
 
-                    Sindhudurg Shikshan Prasarak Mandal's College of Engineering, Kankavli.</br>
+                    Sindhudurg Shikshan Prasarak Mandal's College of Engineering, Kankavli.<br>
 
-                    A/P-Harkul Budruk, Tal- Kankavli. Dist-Sindhudurg.Maharashtra. 416602</br>
+                    A/P-Harkul Budruk, Tal- Kankavli. Dist-Sindhudurg.Maharashtra. 416602<br>
 
-                    PHONE: 91-2367-299214(office)/ 299442(Principal)</br>
+                    PHONE: 91-2367-299214(office)/ 299442(Principal)<br>
 
-                    Email :sspmcoe@gmail.com Web: https://www.sspmcoe.ac.in Exam section : sspmcoeexam@gmail.com</br>
+                    Email :sspmcoe@gmail.com Web: https://www.sspmcoe.ac.in Exam section : sspmcoeexam@gmail.com<br>
 
                     Name & Address of the Principal- Dr.Aneesh Gangal, A/P-Harkul Budruk, Tal- Kankavli.
-                    Dist-Sindhudurg.Maharashtra. 416602</br>
-                    Email:principal@sspmcoe.ac.in.</br>
+                    Dist-Sindhudurg.Maharashtra. 416602<br>
+                    Email:principal@sspmcoe.ac.in.<br>
                     PHONE: 91-2367-299214/299442/299112<br><br>
 
                 </p>

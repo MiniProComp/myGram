@@ -19,33 +19,29 @@
 
 <center>
     {% csrf_token %}
+<!--    <div class="form-group">-->
+<!--        <label for="houseid" class="form-label">House id :</label>-->
+<!--        <input type="text" class="form-control" id="houseid" name="houseid" autocomplete="off" required>-->
+<!--    </div>-->
     <div class="form-group">
-        <label for="houseid" class="form-label">House id :</label>
-        <input type="text" class="form-control" id="houseid" name="houseid" autocomplete="off" required>
+        <label for="houseno" class="form-label">house number:</label>
+        <input type="text" class="form-control" id="houseno" name="houseno" autocomplete="off" required>
     </div>
-    <label for="region" class="form-label"> Select region</label>
-    <select name="region" id="region" required>
-         <option value="Havelinagar">Havelinagar</option>
-         <option value=""></option>
-    </select><br>
-    <label for="subregion" class="form-label">Select subregion </label>
-    <select name="subregion" id="subregion">
-         <option value="Patelvadi">Patelvadi</option>
-         <option value=""></option>
-    </select>
-
-
-
+    <div class="form-group">
+        <label for="region" class="form-label">Region:</label>
+        <input type="text" class="form-control" id="region" name="region" autocomplete="off" required>
+    </div>
+    <div class="form-group">
+        <label for="subregion" class="form-label">Sub-region:</label>
+        <input type="text" class="form-control" id="subregion" name="subregion" autocomplete="off" required>
+    </div>
     <div class="form-group">
         <label for="housetype" class="form-label">House Type:</label>
         <input type="text" class="form-control" id="housetype" name="housetype" autocomplete="off" required>
     </div>
-
-
-
     <div class="form-group">
-        <label for="housedimension" class="form-label">House Dimension:</label>
-        <input type="text" class="form-control" id="housedimension" name="housedimension" autocomplete="off" required>
+        <label for="housearea" class="form-label">House area in sq.ft:</label>
+        <input type="text" class="form-control" id="housearea" name="housearea" autocomplete="off" required>
     </div>
 
     <div class="form-group">
