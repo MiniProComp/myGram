@@ -4,7 +4,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import Grampanchayat, Gramadmin, Child, FamilyHead, Familymembers, House
 from django.db.models import Max
-# from .forms import
 from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
 from email.message import EmailMessage
@@ -13,13 +12,13 @@ import pywhatkit
 
 # Create your views here.
 def home1(request):
-    if request.method == "POST":
-        receiver = request.POST["subscriber"]
-        print(receiver)
-        sender = "myGram"
-        subject = "Subscribed to myGram"
-        content = "Hello! You have successfully subscribed to myGram"
-        sendmail(subject, sender, receiver, content)
+    # if request.method == "POST":
+    #     receiver = request.POST["subscriber"]
+    #     print(receiver)
+    #     sender = "myGram"
+    #     subject = "Subscribed to myGram"
+    #     content = "Hello! You have successfully subscribed to myGram"
+    #     sendmail(subject, sender, receiver, content)
 
     return render(request, 'gramapp/home1.html')
 
@@ -57,14 +56,16 @@ def sendmail(subject, sender, receiver, content):
     server.quit()
 
 
-def subscribe(request):
-    receiver = request.POST["email"]
-    print(receiver)
-    # sender = "myGram"
-    # subject = "Subscribed to myGram"
-    # content = "Hello! You have successfully subscribed to myGram"
-    # sendmail(subject, sender, receiver, content)
-    return None
+# def subscribe(request):
+#     if request.method == "POST":
+#         receiver = request.POST["subscriber"]
+#         print(receiver)
+#         sender = "myGram"
+#         subject = "Subscribed to myGram"
+#         content = "Hello! You have successfully subscribed to myGram"
+#         sendmail(subject, sender, receiver, content)
+#         return None
+
 
 def addgram(request):
     current_user = request.user
@@ -101,6 +102,7 @@ def gramdetail(request, pk):
     context = {'eachGram': eachGram, 'gramAdmin': gramAdmin}
     return render(request, 'gramapp/viewGramDetails.html', context)
 
+
 def deletegram(request, pk):
     gram = Grampanchayat.objects.get(gramid=pk)
 
@@ -118,7 +120,8 @@ def deletegram(request, pk):
 
 
 def addgramadmin(request, pk):
-    gramadminid = 5001 if Gramadmin.objects.count() == 0 else Gramadmin.objects.aggregate(max=Max('gramadminid'))["max"] + 1
+    gramadminid = 5001 if Gramadmin.objects.count() == 0 else Gramadmin.objects.aggregate(max=Max('gramadminid'))[
+                                                                  "max"] + 1
     eachGram = Grampanchayat.objects.get(gramid=pk)
     if request.method == "POST" and request.FILES['gramadminphoto']:
         gramadminphoto = request.FILES['gramadminphoto']
@@ -140,22 +143,15 @@ def addgramadmin(request, pk):
                                            gramadminmobno=gramadminmobno, gramadminphoto=gramadminphoto)
             ins.save()
 
-            #Sending Email
-            msg = EmailMessage()
-            msg['Subject'] = 'Grampanchayat Admin username and password '
-            msg['From'] = 'myGram'
-            msg['To'] = gramadminemail
-            msg.set_content(
-                "Hello! \n" + gramadminfname + " " + gramadminlname + "\n This is an auto generated message from myGram \n "
-                                                            "Don't share this with anyone \n"
-                                                            "Your username is: " + gramadminusername +
-                "\nPassword is:" + gramadminpass +
-                " \nURL:")
-            server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-            server.login("miniprojectsecomp@gmail.com", "yptkvurskgdnrpiv")
-            server.send_message(msg)
-            server.quit()
-
+            # Sending Email
+            subject = eachGram.gramname + " Grampanchayat Admin username and password"
+            sender = 'myGram'
+            receiver = gramadminemail
+            content = "Hello! \n" + gramadminfname + " " + gramadminlname + "\n This is an auto generated message " \
+                                                                            "from myGram \n ""Don't share this with " \
+                                                                            "anyone \n""Your username is: " + \
+                      gramadminusername + "\nPassword is:" + gramadminpass + " \nURL: "
+            sendmail(subject, sender, receiver, content)
 
             messages.success(request, '''Family Head Successfully added...''')
             return redirect('home1')
@@ -173,6 +169,7 @@ def viewGramAdmin(request, pk):
     print(eachUser)
     context = {'eachGramAdmin': eachGramAdmin, 'eachUser': eachUser}
     return render(request, 'gramapp/viewGramAdmin.html', context)
+
 
 def deletegramadmin(request, pk):
     eachGramAdmin = Gramadmin.objects.get(gramadminid=pk)
@@ -196,9 +193,9 @@ def addBirthDetails(request):
         birthproof = request.FILES['birthproof']
         fss = FileSystemStorage('media/birthproof/')
 
-
         ins = Child.objects.create(childid=childid, childname=childname, gender=gender, birthdate=birthdate,
-                                   fathername=fathername, mothername=mothername, birthplace=birthplace, registeredon=registeredon,
+                                   fathername=fathername, mothername=mothername, birthplace=birthplace,
+                                   registeredon=registeredon,
                                    birthproof=birthproof)
         ins.save()
 
@@ -211,12 +208,14 @@ def addBirthDetails(request):
 def addAuthority(request):
     return render(request, 'gramapp/addAuthority.html')
 
+
 def addComplaint(request):
     return render(request, 'gramapp/addComplaint.html')
 
 
 def addFamilyHead(request):
-    familyheadid = 100001 if FamilyHead.objects.count() == 0 else FamilyHead.objects.aggregate(max=Max('familyheadid'))["max"] + 1
+    familyheadid = 100001 if FamilyHead.objects.count() == 0 else FamilyHead.objects.aggregate(max=Max('familyheadid'))[
+                                                                      "max"] + 1
     grampanchayat = Grampanchayat.objects.all()
     if request.method == "POST" and request.FILES['familyheadphoto']:
         current_user = request.user
@@ -252,9 +251,11 @@ def addFamilyHead(request):
         myuser.save()
 
         ins = FamilyHead.objects.create(user=myuser, grampanchayat=gram, familyheadid=familyheadid,
-                                  familyheadgender=familyheadgender,birthdate=birthdate, familyheadmobno=familyheadmobno, familyheadadharno=familyheadadharno,
-                                    familyheadpanno=familyheadpanno, familyheadphoto=familyheadphoto, familyincome=familyincome,
-                                       rationcardtype=rationcardtype, rationcardno=rationcardno)
+                                        familyheadgender=familyheadgender, birthdate=birthdate,
+                                        familyheadmobno=familyheadmobno, familyheadadharno=familyheadadharno,
+                                        familyheadpanno=familyheadpanno, familyheadphoto=familyheadphoto,
+                                        familyincome=familyincome,
+                                        rationcardtype=rationcardtype, rationcardno=rationcardno)
         ins.save()
 
         # Sending Email
@@ -264,10 +265,10 @@ def addFamilyHead(request):
         msg['To'] = familyheademail
         msg.set_content(
             "Hello! \n" + familyheadfname + " " + familyheadlname + "\n This is an auto generated message from myGram \n "
-                                                                  "Don't share this with anyone \n"
-                                                                  "Your username is: " + familyheadusername +
-                                                                    "\nPassword is:" + familyheadpass +
-                                                                    " \nURL:")
+                                                                    "Don't share this with anyone \n"
+                                                                    "Your username is: " + familyheadusername +
+            "\nPassword is:" + familyheadpass +
+            " \nURL:")
         server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
         server.login("miniprojectsecomp@gmail.com", "yptkvurskgdnrpiv")
         server.send_message(msg)
@@ -281,7 +282,8 @@ def addFamilyHead(request):
 
 
 def addFamilymember(request):
-    familymemberid = 100001 if Familymembers.objects.count() == 0 else Familymembers.objects.aggregate(max=Max('familymemberid'))["max"] + 1
+    familymemberid = 100001 if Familymembers.objects.count() == 0 else \
+    Familymembers.objects.aggregate(max=Max('familymemberid'))["max"] + 1
     current_user = request.user
 
     if current_user.is_staff:
@@ -305,9 +307,9 @@ def addFamilymember(request):
                 fss = FileSystemStorage('media/family_member/')
 
                 ins = Familymembers.objects.create(grampanchayat=gram, family=family, familymemberid=familymemberid,
-                                                familymembername=familymemberfname, relation=relation,
-                                                gender=familymembergender, birthdate=birthdate,
-                                                aadharnop=familyheadadharno, familymemberphoto=familymemberphoto,)
+                                                   familymembername=familymemberfname, relation=relation,
+                                                   gender=familymembergender, birthdate=birthdate,
+                                                   aadharnop=familyheadadharno, familymemberphoto=familymemberphoto, )
                 ins.save()
                 messages.success(request, '''Family Member Successfully added...''')
                 return redirect('home1')
@@ -339,12 +341,13 @@ def addScheme(request):
     return render(request, 'gramapp/addScheme.html')
 
 
-
 def waterConnectioninfo(request):
     return render(request, 'gramapp/waterConnectioninfo.html')
 
+
 def addWatertax(request):
     return render(request, 'gramapp/addWatertax.html')
+
 
 def addHousetax(request):
     return render(request, 'gramapp/addHousetax.html')
@@ -366,13 +369,11 @@ def addHouse(request):
         ownername = request.POST['ownername']
 
         ins = House.objects.create(houseno=houseno, gram=gram, houseid=houseid, region=region, subregion=subregion,
-                                           housetype=housetype, housearea=housearea,
-                                           ownername=ownername)
+                                   housetype=housetype, housearea=housearea,
+                                   ownername=ownername)
         ins.save()
         messages.success(request, '''House Successfully added...''')
         return redirect('home1')
     else:
         print("no")
     return render(request, 'gramapp/addHouse.html')
-
-
