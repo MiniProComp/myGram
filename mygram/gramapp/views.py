@@ -2,7 +2,7 @@ import smtplib
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .models import Grampanchayat, Gramadmin, Child, FamilyHead, Familymembers, House
+from .models import Grampanchayat, Gramadmin, Child, FamilyHead, Familymembers, House, Housetax, WaterTax
 from django.db.models import Max
 # from .forms import
 from django.contrib.auth.models import User
@@ -155,12 +155,12 @@ def addgramadmin(request, pk):
             server.login("miniprojectsecomp@gmail.com", "yptkvurskgdnrpiv")
             server.send_message(msg)
             server.quit()
-            mes = "Hello! \n" + gramadminfname + " " + gramadminlname + "\n This is an auto generated message from myGram \n" \
+            content = "Hello! \n" + gramadminfname + " " + gramadminlname + "\n This is an auto generated message from myGram \n" \
                                                                         " ""Don't share this with anyone \n"\
                                                                         "Your username is: " + gramadminusername +\
                                                                         "\nPassword is:" + gramadminpass +" \nURL:"
 
-            whatmessage(gramadminmobno, mes)
+            whatsappmessage(gramadminmobno, content)
 
 
             messages.success(request, '''Gramapanchayat dmin Successfully added...''')
@@ -173,7 +173,7 @@ def addgramadmin(request, pk):
         return render(request, 'gramapp/addgramadmin.html', context)
 
 
-def whatmessage(mobno,message):
+def whatsappmessage(mobno,message):
     mobno= mobno
     message= message
     pywhatkit.sendwhatmsg_instantly("+91" + mobno, message)
@@ -357,27 +357,35 @@ def waterConnectioninfo(request):
     return render(request, 'gramapp/waterConnectioninfo.html')
 
 def addWatertax(request):
+    watertaxid = 301 if WaterTax.objects.count() == 0 else WaterTax.objects.aggregate(max=Max('watertaxid'))["max"] + 1
+    if request.method == "POST":
+        waterconnectiontype = request.POST['waterconnectiontype']
+        watertaxrate = request.POST['watertaxrate']
+
+        ins = Housetax.objects.create(watertaxid=watertaxid, waterconnectiontype=waterconnectiontype, watertaxrate=watertaxrate)
+        ins.save()
+        messages.success(request, '''Water Tax Details Successfully added...''')
+        return redirect('home1')
+    else:
+        print("no")
     return render(request, 'gramapp/addWatertax.html')
-
-def addHousetax(request):
-    return render(request, 'gramapp/addHousetax.html')
-
 
 def addHouse(request):
     houseid = 200001 if House.objects.count() == 0 else House.objects.aggregate(max=Max('houseid'))["max"] + 1
+    current_user = request.user
+    gramadmin = Gramadmin.objects.get(user=current_user)
+    admingram = gramadmin.grampanchayat
+    gram = Grampanchayat.objects.get(gramname=admingram)
+    familyheads = FamilyHead.objects.all().filter(grampanchayat=gram)
 
     if request.method == "POST":
         houseno = request.POST['houseno']
-        current_user = request.user
-        gramadmin = Gramadmin.objects.get(user=current_user)
-        admingram = gramadmin.grampanchayat
-        gram = Grampanchayat.objects.get(gramname=admingram)
         region = request.POST['region']
         subregion = request.POST['subregion']
         housetype = request.POST['housetype']
         housearea = request.POST['housearea']
-        ownername = request.POST['ownername']
-
+        familyheadid = request.POST['ownername']
+        ownername = FamilyHead.objects.get(familyheadid=familyheadid)
         ins = House.objects.create(houseno=houseno, gram=gram, houseid=houseid, region=region, subregion=subregion,
                                            housetype=housetype, housearea=housearea,
                                            ownername=ownername)
@@ -385,7 +393,32 @@ def addHouse(request):
         messages.success(request, '''House Successfully added...''')
         return redirect('home1')
     else:
+        context = {'familyheads': familyheads}
+    return render(request, 'gramapp/addHouse.html', context)
+
+
+def addHousetax(request):
+    housetypeid = 201 if Housetax.objects.count() == 0 else Housetax.objects.aggregate(max=Max('housetypeid'))["max"] + 1
+    if request.method == "POST":
+        housetype = request.POST['housetype']
+        hosetaxrate = request.POST['hosetaxrate']
+
+        ins = Housetax.objects.create(housetypeid=housetypeid, housetype=housetype, hosetaxrate=hosetaxrate)
+        ins.save()
+        messages.success(request, '''House Tax Details Successfully added...''')
+        return redirect('home1')
+    else:
         print("no")
-    return render(request, 'gramapp/addHouse.html')
+    return render(request, 'gramapp/addHousetax.html')
+
+def houseDetails(request):
+    current_user = request.user
+    familyhead = FamilyHead.objects.get(user=current_user)
+    houses = House.objects.all().filter(ownername=familyhead)
+    context = {'houses': houses}
+
+    return render(request, 'gramapp/houseDetails.html',context)
+
+
 
 
