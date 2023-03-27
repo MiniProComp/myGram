@@ -160,7 +160,7 @@ def addgramadmin(request, pk):
                                                                         "Your username is: " + gramadminusername +\
                                                                         "\nPassword is:" + gramadminpass +" \nURL:"
 
-            whatmes(gramadminmobno, mes)
+            whatmessage(gramadminmobno, mes)
 
 
             messages.success(request, '''Gramapanchayat dmin Successfully added...''')
@@ -173,7 +173,7 @@ def addgramadmin(request, pk):
         return render(request, 'gramapp/addgramadmin.html', context)
 
 
-def whatmes(mobno,message):
+def whatmessage(mobno,message):
     mobno= mobno
     message= message
     pywhatkit.sendwhatmsg_instantly("+91" + mobno, message)
