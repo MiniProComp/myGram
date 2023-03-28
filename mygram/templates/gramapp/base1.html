@@ -65,7 +65,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{% url 'addBirthDetails' %}">Add Birth Details</a>
-                        <a class="dropdown-item" href="">Add House</a>
+                        <a class="dropdown-item" href="{% url 'addHouse' %}">Add House</a>
                         <a class="dropdown-item" href="">House Details</a>
                         <a class="dropdown-item" href="">Add Marriage Info</a>
                         <a class="dropdown-item" href="{% url 'addScheme' %}">Add Scheme</a>
@@ -80,10 +80,22 @@
                         Tax Information
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="">Add House Tax</a>
+                        <a class="dropdown-item" href="{% url 'addHousetax' %}">Add House Tax</a>
                         <a class="dropdown-item" href="">Add Water Tax</a>
                     </div>
+                </li>
                     {% endif %}
+                    {% elif user.is_active %}
+                    <li class="nav-item dropdown {% block viewhouseactive %}  {% endblock viewhouseactive %}">
+                    <a class="nav-link dropdown-toggle" href="#" id="viewhouse" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Houses
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="viewhouse">
+                        <a class="dropdown-item" href="{% url 'houseDetails' %}">View House</a>
+                    </div>
+                    </li>
+
                     {% endif %}
 
                 <li class="nav-item {% block aboutactive %}  {% endblock aboutactive %}">

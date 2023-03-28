@@ -100,19 +100,19 @@ class Authority(models.Model):
         return self.user.username
 
 
-class Child(models.Model):
-    childid = models.IntegerField(primary_key=True)
+class BirthDetail(models.Model):
+    childid = models.IntegerField(primary_key=True, serialize=False)
     childname = models.CharField(max_length=10)
     gender = models.CharField(max_length=10)
-    birthdate = models.DateField(max_length=10)
+    birthdate = models.DateField()
     fathername = models.CharField(max_length=10)
     mothername = models.CharField(max_length=10)
     birthplace = models.CharField(max_length=10)
-    registeredon = models.CharField(max_length=10)
-    birthproof = models.FileField(upload_to='birthproof/', null=True)
+    registration_number = models.CharField(max_length=10)
+    registration_date = models.DateField()
 
     def __str__(self):
-        return self.user.childname
+        return self.childname
 
 
 class WaterTax(models.Model):
@@ -140,4 +140,7 @@ class Houses(models.Model):
     ownername = models.ForeignKey("FamilyHead", on_delete=models.CASCADE)
 
 
-
+class Housetax(models.Model):
+    housetypeid = models.IntegerField(primary_key=True)
+    housetype = models.CharField(max_length=30, unique=True)
+    hosetaxrate = models.IntegerField()

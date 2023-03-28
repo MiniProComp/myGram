@@ -18,14 +18,15 @@
         <div class="col md-6">
             <div class="card m-2" style="width: 20rem;">
                 <div class="card-body">
-                    <h5 class="card-title m-1">House id:- {{house.houseno}} </h5>
-                    <h4 class="card-subtitle m-1">tax price :-{{house.housearea}}</h4>
-                    <p class="card-text m-1">{{familyhead.familyheadgender}}</p>
-                    <a href="" class="btn btn-primary mt-2">Details</a>
+                    <h5 class="card-title m-1">House Number:- {{house.houseno}} </h5>
+                    <h5 class="card-text m-1">House Type:-{{house.housetype}}</h5>
+                    <h5 class="card-subtitle m-1">House Area:- {{house.housearea}}</h5>
+                    <h6 class="card-subtitle m-1">House Address:- {{house.gram}} {{house.region}} {{house.subregion}}</h6>
+                    <a href="{% url 'viewhousetax' house.pk %}" class="btn btn-primary mt-2">Details</a>
                 </div>
             </div>
         </div>
-            {% endfor %}
+    {% endfor %}
 
 {% else %}
  <h4>No Families</h4>

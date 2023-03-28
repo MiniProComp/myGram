@@ -27,6 +27,11 @@ urlpatterns = [
     path('waterConnectioninfo/', views.waterConnectioninfo, name='waterConnectioninfo'),
     path('addWatertax/', views.addWatertax, name='addWatertax'),
 
+    path('addHousetax/', views.addHousetax, name='addHousetax'),
+    path('addHouse/', views.addHouse, name='addHouse'),
+    path('houseDetails/', views.houseDetails, name='houseDetails'),
+    path('viewhousetax/<int:pk>/', views.viewHouseTax, name='viewhousetax'),
+
     path('viewFamily/', views.viewFamily, name='viewFamily'),
     path('viewFamilyDetails/<int:pk>/', views.viewFamilyDetails, name='viewFamilyDetails'),
 

@@ -1,0 +1,37 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} House Tax {% endblock title %}
+{% block companyactive %} active {% endblock companyactive %}
+
+{% block head %}
+    <style>
+        .container{
+            width: 600px;
+            }
+
+    </style>
+{% endblock head %}
+
+
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col md-6">
+          <a href="{% url 'houseDetails' %}" class="btn btn-dark mt-2">Back</a>
+            <div class="card m-2" style="width: 20rem;">
+                <div class="card-body">
+                    <h5 class="card-title m-1"></h5>
+                    <h5 class="card-title m-1">House Number:- {{house.houseno}}</h5>
+                    <h6 class="card-subtitle m-1">House Type:-{{house.housetype}}</h6>
+                    <h6 class="card-text m-1">House Area:- {{house.housearea}}</h6>
+                    <p class="card-text m-1">Total Tax:- Rs {{total_housetax}}</p>
+
+                    <a href="#" class="btn btn-success mt-2">Pay</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
