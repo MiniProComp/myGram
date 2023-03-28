@@ -2,30 +2,30 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class State(models.Model):
-    state_id = models.IntegerField(primary_key=True)
-    state_name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.state_name
-
-class District(models.Model):
-    district_id = models.IntegerField(primary_key=True)
-    state_name = models.ForeignKey("State", on_delete=models.CASCADE)
-    district_name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.district_name
-
-
-class Taluka(models.Model):
-    taluka_id = models.IntegerField(primary_key=True)
-    state_name = models.ForeignKey("State", on_delete=models.CASCADE)
-    district_name = models.ForeignKey("District", on_delete=models.CASCADE)
-    taluka_name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.taluka_name
+# class State(models.Model):
+#     state_id = models.IntegerField(primary_key=True)
+#     state_name = models.CharField(max_length=50)
+#
+#     def __str__(self):
+#         return self.state_name
+#
+# class District(models.Model):
+#     district_id = models.IntegerField(primary_key=True)
+#     state_name = models.ForeignKey("State", on_delete=models.CASCADE)
+#     district_name = models.CharField(max_length=50)
+#
+#     def __str__(self):
+#         return self.district_name
+#
+#
+# class Taluka(models.Model):
+#     taluka_id = models.IntegerField(primary_key=True)
+#     state_name = models.ForeignKey("State", on_delete=models.CASCADE)
+#     district_name = models.ForeignKey("District", on_delete=models.CASCADE)
+#     taluka_name = models.CharField(max_length=50)
+#
+#     def __str__(self):
+#         return self.taluka_name
 
 
 class Grampanchayat(models.Model):
@@ -129,20 +129,5 @@ class WaterConnection(models.Model):
     def __str__(self):
         return self.ownername
 
-
-class House(models.Model):
-    houseid = models.IntegerField(primary_key=True)
-    houseno = models.IntegerField(unique=True)
-    gram = models.ForeignKey("Grampanchayat", on_delete=models.CASCADE)
-    region = models.CharField(max_length=20)
-    subregion = models.CharField(max_length=20)
-    housetype = models.CharField(max_length=20)
-    housearea = models.IntegerField()
-    ownername = models.ForeignKey("FamilyHead", on_delete=models.CASCADE)
-
-class Housetax(models.Model):
-    housetypeid = models.IntegerField(primary_key=True)
-    housetype = models.CharField(max_length=30)
-    hosetaxrate = models.IntegerField()
 
 
