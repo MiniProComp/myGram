@@ -425,4 +425,3 @@ def houseDetails(request):
 
 
 
-
