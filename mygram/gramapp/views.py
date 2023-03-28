@@ -415,6 +415,7 @@ def houseDetails(request):
     current_user = request.user
     familyhead = FamilyHead.objects.get(user=current_user)
     houses = House.objects.all().filter(ownername=familyhead)
+
     context = {'houses': houses}
 
     return render(request, 'gramapp/houseDetails.html',context)

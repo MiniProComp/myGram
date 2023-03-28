@@ -127,22 +127,22 @@ class WaterConnection(models.Model):
     waterconnectiontype = models.CharField(max_length=10)
 
     def __str__(self):
-        return self.user.ownername
+        return self.ownername
 
 
-class House(models.Model):
-    houseid = models.IntegerField(primary_key=True)
-    houseno = models.IntegerField(unique=True)
-    gram = models.ForeignKey("Grampanchayat", on_delete=models.CASCADE)
-    region = models.CharField(max_length=20)
-    subregion = models.CharField(max_length=20)
-    housetype = models.CharField(max_length=20)
-    housearea = models.IntegerField()
-    ownername = models.ForeignKey("FamilyHead", on_delete=models.CASCADE)
-
-class Housetax(models.Model):
-    housetypeid = models.IntegerField(primary_key=True)
-    housetype = models.CharField(max_length=30)
-    hosetaxrate = models.IntegerField()
+# class House(models.Model):
+#     houseid = models.IntegerField(primary_key=True)
+#     houseno = models.IntegerField(unique=True)
+#     gram = models.ForeignKey("Grampanchayat", on_delete=models.CASCADE)
+#     region = models.CharField(max_length=20)
+#     subregion = models.CharField(max_length=20)
+#     housetype = models.CharField(max_length=20)
+#     housearea = models.IntegerField()
+#     ownername = models.ForeignKey("FamilyHead", on_delete=models.CASCADE)
+#
+# class Housetax(models.Model):
+#     housetypeid = models.IntegerField(primary_key=True)
+#     housetype = models.CharField(max_length=30)
+#     hosetaxrate = models.IntegerField()
 
 
