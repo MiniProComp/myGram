@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'gramapp.apps.GramappConfig'
+    'gramapp.apps.GramappConfig',
+    'reset_migrations',
 ]
 
 MIDDLEWARE = [
