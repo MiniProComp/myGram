@@ -9,6 +9,14 @@ from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
 from email.message import EmailMessage
 import pywhatkit
+from datetime import datetime
+
+from django.http import HttpResponse
+from django.views.generic import View
+from .utils import html_to_pdf
+from django.http import Http404
+
+
 
 
 # Create your views here.
@@ -208,6 +216,41 @@ def addBirthDetails(request):
         return render(request, 'gramapp/home1.html')
     else:
         return render(request, 'gramapp/addBirthDetails.html', locals())
+
+
+def requestBirthCertificate(request):
+    if request.method == "POST":
+        childname = request.POST['childname']
+        birthdate = request.POST['birthdate']
+        # birthdate_object = datetime.strptime(birthdate, '%m/%d/%y %H:%M:%S')
+        birthdetails = BirthDetail.objects.all()
+
+        for i in birthdetails:
+            if(i.childname == childname):
+                context = {'birthdetails': birthdetails}
+                return HttpResponse('yes')
+            else:
+                return HttpResponse("No")
+    else:
+
+        return render(request, 'gramapp/requestBirthCertificate.html')
+
+
+class GeneratePdf(View):
+    def get_object(self, pk=None):
+        try:
+            return BirthDetail.objects.get(childid=pk)
+        except BirthDetail.DoesNotExist:
+            raise Http404
+    def get(self, pk, request, *args, **kwargs):
+        # getting the template
+
+        snippet = self.get_object(pk)
+
+        pdf = html_to_pdf('gramapp/birthCertificate.html',snippet.data)
+
+        # rendering the template
+        return HttpResponse(pdf, content_type='application/pdf')
 
 
 def addAuthority(request):

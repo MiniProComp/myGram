@@ -96,7 +96,19 @@
                     </div>
                     </li>
 
+
                     {% endif %}
+                <li class="nav-item dropdown {% block documentactive %}  {% endblock documentactive %}">
+                    <a class="nav-link dropdown-toggle" href="#" id="documents" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Documents
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="documents">
+                        <a class="dropdown-item" href="{% url 'requestbirthcertificate' %}">Birth Certificate</a>
+                        <a class="dropdown-item" href="">Marriage Certificate</a>
+                        <a class="dropdown-item" href="">Death Certificate</a>
+                    </div>
+                    </li>
 
                 <li class="nav-item {% block aboutactive %}  {% endblock aboutactive %}">
                     <a class="nav-link" href="/about">About</a>

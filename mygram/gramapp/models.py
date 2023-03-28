@@ -102,13 +102,13 @@ class Authority(models.Model):
 
 class BirthDetail(models.Model):
     childid = models.IntegerField(primary_key=True, serialize=False)
-    childname = models.CharField(max_length=10)
+    childname = models.CharField(max_length=50)
     gender = models.CharField(max_length=10)
     birthdate = models.DateField()
-    fathername = models.CharField(max_length=10)
-    mothername = models.CharField(max_length=10)
-    birthplace = models.CharField(max_length=10)
-    registration_number = models.CharField(max_length=10)
+    fathername = models.CharField(max_length=50)
+    mothername = models.CharField(max_length=50)
+    birthplace = models.CharField(max_length=30)
+    registration_number = models.CharField(max_length=20)
     registration_date = models.DateField()
 
     def __str__(self):

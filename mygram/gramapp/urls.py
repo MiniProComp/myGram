@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 # from django.conf import settings
 # from django.conf.urls.static import static
+from .views import GeneratePdf
 
 urlpatterns = [
 
@@ -18,6 +19,9 @@ urlpatterns = [
     path('deletegramadmin/<int:pk>/', views.deletegramadmin, name='deletegramadmin'),
 
     path('addBirthDetails/', views.addBirthDetails, name='addBirthDetails'),
+    path('requestbirthcertificate/', views.requestBirthCertificate, name='requestbirthcertificate'),
+    path('pdf/<int:pk>/', GeneratePdf.as_view()),
+
     path('addAuthority/', views.addAuthority, name='addAuthority'),
     path('addComplaint/', views.addComplaint, name='addComplaint'),
     path('addfamilyhead/', views.addFamilyHead, name='addfamilyhead'),
