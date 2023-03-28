@@ -118,7 +118,7 @@ class Child(models.Model):
 class WaterTax(models.Model):
     watertaxid = models.IntegerField(primary_key=True)
     waterconnectiontype = models.CharField(max_length=10)
-    watertaxrate = models.CharField(max_length=20)
+    watertaxrate = models.IntegerField()
 
 
 class WaterConnection(models.Model):
@@ -138,7 +138,11 @@ class House(models.Model):
     subregion = models.CharField(max_length=20)
     housetype = models.CharField(max_length=20)
     housearea = models.IntegerField()
-    ownername = models.CharField(max_length=20)
+    ownername = models.ForeignKey("FamilyHead", on_delete=models.CASCADE)
 
+class Housetax(models.Model):
+    housetypeid = models.IntegerField(primary_key=True)
+    housetype = models.CharField(max_length=30)
+    hosetaxrate = models.IntegerField()
 
 

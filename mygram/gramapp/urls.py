@@ -28,6 +28,7 @@ urlpatterns = [
     path('addWatertax/', views.addWatertax, name='addWatertax'),
     path('addHousetax/', views.addHousetax, name='addHousetax'),
     path('addHouse/', views.addHouse, name='addHouse'),
+    path('houseDetails/', views.houseDetails, name='houseDetails'),
     path('viewFamily/', views.viewFamily, name='viewFamily'),
     path('viewFamilyDetails/<int:pk>/', views.viewFamilyDetails, name='viewFamilyDetails'),
 

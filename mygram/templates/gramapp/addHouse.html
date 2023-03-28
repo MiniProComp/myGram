@@ -43,11 +43,14 @@
         <label for="housearea" class="form-label">House area in sq.ft:</label>
         <input type="text" class="form-control" id="housearea" name="housearea" autocomplete="off" required>
     </div>
-
-    <div class="form-group">
-        <label for="ownername" class="form-label">owner Nmae:</label>
-        <input type="text" class="form-control" id="ownername" name="ownername" autocomplete="off" required>
-    </div>
+    <div>
+        <label for="ownername" class="form-label">Owner Nmae:</label><br>
+        <select name="ownername" id="ownername" class="form-control">
+                {% for familyhead in familyheads %}
+                    <option value="{{ familyhead.familyheadid }}"> {{ familyhead.user }}</option>
+                {% endfor %}
+        </select>
+    </div><br>
 
 
 
