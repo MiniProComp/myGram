@@ -57,6 +57,12 @@ def sendmail(subject, sender, receiver, content):
     server.quit()
 
 
+def whatsappmessage(mobno,message):
+    mobno= mobno
+    message= message
+    pywhatkit.sendwhatmsg_instantly("+91" + mobno, message)
+
+
 def subscribe(request):
     receiver = request.POST["email"]
     print(receiver)
@@ -141,24 +147,14 @@ def addgramadmin(request, pk):
             ins.save()
 
             #Sending Email
-            msg = EmailMessage()
-            msg['Subject'] = 'Grampanchayat Admin username and password '
-            msg['From'] = 'myGram'
-            msg['To'] = gramadminemail
-            msg.set_content(
-                "Hello! \n" + gramadminfname + " " + gramadminlname + "\n This is an auto generated message from myGram \n "
-                                                            "Don't share this with anyone \n"
-                                                            "Your username is: " + gramadminusername +
-                "\nPassword is:" + gramadminpass +
-                " \nURL:")
-            server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-            server.login("miniprojectsecomp@gmail.com", "yptkvurskgdnrpiv")
-            server.send_message(msg)
-            server.quit()
             content = "Hello! \n" + gramadminfname + " " + gramadminlname + "\n This is an auto generated message from myGram \n" \
                                                                         " ""Don't share this with anyone \n"\
                                                                         "Your username is: " + gramadminusername +\
                                                                         "\nPassword is:" + gramadminpass +" \nURL:"
+            subject = eachGram.grampanchayat + 'Grampanchayat Admin username and password '
+            sender = 'myGram'
+            receiver = gramadminemail
+            sendmail(subject, sender, receiver, content)
 
             whatsappmessage(gramadminmobno, content)
 
@@ -171,13 +167,6 @@ def addgramadmin(request, pk):
     else:
         context = {'eachGram': eachGram}
         return render(request, 'gramapp/addgramadmin.html', context)
-
-
-def whatsappmessage(mobno,message):
-    mobno= mobno
-    message= message
-    pywhatkit.sendwhatmsg_instantly("+91" + mobno, message)
-
 
 
 def viewGramAdmin(request, pk):
@@ -270,21 +259,19 @@ def addFamilyHead(request):
                                        rationcardtype=rationcardtype, rationcardno=rationcardno)
         ins.save()
 
+
         # Sending Email
-        msg = EmailMessage()
-        msg['Subject'] = 'Grampanchayat Family Head username and password '
-        msg['From'] = 'myGram'
-        msg['To'] = familyheademail
-        msg.set_content(
-            "Hello! \n" + familyheadfname + " " + familyheadlname + "\n This is an auto generated message from myGram \n "
-                                                                  "Don't share this with anyone \n"
-                                                                  "Your username is: " + familyheadusername +
-                                                                    "\nPassword is:" + familyheadpass +
-                                                                    " \nURL:")
-        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-        server.login("miniprojectsecomp@gmail.com", "yptkvurskgdnrpiv")
-        server.send_message(msg)
-        server.quit()
+        content = "Hello! \n" + familyheadfname + " " + familyheadlname + "\n This is an auto generated message from myGram \n "\
+                                                                          "Don't share this with anyone \n" \
+                                                                        "Your username is: " + familyheadusername + \
+                                                                    "\nPassword is:" + familyheadpass + \
+                                                                    " \nURL:"
+        subject = 'Grampanchayat Family Head username and password '
+        sender = 'myGram'
+        receiver = familyheademail
+        sendmail(subject, sender, receiver, content)
+
+        whatsappmessage(familyheadmobno, content)
 
         messages.success(request, '''Family Head Successfully added...''')
         return redirect('home1')
