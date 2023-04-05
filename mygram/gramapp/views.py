@@ -227,8 +227,8 @@ def requestBirthCertificate(request):
 
         for i in birthdetails:
             if(i.childname == childname):
-                context = {'birthdetails': birthdetails}
-                return HttpResponse('yes')
+                context = {'birthdetails': i}
+                return render(request, 'gramapp/birthCertificate.html', context)
             else:
                 return HttpResponse("No")
     else:
@@ -237,17 +237,9 @@ def requestBirthCertificate(request):
 
 
 class GeneratePdf(View):
-    def get_object(self, pk=None):
-        try:
-            return BirthDetail.objects.get(childid=pk)
-        except BirthDetail.DoesNotExist:
-            raise Http404
-    def get(self, pk, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         # getting the template
-
-        snippet = self.get_object(pk)
-
-        pdf = html_to_pdf('gramapp/birthCertificate.html',snippet.data)
+        pdf = html_to_pdf('gramapp/birthCertificate.html')
 
         # rendering the template
         return HttpResponse(pdf, content_type='application/pdf')
@@ -449,6 +441,7 @@ def houseDetails(request):
     context = {'houses': houses}
 
     return render(request, 'gramapp/viewHouseDetails.html', context)
+
 
 def viewHouseTax(request, pk):
     house = Houses.objects.get(houseid=pk)

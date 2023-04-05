@@ -20,7 +20,7 @@ urlpatterns = [
 
     path('addBirthDetails/', views.addBirthDetails, name='addBirthDetails'),
     path('requestbirthcertificate/', views.requestBirthCertificate, name='requestbirthcertificate'),
-    path('pdf/<int:pk>/', GeneratePdf.as_view()),
+    path('pdf/', GeneratePdf.as_view(), name='pdf'),
 
     path('addAuthority/', views.addAuthority, name='addAuthority'),
     path('addComplaint/', views.addComplaint, name='addComplaint'),

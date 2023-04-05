@@ -10,8 +10,10 @@
 {% endblock head %}
 
 {% block body %}
+
 <h3 style="text-align:center;">House Details</h3>
 <div class="container">
+    <a href="{% url 'home1' %}" class="btn btn-dark mt-2">Back</a><br>
     <div class="row justify-content-center">
         {% if houses %}
     {% for house in houses %}
@@ -29,7 +31,7 @@
     {% endfor %}
 
 {% else %}
- <h4>No Families</h4>
+ <h4>No Houses</h4>
 {% endif %}
     </div>
 </div>

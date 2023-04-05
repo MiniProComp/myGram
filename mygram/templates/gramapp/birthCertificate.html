@@ -1,15 +1,23 @@
-<div style="width:800px; height:600px; padding:20px; text-align:center; border: 10px solid #787878">
-<div style="width:750px; height:550px; padding:20px; text-align:center; border: 5px solid #787878">
+
+<center>
+<div style="width:800px; height:900px; padding:20px; text-align:center; border: 10px solid #787878">
+<div style="width:750px; height:850px; padding:20px; text-align:center; border: 5px solid #787878">
        <span style="font-size:50px; font-weight:bold">Birth Certificate</span>
-       <br><br>
-       <span style="font-size:25px"><i>This is to certify that the following information is taken fron the registers of </i></span>
-       <br><br>
-       <span style="font-size:30px"><b>birthdetails.childname</b></span><br/><br/>
-       <span style="font-size:25px"><i>has completed the course</i></span> <br/><br/>
-       <span style="font-size:30px">$course.getName()</span> <br/><br/>
-       <span style="font-size:20px">with score of <b>$grade.getPoints()%</b></span> <br/><br/><br/><br/>
-       <span style="font-size:25px"><i>dated</i></span><br>
-      #set ($dt = $DateFormatter.getFormattedDate($grade.getAwardDate(), "MMMM dd, yyyy"))
-      <span style="font-size:30px">$dt</span>
+       <br><br><br><br>
+       <span style="font-size:25px"><i>This is to certify that, the following information is taken fron the registers of {{birthdetails.birthplace}} grampanchcyat.</i></span>
+       <br><br><br><br>
+       <div style="text-align:left;">
+       <span style="font-size:25px"><b>Name:</b> {{birthdetails.childname}} &emsp;&emsp;&emsp; <b>Gender:</b> {{birthdetails.gender}}</span><br/><br/>
+       <span style="font-size:25px"><b>Birthdate:</b> {{birthdetails.birthdate}} &emsp;&emsp;&emsp; <b>Birth Place:</b> {{birthdetails.birthplace}}</span> <br/><br/>
+       <span style="font-size:25px"><b>Father's Name:</b> {{birthdetails.fathername}}</span> <br/><br/>
+       <span style="font-size:25px"><b>Mother's Name:</b> {{birthdetails.mothername}}</span> <br/><br/>
+
+       <span style="font-size:25px"><b>Registration No.:</b> {{birthdetails.registration_number}}</span><br><br/>
+       <span style="font-size:25px"><b>Registration Date.:</b> {{birthdetails.registration_date}}</span><br><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+      <span style="font-size:25px"><b>Place.:</b> {{birthdetails.birthplace}}</span><br/>
+      <span style="font-size:25px"><b>Date.:</b> {{birthdetails.registration_date}}</span>
+       </div>
 </div>
 </div>
+</center>

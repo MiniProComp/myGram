@@ -57,6 +57,17 @@
                     </div>
                 </li>
 
+                <li class="nav-item dropdown {% block houseactive %}  {% endblock houseactive %}">
+                    <a class="nav-link dropdown-toggle" href="#" id="house" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Houses
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="house">
+                        <a class="dropdown-item" href="{% url 'addHouse' %}">Add House</a>
+                        <a class="dropdown-item" href="">House Details</a>
+                    </div>
+
+                </li>
 
                 <li class="nav-item dropdown {% block Menu %}  {% endblock Menu %}">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink4" data-toggle="dropdown"
@@ -65,8 +76,6 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{% url 'addBirthDetails' %}">Add Birth Details</a>
-                        <a class="dropdown-item" href="{% url 'addHouse' %}">Add House</a>
-                        <a class="dropdown-item" href="">House Details</a>
                         <a class="dropdown-item" href="">Add Marriage Info</a>
                         <a class="dropdown-item" href="{% url 'addScheme' %}">Add Scheme</a>
                         <a class="dropdown-item" href="">Add Spot</a>

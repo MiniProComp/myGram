@@ -25,9 +25,12 @@
                     <h5 class="card-title m-1">House Number:- {{house.houseno}}</h5>
                     <h6 class="card-subtitle m-1">House Type:-{{house.housetype}}</h6>
                     <h6 class="card-text m-1">House Area:- {{house.housearea}}</h6>
-                    <p class="card-text m-1">Total Tax:- Rs {{total_housetax}}</p>
+                    <p class="card-text m-1">Total Tax:- Rs. {{total_housetax}}</p>
 
-                    <a href="#" class="btn btn-success mt-2">Pay</a>
+                    <div>
+                        <a href="#" class="btn btn-success mt-3">Pay Rs.{{total_housetax}}</a>
+                    </div>
+
                 </div>
             </div>
         </div>
