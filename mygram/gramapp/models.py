@@ -117,17 +117,22 @@ class BirthDetail(models.Model):
 
 class WaterTax(models.Model):
     watertaxid = models.IntegerField(primary_key=True)
-    waterconnectiontype = models.CharField(max_length=10)
+    waterconnectiontype = models.CharField(max_length=30, unique=True)
     watertaxrate = models.IntegerField()
 
 
 class WaterConnection(models.Model):
     waterconnectionid = models.IntegerField(primary_key=True)
+    waterconnectionno = models.IntegerField(unique=True)
+    gram = models.ForeignKey("Grampanchayat", on_delete=models.CASCADE)
+    region = models.CharField(max_length=20)
+    subregion = models.CharField(max_length=20)
+    waterconnectiontype = models.CharField(max_length=30)
     ownername = models.ForeignKey("FamilyHead", on_delete=models.CASCADE)
-    waterconnectiontype = models.CharField(max_length=10)
 
     def __str__(self):
         return self.ownername
+
 
 class Houses(models.Model):
     houseid = models.IntegerField(primary_key=True)

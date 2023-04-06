@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 # from django.conf import settings
 # from django.conf.urls.static import static
-from .views import GeneratePdf
+
 
 urlpatterns = [
 
@@ -20,7 +20,7 @@ urlpatterns = [
 
     path('addBirthDetails/', views.addBirthDetails, name='addBirthDetails'),
     path('requestbirthcertificate/', views.requestBirthCertificate, name='requestbirthcertificate'),
-    path('pdf/', GeneratePdf.as_view(), name='pdf'),
+
 
     path('addAuthority/', views.addAuthority, name='addAuthority'),
     path('addComplaint/', views.addComplaint, name='addComplaint'),
@@ -28,8 +28,10 @@ urlpatterns = [
     path('addFamilymember/', views.addFamilymember, name='addFamilymember'),
 
     path('addScheme/', views.addScheme, name='addScheme'),
-    path('waterConnectioninfo/', views.waterConnectioninfo, name='waterConnectioninfo'),
-    path('addWatertax/', views.addWatertax, name='addWatertax'),
+
+    path('addWaterConnection/', views.addWaterConnection, name='addWaterConnection'),
+    path('addWaterTax/', views.addWaterTax, name='addWaterTax'),
+    # path('waterConnectioninfo/', views.waterConnectioninfo, name='waterConnectioninfo'),
 
     path('addHousetax/', views.addHousetax, name='addHousetax'),
     path('addHouse/', views.addHouse, name='addHouse'),

@@ -1,23 +1,69 @@
+<!doctype html>
+<html lang="en">
 
-<center>
-<div style="width:800px; height:900px; padding:20px; text-align:center; border: 10px solid #787878">
-<div style="width:750px; height:850px; padding:20px; text-align:center; border: 5px solid #787878">
-       <span style="font-size:50px; font-weight:bold">Birth Certificate</span>
-       <br><br><br><br>
-       <span style="font-size:25px"><i>This is to certify that, the following information is taken fron the registers of {{birthdetails.birthplace}} grampanchcyat.</i></span>
-       <br><br><br><br>
-       <div style="text-align:left;">
-       <span style="font-size:25px"><b>Name:</b> {{birthdetails.childname}} &emsp;&emsp;&emsp; <b>Gender:</b> {{birthdetails.gender}}</span><br/><br/>
-       <span style="font-size:25px"><b>Birthdate:</b> {{birthdetails.birthdate}} &emsp;&emsp;&emsp; <b>Birth Place:</b> {{birthdetails.birthplace}}</span> <br/><br/>
-       <span style="font-size:25px"><b>Father's Name:</b> {{birthdetails.fathername}}</span> <br/><br/>
-       <span style="font-size:25px"><b>Mother's Name:</b> {{birthdetails.mothername}}</span> <br/><br/>
+<head>
+  <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-       <span style="font-size:25px"><b>Registration No.:</b> {{birthdetails.registration_number}}</span><br><br/>
-       <span style="font-size:25px"><b>Registration Date.:</b> {{birthdetails.registration_date}}</span><br><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-      <span style="font-size:25px"><b>Place.:</b> {{birthdetails.birthplace}}</span><br/>
-      <span style="font-size:25px"><b>Date.:</b> {{birthdetails.registration_date}}</span>
-       </div>
-</div>
-</div>
-</center>
+<!--    <style>-->
+<!--      .btn {-->
+<!--        float: right;-->
+<!--      }-->
+<!--    </style>-->
+</head>
+
+<body>
+    <center>
+        <div id="content" style="width:850px; height:580px; padding:20px; text-align:center; border: 10px solid #787878">
+            <div style="width:790px; height:520px; padding:20px; text-align:center; border: 5px solid #787878">
+                <div>
+                <span style="font-size:50px; font-weight:bold">Birth Certificate</span>
+                <br><br>
+                <span style="font-size:25px"><i>This is to certify that, the following information is taken fron the
+                        registers of {{birthdetails.birthplace}} grampanchcyat.</i></span>
+                <br>
+                <div style="text-align:left;">
+                    <span style="font-size:25px"><b>Name:</b> {{birthdetails.childname}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Gender:</b> {{birthdetails.gender}}</span><br />
+                    <span style="font-size:25px"><b>Birthdate:</b> {{birthdetails.birthdate}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Birth Place:</b> {{birthdetails.birthplace}}</span> <br />
+                    <span style="font-size:25px"><b>Father's Name:</b> {{birthdetails.fathername}}</span> <br />
+                    <span style="font-size:25px"><b>Mother's Name:</b> {{birthdetails.mothername}}</span> <br />
+
+                    <span style="font-size:25px"><b>Registration No.:</b>{{birthdetails.registration_number}}</span><br>
+                    <span style="font-size:25px"><b>Registration Date.:</b>{{birthdetails.registration_date}}</span><br>
+
+                    <span style="font-size:25px"><b>Place.:</b> {{birthdetails.birthplace}}</span><br />
+                    <span style="font-size:25px"><b>Date.:</b> {{birthdetails.registration_date}}</span>
+                </div>
+                </div>
+            </div>
+        </div><br>
+        <button id="download-button" type="button" class="btn btn-outline-secondary">Download</button>
+
+
+        <script>
+			const button = document.getElementById('download-button');
+			var opt = {
+                 margin:       [0,0],
+                filename:     'birth certificate.pdf',
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' }
+            };
+
+			function generatePDF() {
+				// Choose the element that your content will be rendered to.
+				const element = document.getElementById('content');
+				// Choose the element and save the PDF for your user.
+				html2pdf().set(opt).from(element).save();
+			}
+
+			button.addEventListener('click', generatePDF);
+		</script>
+    </center>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+
+</html>

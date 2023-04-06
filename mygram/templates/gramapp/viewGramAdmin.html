@@ -1,7 +1,7 @@
 {% extends 'gramapp/base1.html' %}
 
-{% block title %} gramdetails {% endblock title %}
-{% block companyactive %} active {% endblock companyactive %}
+{% block title %} {{eachUser.first_name}} {{eachUser.last_name}}'s Details {% endblock title %}
+{% block gramactive %} active {% endblock gramactive %}
 
 {% block head %}
     <style>

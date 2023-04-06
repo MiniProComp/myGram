@@ -1,0 +1,41 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} Add Water Tax {% endblock title %}
+{% block wateractive %} active {% endblock wateractive %}
+{% block head %}
+    <style>
+        .container{
+            width: 600px;
+            border-style: groove;
+            }
+
+    </style>
+{% endblock head %}
+
+{% block body %}
+</br>
+<center><h2 >Add Water Tax</h2></center>
+<form class="container" method="post" action="" enctype="multipart/form-data">
+
+<center>
+    {% csrf_token %}
+
+
+    <div class="form-group">
+        <label for="waterconnectiontype" class="form-label">Connection Type:</label>
+            <select name="waterconnectiontype" id="waterconnectiontype" >
+                <option value="domestic">Domestic</option>
+                <option value="commercial">Commercial</option>
+            </select >
+    </div>
+
+    <div class="form-group">
+        <label for="watertaxrate" class="form-label">Rate(per Year):  </label>
+        <input type="number" class="form-control" id="watertaxrate" name="watertaxrate" autocomplete="off" required>
+    </div>
+
+    <button class="btn btn-primary " type="submit" >Submit</button>
+</center>
+</form>
+
+{% endblock body %}
