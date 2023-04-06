@@ -130,8 +130,6 @@ class WaterConnection(models.Model):
     waterconnectiontype = models.CharField(max_length=30)
     ownername = models.ForeignKey("FamilyHead", on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.ownername
 
 
 class Houses(models.Model):

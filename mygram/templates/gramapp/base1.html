@@ -103,10 +103,11 @@
                     <li class="nav-item dropdown {% block viewhouseactive %}  {% endblock viewhouseactive %}">
                     <a class="nav-link dropdown-toggle" href="#" id="viewhouse" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                        Houses
+                        House & Water
                     </a>
                     <div class="dropdown-menu" aria-labelledby="viewhouse">
-                        <a class="dropdown-item" href="{% url 'houseDetails' %}">View House</a>
+                        <a class="dropdown-item" href="{% url 'houseDetails' %}">View Houses</a>
+                        <a class="dropdown-item" href="{% url 'waterConnectionDetails' %}">View Water Connections</a>
                     </div>
                     </li>
 

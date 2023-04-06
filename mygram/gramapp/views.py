@@ -78,6 +78,7 @@ def subscribe(request):
     # sendmail(subject, sender, receiver, content)
     return None
 
+
 def addgram(request):
     current_user = request.user
     if current_user.is_superuser:
@@ -102,119 +103,151 @@ def addgram(request):
 
 
 def viewgram(request):
-    grampanchayat = Grampanchayat.objects.all()
-    context = {'grampanchayat': grampanchayat}
-    return render(request, 'gramapp/viewGrampanchayat.html', context)
+    current_user = request.user
+    if current_user.is_superuser:
+        grampanchayat = Grampanchayat.objects.all()
+        context = {'grampanchayat': grampanchayat}
+        return render(request, 'gramapp/viewGrampanchayat.html', context)
+    else:
+        return render(request, 'gramapp/pageNotFound.html')
+
 
 
 def gramdetail(request, pk):
-    eachGram = Grampanchayat.objects.get(gramid=pk)
-    gramAdmin = Gramadmin.objects.all().filter(grampanchayat=eachGram)
-    context = {'eachGram': eachGram, 'gramAdmin': gramAdmin}
-    return render(request, 'gramapp/viewGramDetails.html', context)
+    current_user = request.user
+    if current_user.is_superuser:
+        eachGram = Grampanchayat.objects.get(gramid=pk)
+        gramAdmin = Gramadmin.objects.all().filter(grampanchayat=eachGram)
+        context = {'eachGram': eachGram, 'gramAdmin': gramAdmin}
+        return render(request, 'gramapp/viewGramDetails.html', context)
+    else:
+        return render(request, 'gramapp/pageNotFound.html')
+
 
 def deletegram(request, pk):
-    gram = Grampanchayat.objects.get(gramid=pk)
+    current_user = request.user
+    if current_user.is_superuser:
+        gram = Grampanchayat.objects.get(gramid=pk)
+        try:
+            eachGramAdmin = Gramadmin.objects.get(grampanchayat=gram)
 
-    try:
-        eachGramAdmin = Gramadmin.objects.get(grampanchayat=gram)
-
-        user = User.objects.all().filter(username=eachGramAdmin.user)
-        eachGramAdmin.delete()
-        user.delete()
-        gram.delete()
-    except:
-        gram.delete()
-    messages.success(request, '''Grampanchayat Successfully deleted...''')
-    return redirect('home1')
+            user = User.objects.all().filter(username=eachGramAdmin.user)
+            eachGramAdmin.delete()
+            user.delete()
+            gram.delete()
+        except:
+            print("error")
+        messages.success(request, '''Grampanchayat Successfully deleted...''')
+        return redirect('home1')
+    else:
+        return render(request, 'gramapp/pageNotFound.html')
 
 
 def addgramadmin(request, pk):
-    gramadminid = 5001 if Gramadmin.objects.count() == 0 else Gramadmin.objects.aggregate(max=Max('gramadminid'))["max"] + 1
-    eachGram = Grampanchayat.objects.get(gramid=pk)
-    if request.method == "POST" and request.FILES['gramadminphoto']:
-        gramadminphoto = request.FILES['gramadminphoto']
-        fss = FileSystemStorage('media/gramadmin/')
-        gramadminfname = request.POST['gramadminfname']
-        gramadminlname = request.POST['gramadminlname']
-        gramadminmobno = request.POST['gramadminmobno']
-        gramadminemail = request.POST['gramadminemail']
-        gramadminusername = request.POST['gramadminusername']
-        gramadminpass = request.POST['gramadminpass']
-        gramadmincnfmpass = request.POST['gramadmincnfmpass']
-        if gramadminpass == gramadmincnfmpass:
-            myuser = User.objects.create_user(gramadminusername, gramadminemail, gramadminpass, is_staff=True)
-            myuser.first_name = (gramadminfname)
-            myuser.last_name = (gramadminlname)
-            myuser.save()
+    current_user = request.user
+    if current_user.is_superuser:
+        gramadminid = 5001 if Gramadmin.objects.count() == 0 else Gramadmin.objects.aggregate(max=Max('gramadminid'))[
+                                                                      "max"] + 1
+        eachGram = Grampanchayat.objects.get(gramid=pk)
+        if request.method == "POST" and request.FILES['gramadminphoto']:
+            gramadminphoto = request.FILES['gramadminphoto']
+            fss = FileSystemStorage('media/gramadmin/')
+            gramadminfname = request.POST['gramadminfname']
+            gramadminlname = request.POST['gramadminlname']
+            gramadminmobno = request.POST['gramadminmobno']
+            gramadminemail = request.POST['gramadminemail']
+            gramadminusername = request.POST['gramadminusername']
+            gramadminpass = request.POST['gramadminpass']
+            gramadmincnfmpass = request.POST['gramadmincnfmpass']
+            if gramadminpass == gramadmincnfmpass:
+                myuser = User.objects.create_user(gramadminusername, gramadminemail, gramadminpass, is_staff=True)
+                myuser.first_name = (gramadminfname)
+                myuser.last_name = (gramadminlname)
+                myuser.save()
 
-            ins = Gramadmin.objects.create(user=myuser, grampanchayat=eachGram, gramadminid=gramadminid,
-                                           gramadminmobno=gramadminmobno, gramadminphoto=gramadminphoto)
-            ins.save()
+                ins = Gramadmin.objects.create(user=myuser, grampanchayat=eachGram, gramadminid=gramadminid,
+                                               gramadminmobno=gramadminmobno, gramadminphoto=gramadminphoto)
+                ins.save()
 
-            #Sending Email
-            content = "Hello! \n" + gramadminfname + " " + gramadminlname + "\n This is an auto generated message from myGram \n" \
-                                                                        " ""Don't share this with anyone \n"\
-                                                                        "Your username is: " + gramadminusername +\
-                                                                        "\nPassword is:" + gramadminpass +" \nURL:"
-            subject = eachGram.gramname + 'Grampanchayat Admin username and password '
-            sender = 'myGram'
-            receiver = gramadminemail
-            sendmail(subject, sender, receiver, content)
+                # Sending Email
+                content = "Hello! \n" + gramadminfname + " " + gramadminlname + "\n This is an auto generated message from myGram \n" \
+                                                                                " ""Don't share this with anyone \n" \
+                                                                                "Your username is: " + gramadminusername + \
+                          "\nPassword is:" + gramadminpass + " \nURL:"
+                subject = eachGram.gramname + 'Grampanchayat Admin username and password '
+                sender = 'myGram'
+                receiver = gramadminemail
+                sendmail(subject, sender, receiver, content)
 
-            whatsappmessage(gramadminmobno, content)
+                whatsappmessage(gramadminmobno, content)
 
-
-            messages.success(request, '''Gramapanchayat admin Successfully added...''')
-            return redirect('home1')
+                messages.success(request, '''Gramapanchayat admin Successfully added...''')
+                return redirect('home1')
+            else:
+                messages.error(request, '''Password does not match''')
+                return redirect('addgramadmin')
         else:
-            messages.error(request, '''Password does not match''')
-            return redirect('addgramadmin')
+            context = {'eachGram': eachGram}
+            return render(request, 'gramapp/addgramadmin.html', context)
     else:
-        context = {'eachGram': eachGram}
-        return render(request, 'gramapp/addgramadmin.html', context)
+        return render(request, 'gramapp/pageNotFound.html')
 
 
 def viewGramAdmin(request, pk):
-    eachGramAdmin = Gramadmin.objects.get(gramadminid=pk)
-    eachUser = User.objects.get(username=eachGramAdmin.user)
-    print(eachUser)
-    context = {'eachGramAdmin': eachGramAdmin, 'eachUser': eachUser}
-    return render(request, 'gramapp/viewGramAdmin.html', context)
+    current_user = request.user
+    if current_user.is_superuser:
+        eachGramAdmin = Gramadmin.objects.get(gramadminid=pk)
+        eachUser = User.objects.get(username=eachGramAdmin.user)
+        print(eachUser)
+        context = {'eachGramAdmin': eachGramAdmin, 'eachUser': eachUser}
+        return render(request, 'gramapp/viewGramAdmin.html', context)
+    else:
+        return render(request, 'gramapp/pageNotFound.html')
+
 
 
 def deletegramadmin(request, pk):
-    eachGramAdmin = Gramadmin.objects.get(gramadminid=pk)
-    user = User.objects.all().filter(username=eachGramAdmin.user)
-    user.delete()
-    eachGramAdmin.delete()
-    messages.success(request, '''Grampanchayat Admin Successfully deleted...''')
-    return redirect('home1')
+    current_user = request.user
+    if current_user.is_superuser:
+        eachGramAdmin = Gramadmin.objects.get(gramadminid=pk)
+        user = User.objects.all().filter(username=eachGramAdmin.user)
+        user.delete()
+        eachGramAdmin.delete()
+        messages.success(request, '''Grampanchayat Admin Successfully deleted...''')
+        return redirect('home1')
+    else:
+        return render(request, 'gramapp/pageNotFound.html')
+
 
 
 def addBirthDetails(request):
-    childid = 1001 if BirthDetail.objects.count() == 0 else BirthDetail.objects.aggregate(max=Max('childid'))["max"] + 1
-    if request.method == "POST" and request.FILES['birthproof']:
-        childname = request.POST['childname']
-        gender = request.POST['gender']
-        birthdate = request.POST['birthdate']
-        fathername = request.POST['fathername']
-        mothername = request.POST['mothername']
-        birthplace = request.POST['birthplace']
-        registeredon = request.POST['registeredon']
-        birthproof = request.FILES['birthproof']
-        fss = FileSystemStorage('media/birthproof/')
+    current_user = request.user
+    if current_user.is_staff:
+        childid = 1001 if BirthDetail.objects.count() == 0 else BirthDetail.objects.aggregate(max=Max('childid'))[
+                                                                    "max"] + 1
+        if request.method == "POST" and request.FILES['birthproof']:
+            childname = request.POST['childname']
+            gender = request.POST['gender']
+            birthdate = request.POST['birthdate']
+            fathername = request.POST['fathername']
+            mothername = request.POST['mothername']
+            birthplace = request.POST['birthplace']
+            registeredon = request.POST['registeredon']
+            birthproof = request.FILES['birthproof']
+            fss = FileSystemStorage('media/birthproof/')
 
+            ins = BirthDetail.objects.create(childid=childid, childname=childname, gender=gender, birthdate=birthdate,
+                                             fathername=fathername, mothername=mothername, birthplace=birthplace,
+                                             registeredon=registeredon,
+                                             birthproof=birthproof)
+            ins.save()
 
-        ins = BirthDetail.objects.create(childid=childid, childname=childname, gender=gender, birthdate=birthdate,
-                                   fathername=fathername, mothername=mothername, birthplace=birthplace, registeredon=registeredon,
-                                   birthproof=birthproof)
-        ins.save()
-
-        messages.success(request, '''New Child Registration Successfully added...''')
-        return render(request, 'gramapp/home1.html')
+            messages.success(request, '''New Child Registration Successfully added...''')
+            return render(request, 'gramapp/home1.html')
+        else:
+            return render(request, 'gramapp/addBirthDetails.html', locals())
     else:
-        return render(request, 'gramapp/addBirthDetails.html', locals())
+        return render(request, 'gramapp/pageNotFound.html')
 
 
 def requestBirthCertificate(request):
@@ -244,121 +277,141 @@ def addComplaint(request):
 
 
 def addFamilyHead(request):
-    familyheadid = 100001 if FamilyHead.objects.count() == 0 else FamilyHead.objects.aggregate(max=Max('familyheadid'))["max"] + 1
-    grampanchayat = Grampanchayat.objects.all()
-    if request.method == "POST" and request.FILES['familyheadphoto']:
-        current_user = request.user
-        if current_user.is_superuser:
-            selectedgramid = request.POST['gram']
-            gram = Grampanchayat.objects.get(gramid=selectedgramid)
+    current_user = request.user
+    if current_user.is_staff:
+        familyheadid = 100001 if FamilyHead.objects.count() == 0 else \
+        FamilyHead.objects.aggregate(max=Max('familyheadid'))["max"] + 1
+        grampanchayat = Grampanchayat.objects.all()
+        if request.method == "POST" and request.FILES['familyheadphoto']:
+            current_user = request.user
+            if current_user.is_superuser:
+                selectedgramid = request.POST['gram']
+                gram = Grampanchayat.objects.get(gramid=selectedgramid)
+            else:
+                gramAdmin = Gramadmin.objects.get(user=current_user)
+                adminGram = gramAdmin.grampanchayat
+                gram = Grampanchayat.objects.get(gramname=adminGram)
+
+            familyheadphoto = request.FILES['familyheadphoto']
+            fss = FileSystemStorage('media/family_head/')
+            familyheadfname = request.POST['familyheadfname']
+            familyheadlname = request.POST['familyheadlname']
+            familyheadgender = request.POST['familyheadgender']
+            birthdate = request.POST['birthdate']
+            familyheadmobno = request.POST['familyheadmobno']
+            familyheademail = request.POST['familyheademail']
+            familyheadadharno = request.POST['familyheadadharno']
+            familyheadpanno = request.POST['familyheadpanno']
+            familyincome = request.POST['familyincome']
+            rationcardtype = request.POST['rationcardtype']
+            rationcardno = request.POST['rationcardno']
+
+            familyheadusername = request.POST['familyheadusername']
+            familyheadpass = request.POST['familyheadpass']
+            familyheadcnfmpass = request.POST['familyheadcnfmpass']
+
+            myuser = User.objects.create_user(familyheadusername, familyheademail, familyheadpass)
+            myuser.first_name = (familyheadfname)
+            myuser.last_name = (familyheadlname)
+            myuser.save()
+
+            ins = FamilyHead.objects.create(user=myuser, grampanchayat=gram, familyheadid=familyheadid,
+                                            familyheadgender=familyheadgender, birthdate=birthdate,
+                                            familyheadmobno=familyheadmobno, familyheadadharno=familyheadadharno,
+                                            familyheadpanno=familyheadpanno, familyheadphoto=familyheadphoto,
+                                            familyincome=familyincome,
+                                            rationcardtype=rationcardtype, rationcardno=rationcardno)
+            ins.save()
+
+            # Sending Email
+            content = "Hello! \n" + familyheadfname + " " + familyheadlname + "\n This is an auto generated message from myGram \n " \
+                                                                              "Don't share this with anyone \n" \
+                                                                              "Your username is: " + familyheadusername + \
+                      "\nPassword is:" + familyheadpass + \
+                      " \nURL:"
+            subject = 'Grampanchayat Family Head username and password '
+            sender = 'myGram'
+            receiver = familyheademail
+            sendmail(subject, sender, receiver, content)
+
+            whatsappmessage(familyheadmobno, content)
+
+            messages.success(request, '''Family Head Successfully added...''')
+            return redirect('home1')
         else:
-            gramAdmin = Gramadmin.objects.get(user=current_user)
-            adminGram = gramAdmin.grampanchayat
-            gram = Grampanchayat.objects.get(gramname=adminGram)
-
-        familyheadphoto = request.FILES['familyheadphoto']
-        fss = FileSystemStorage('media/family_head/')
-        familyheadfname = request.POST['familyheadfname']
-        familyheadlname = request.POST['familyheadlname']
-        familyheadgender = request.POST['familyheadgender']
-        birthdate = request.POST['birthdate']
-        familyheadmobno = request.POST['familyheadmobno']
-        familyheademail = request.POST['familyheademail']
-        familyheadadharno = request.POST['familyheadadharno']
-        familyheadpanno = request.POST['familyheadpanno']
-        familyincome = request.POST['familyincome']
-        rationcardtype = request.POST['rationcardtype']
-        rationcardno = request.POST['rationcardno']
-
-        familyheadusername = request.POST['familyheadusername']
-        familyheadpass = request.POST['familyheadpass']
-        familyheadcnfmpass = request.POST['familyheadcnfmpass']
-
-        myuser = User.objects.create_user(familyheadusername, familyheademail, familyheadpass)
-        myuser.first_name = (familyheadfname)
-        myuser.last_name = (familyheadlname)
-        myuser.save()
-
-        ins = FamilyHead.objects.create(user=myuser, grampanchayat=gram, familyheadid=familyheadid,
-                                  familyheadgender=familyheadgender,birthdate=birthdate, familyheadmobno=familyheadmobno, familyheadadharno=familyheadadharno,
-                                    familyheadpanno=familyheadpanno, familyheadphoto=familyheadphoto, familyincome=familyincome,
-                                       rationcardtype=rationcardtype, rationcardno=rationcardno)
-        ins.save()
-
-
-        # Sending Email
-        content = "Hello! \n" + familyheadfname + " " + familyheadlname + "\n This is an auto generated message from myGram \n "\
-                                                                          "Don't share this with anyone \n" \
-                                                                        "Your username is: " + familyheadusername + \
-                                                                    "\nPassword is:" + familyheadpass + \
-                                                                    " \nURL:"
-        subject = 'Grampanchayat Family Head username and password '
-        sender = 'myGram'
-        receiver = familyheademail
-        sendmail(subject, sender, receiver, content)
-
-        whatsappmessage(familyheadmobno, content)
-
-        messages.success(request, '''Family Head Successfully added...''')
-        return redirect('home1')
+            context = {'grampanchayat': grampanchayat}
+            return render(request, 'gramapp/addFamilyHead.html', context)
     else:
-        context = {'grampanchayat': grampanchayat}
-        return render(request, 'gramapp/addFamilyHead.html', context)
+        return render(request, 'gramapp/pageNotFound.html')
 
 
 def addFamilymember(request):
-    familymemberid = 100001 if Familymembers.objects.count() == 0 else Familymembers.objects.aggregate(max=Max('familymemberid'))["max"] + 1
     current_user = request.user
-
     if current_user.is_staff:
-        if current_user.is_superuser:
-            print("superuser")
-        if not current_user.is_superuser:
-            gramadmin = Gramadmin.objects.get(user=current_user)
-            admingram = gramadmin.grampanchayat
-            gram = Grampanchayat.objects.get(gramname=admingram)
-            familyheads = FamilyHead.objects.all().filter(grampanchayat=gram)
+        familymemberid = 100001 if Familymembers.objects.count() == 0 else \
+        Familymembers.objects.aggregate(max=Max('familymemberid'))["max"] + 1
+        current_user = request.user
 
-            if request.method == "POST":
-                familyheadid = request.POST['familyhead']
-                family = FamilyHead.objects.get(familyheadid=familyheadid)
-                familymemberfname = request.POST['familymemberfname']
-                relation = request.POST['relation']
-                familymembergender = request.POST['familymembergender']
-                birthdate = request.POST['birthdate']
-                familyheadadharno = request.POST['familyheadadharno']
-                familymemberphoto = request.FILES['familymemberphoto']
-                fss = FileSystemStorage('media/family_member/')
+        if current_user.is_staff:
+            if current_user.is_superuser:
+                print("superuser")
+            if not current_user.is_superuser:
+                gramadmin = Gramadmin.objects.get(user=current_user)
+                admingram = gramadmin.grampanchayat
+                gram = Grampanchayat.objects.get(gramname=admingram)
+                familyheads = FamilyHead.objects.all().filter(grampanchayat=gram)
 
-                ins = Familymembers.objects.create(grampanchayat=gram, family=family, familymemberid=familymemberid,
-                                                familymembername=familymemberfname, relation=relation,
-                                                gender=familymembergender, birthdate=birthdate,
-                                                aadharnop=familyheadadharno, familymemberphoto=familymemberphoto,)
-                ins.save()
-                messages.success(request, '''Family Member Successfully added...''')
-                return redirect('home1')
+                if request.method == "POST":
+                    familyheadid = request.POST['familyhead']
+                    family = FamilyHead.objects.get(familyheadid=familyheadid)
+                    familymemberfname = request.POST['familymemberfname']
+                    relation = request.POST['relation']
+                    familymembergender = request.POST['familymembergender']
+                    birthdate = request.POST['birthdate']
+                    familyheadadharno = request.POST['familyheadadharno']
+                    familymemberphoto = request.FILES['familymemberphoto']
+                    fss = FileSystemStorage('media/family_member/')
+
+                    ins = Familymembers.objects.create(grampanchayat=gram, family=family, familymemberid=familymemberid,
+                                                       familymembername=familymemberfname, relation=relation,
+                                                       gender=familymembergender, birthdate=birthdate,
+                                                       aadharnop=familyheadadharno,
+                                                       familymemberphoto=familymemberphoto, )
+                    ins.save()
+                    messages.success(request, '''Family Member Successfully added...''')
+                    return redirect('home1')
+        else:
+            print("no")
+
+        context = {'familyheads': familyheads}
+        return render(request, 'gramapp/addFamilymember.html', context)
     else:
-        print("no")
-
-    context = {'familyheads': familyheads}
-    return render(request, 'gramapp/addFamilymember.html', context)
+        return render(request, 'gramapp/pageNotFound.html')
 
 
 def viewFamily(request):
     current_user = request.user
-    gramadmin = Gramadmin.objects.get(user=current_user)
-    admingram = gramadmin.grampanchayat
-    gram = Grampanchayat.objects.get(gramname=admingram)
-    familyheads = FamilyHead.objects.all().filter(grampanchayat=gram)
-    context = {'familyheads': familyheads}
-    return render(request, 'gramapp/viewFamily.html', context)
+    if current_user.is_staff:
+        current_user = request.user
+        gramadmin = Gramadmin.objects.get(user=current_user)
+        admingram = gramadmin.grampanchayat
+        gram = Grampanchayat.objects.get(gramname=admingram)
+        familyheads = FamilyHead.objects.all().filter(grampanchayat=gram)
+        context = {'familyheads': familyheads}
+        return render(request, 'gramapp/viewFamily.html', context)
+    else:
+        return render(request, 'gramapp/pageNotFound.html')
 
 
 def viewFamilyDetails(request, pk):
-    familyhead = FamilyHead.objects.get(familyheadid=pk)
-    familymembers = Familymembers.objects.all().filter(family=familyhead)
-    context = {'familyhead': familyhead, 'familymembers': familymembers}
-    return render(request, 'gramapp/viewFamilyDetails.html', context)
+    current_user = request.user
+    if current_user.is_staff:
+        familyhead = FamilyHead.objects.get(familyheadid=pk)
+        familymembers = Familymembers.objects.all().filter(family=familyhead)
+        context = {'familyhead': familyhead, 'familymembers': familymembers}
+        return render(request, 'gramapp/viewFamilyDetails.html', context)
+    else:
+        return render(request, 'gramapp/pageNotFound.html')
 
 
 def addScheme(request):
@@ -367,45 +420,54 @@ def addScheme(request):
 
 
 def addHouse(request):
-    houseid = 200001 if Houses.objects.count() == 0 else Houses.objects.aggregate(max=Max('houseid'))["max"] + 1
     current_user = request.user
-    gramadmin = Gramadmin.objects.get(user=current_user)
-    admingram = gramadmin.grampanchayat
-    gram = Grampanchayat.objects.get(gramname=admingram)
-    familyheads = FamilyHead.objects.all().filter(grampanchayat=gram)
+    if current_user.is_staff:
+        houseid = 200001 if Houses.objects.count() == 0 else Houses.objects.aggregate(max=Max('houseid'))["max"] + 1
+        current_user = request.user
+        gramadmin = Gramadmin.objects.get(user=current_user)
+        admingram = gramadmin.grampanchayat
+        gram = Grampanchayat.objects.get(gramname=admingram)
+        familyheads = FamilyHead.objects.all().filter(grampanchayat=gram)
 
-    if request.method == "POST":
-        houseno = request.POST['houseno']
-        region = request.POST['region']
-        subregion = request.POST['subregion']
-        housetype = request.POST['housetype']
-        housearea = request.POST['housearea']
-        familyheadid = request.POST['ownername']
-        ownername = FamilyHead.objects.get(familyheadid=familyheadid)
-        ins = Houses.objects.create(houseno=houseno, gram=gram, houseid=houseid, region=region, subregion=subregion,
-                                           housetype=housetype, housearea=housearea,
-                                           ownername=ownername)
-        ins.save()
-        messages.success(request, '''House Successfully added...''')
-        return redirect('home1')
+        if request.method == "POST":
+            houseno = request.POST['houseno']
+            region = request.POST['region']
+            subregion = request.POST['subregion']
+            housetype = request.POST['housetype']
+            housearea = request.POST['housearea']
+            familyheadid = request.POST['ownername']
+            ownername = FamilyHead.objects.get(familyheadid=familyheadid)
+            ins = Houses.objects.create(houseno=houseno, gram=gram, houseid=houseid, region=region, subregion=subregion,
+                                        housetype=housetype, housearea=housearea,
+                                        ownername=ownername)
+            ins.save()
+            messages.success(request, '''House Successfully added...''')
+            return redirect('home1')
+        else:
+            context = {'familyheads': familyheads}
+        return render(request, 'gramapp/addHouse.html', context)
     else:
-        context = {'familyheads': familyheads}
-    return render(request, 'gramapp/addHouse.html', context)
+        return render(request, 'gramapp/pageNotFound.html')
 
 
 def addHousetax(request):
-    housetypeid = 201 if Housetax.objects.count() == 0 else Housetax.objects.aggregate(max=Max('housetypeid'))["max"] + 1
-    if request.method == "POST":
-        housetype = request.POST['housetype']
-        hosetaxrate = request.POST['hosetaxrate']
+    current_user = request.user
+    if current_user.is_staff:
+        housetypeid = 201 if Housetax.objects.count() == 0 else Housetax.objects.aggregate(max=Max('housetypeid'))[
+                                                                    "max"] + 1
+        if request.method == "POST":
+            housetype = request.POST['housetype']
+            hosetaxrate = request.POST['hosetaxrate']
 
-        ins = Housetax.objects.create(housetypeid=housetypeid, housetype=housetype, hosetaxrate=hosetaxrate)
-        ins.save()
-        messages.success(request, '''House Tax Details Successfully added...''')
-        return redirect('home1')
+            ins = Housetax.objects.create(housetypeid=housetypeid, housetype=housetype, hosetaxrate=hosetaxrate)
+            ins.save()
+            messages.success(request, '''House Tax Details Successfully added...''')
+            return redirect('home1')
+        else:
+            print("no")
+        return render(request, 'gramapp/addHousetax.html')
     else:
-        print("no")
-    return render(request, 'gramapp/addHousetax.html')
+        return render(request, 'gramapp/pageNotFound.html')
 
 
 def houseDetails(request):
@@ -428,40 +490,72 @@ def viewHouseTax(request, pk):
 
 
 def addWaterConnection(request):
-    waterconnectionid = 20001 if WaterConnection.objects.count() == 0 else WaterConnection.objects.aggregate(max=Max('waterconnectionid'))["max"] + 1
     current_user = request.user
-    gramadmin = Gramadmin.objects.get(user=current_user)
-    admingram = gramadmin.grampanchayat
-    gram = Grampanchayat.objects.get(gramname=admingram)
-    familyheads = FamilyHead.objects.all().filter(grampanchayat=gram)
+    if current_user.is_staff:
+        waterconnectionid = 20001 if WaterConnection.objects.count() == 0 else \
+        WaterConnection.objects.aggregate(max=Max('waterconnectionid'))["max"] + 1
+        current_user = request.user
+        gramadmin = Gramadmin.objects.get(user=current_user)
+        admingram = gramadmin.grampanchayat
+        gram = Grampanchayat.objects.get(gramname=admingram)
+        familyheads = FamilyHead.objects.all().filter(grampanchayat=gram)
 
-    if request.method == "POST":
-        waterconnectionno = request.POST['waterconnectionno']
-        region = request.POST['region']
-        subregion = request.POST['subregion']
-        waterconnectiontype = request.POST['waterconnectiontype']
-        familyheadid = request.POST['ownername']
-        ownername = FamilyHead.objects.get(familyheadid=familyheadid)
-        ins = WaterConnection.objects.create(waterconnectionid=waterconnectionid, waterconnectionno=waterconnectionno, gram=gram,  region=region, subregion=subregion,
-                                    waterconnectiontype=waterconnectiontype, ownername=ownername)
-        ins.save()
-        messages.success(request, '''Water Connection Successfully added...''')
-        return redirect('home1')
+        if request.method == "POST":
+            waterconnectionno = request.POST['waterconnectionno']
+            region = request.POST['region']
+            subregion = request.POST['subregion']
+            waterconnectiontype = request.POST['waterconnectiontype']
+            familyheadid = request.POST['ownername']
+            ownername = FamilyHead.objects.get(familyheadid=familyheadid)
+            ins = WaterConnection.objects.create(waterconnectionid=waterconnectionid,
+                                                 waterconnectionno=waterconnectionno, gram=gram, region=region,
+                                                 subregion=subregion,
+                                                 waterconnectiontype=waterconnectiontype, ownername=ownername)
+            ins.save()
+            messages.success(request, '''Water Connection Successfully added...''')
+            return redirect('home1')
+        else:
+            context = {'familyheads': familyheads}
+        return render(request, 'gramapp/addWaterConnection.html', context)
     else:
-        context = {'familyheads': familyheads}
-    return render(request, 'gramapp/addWaterConnection.html', context)
+        return render(request, 'gramapp/pageNotFound.html')
 
 
 def addWaterTax(request):
-    watertaxid = 301 if WaterTax.objects.count() == 0 else WaterTax.objects.aggregate(max=Max('watertaxid'))["max"] + 1
-    if request.method == "POST":
-        waterconnectiontype = request.POST['waterconnectiontype']
-        watertaxrate = request.POST['watertaxrate']
+    current_user = request.user
+    if current_user.is_staff:
+        watertaxid = 301 if WaterTax.objects.count() == 0 else WaterTax.objects.aggregate(max=Max('watertaxid'))[
+                                                                   "max"] + 1
+        if request.method == "POST":
+            waterconnectiontype = request.POST['waterconnectiontype']
+            watertaxrate = request.POST['watertaxrate']
 
-        ins = WaterTax.objects.create(watertaxid=watertaxid, waterconnectiontype=waterconnectiontype, watertaxrate=watertaxrate)
-        ins.save()
-        messages.success(request, '''Water Tax Details Successfully added...''')
-        return redirect('home1')
+            ins = WaterTax.objects.create(watertaxid=watertaxid, waterconnectiontype=waterconnectiontype,
+                                          watertaxrate=watertaxrate)
+            ins.save()
+            messages.success(request, '''Water Tax Details Successfully added...''')
+            return redirect('home1')
+        else:
+            print("no")
+        return render(request, 'gramapp/addWaterTax.html')
     else:
-        print("no")
-    return render(request, 'gramapp/addWaterTax.html')
+        return render(request, 'gramapp/pageNotFound.html')
+
+
+def waterConnectionDetails(request):
+    current_user = request.user
+    familyhead = FamilyHead.objects.get(user=current_user)
+    waterconnections = WaterConnection.objects.all().filter(ownername=familyhead)
+    context = {'waterconnections': waterconnections}
+
+    return render(request, 'gramapp/viewWaterConnectionDetails.html', context)
+
+
+def viewWaterTax(request, pk):
+    waterconnection = WaterConnection.objects.get(waterconnectionid=pk)
+    waterconnectiontype = waterconnection.waterconnectiontype
+    watertax = WaterTax.objects.get(waterconnectiontype=waterconnectiontype)
+    total_watertax = watertax.watertaxrate
+    context = {'waterconnection': waterconnection, 'waterconnectiontype': waterconnectiontype, 'total_watertax': total_watertax}
+
+    return render(request, 'gramapp/viewWaterTax.html', context)

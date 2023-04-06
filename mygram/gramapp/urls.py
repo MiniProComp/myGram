@@ -31,7 +31,8 @@ urlpatterns = [
 
     path('addWaterConnection/', views.addWaterConnection, name='addWaterConnection'),
     path('addWaterTax/', views.addWaterTax, name='addWaterTax'),
-    # path('waterConnectioninfo/', views.waterConnectioninfo, name='waterConnectioninfo'),
+    path('waterConnectionDetails/', views.waterConnectionDetails, name='waterConnectionDetails'),
+    path('viewWaterTax/<int:pk>/', views.viewWaterTax, name='viewWaterTax'),
 
     path('addHousetax/', views.addHousetax, name='addHousetax'),
     path('addHouse/', views.addHouse, name='addHouse'),

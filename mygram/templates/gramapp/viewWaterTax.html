@@ -1,0 +1,39 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} Water Tax {% endblock title %}
+{% block companyactive %} active {% endblock companyactive %}
+
+{% block head %}
+    <style>
+        .container{
+            width: 600px;
+            }
+
+    </style>
+{% endblock head %}
+
+
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col md-6">
+          <a href="{% url 'waterConnectionDetails' %}" class="btn btn-dark mt-2">Back</a>
+            <div class="card m-2" style="width: 20rem;">
+                <div class="card-body">
+                    <h5 class="card-title m-1"></h5>
+                    <h5 class="card-title m-1">Water Connection Number:- {{waterconnection.waterconnectionno}}</h5>
+                    <h6 class="card-subtitle m-1">Water Connection Type:-{{waterconnection.waterconnectiontype}}</h6>
+                    <p class="card-text m-1">Total Tax:- Rs. {{total_watertax}}</p>
+
+                    <div>
+                        <a href="#" class="btn btn-success mt-3">Pay Rs.{{total_watertax}}</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
