@@ -9,15 +9,12 @@ from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
 from email.message import EmailMessage
 import pywhatkit
+from .forms import companyforms
 from datetime import datetime
 
 from django.http import HttpResponse
 from django.http import Http404
 
-
-
-
-# Create your views here.
 def home1(request):
     if request.method == "POST":
         receiver = request.POST["subscriber"]
@@ -112,7 +109,6 @@ def viewgram(request):
         return render(request, 'gramapp/pageNotFound.html')
 
 
-
 def gramdetail(request, pk):
     current_user = request.user
     if current_user.is_superuser:
@@ -122,6 +118,35 @@ def gramdetail(request, pk):
         return render(request, 'gramapp/viewGramDetails.html', context)
     else:
         return render(request, 'gramapp/pageNotFound.html')
+
+#
+# def updateGrampanchayat(request, pk):
+#     eachgrampanchayat = Grampanchayat.objects.get(gramid=pk)
+#
+#     if request.method == "POST":
+#         form = gramforms(request.POST, instance=eachgrampanchayat)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, eachgrampanchayat.gramname+''' Successfully updated''')
+#             return redirect('viewgram')
+#         else:
+#             return HttpResponse("Error")
+#     else:
+#         context = {'eachgrampanchayat': eachgrampanchayat}
+#         return render(request, 'gramapp/updateGrampanchayat.html', context)
+def updateGrampanchayat(request, pk):
+    eachgrampanchayat = Grampanchayat.objects.get(gramid=pk)
+
+    if request.method == "POST":
+        form = companyforms(request.POST, instance=eachgrampanchayat)
+        if form.is_valid():
+            form.save()
+            return redirect('viewCompany')
+        else:
+            messages.error(request, ''' Error ''')
+    context = {'eachgrampanchayat': eachgrampanchayat}
+
+    return render(request, 'gramapp/updateGrampanchayat.html', context)
 
 
 def deletegram(request, pk):

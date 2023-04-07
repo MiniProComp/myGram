@@ -13,6 +13,7 @@ urlpatterns = [
 
     path('addgram/', views.addgram, name='addgram'),
     path('viewgram/', views.viewgram, name='viewgram'),
+    path('updateGrampanchayat/<int:pk>/', views.updateGrampanchayat, name='updateGrampanchayat'),
     path('gramdetail/<int:pk>/', views.gramdetail, name='gramdetail'),
     path('deletegram/<int:pk>/', views.deletegram, name='deletegram'),
 

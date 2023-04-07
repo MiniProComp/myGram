@@ -28,7 +28,7 @@
                     <p class="card-text m-1">{{eachGram.gramcontact}}</p>
 
                     <a href="{% url 'deletegram' eachGram.pk %}" class="btn btn-danger mt-2">Delete</a>
-                    <a href="{}" class="btn btn-primary mt-2">Update</a>
+                    <a href="{% url 'updateGrampanchayat' eachGram.pk %}" class="btn btn-primary mt-2">Update</a>
                     {% if gramAdmin %}
                     {% for gramAdmin in gramAdmin %}
                     {% if eachGram == gramAdmin.grampanchayat %}

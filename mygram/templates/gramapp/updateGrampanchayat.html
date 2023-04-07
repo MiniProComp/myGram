@@ -1,0 +1,48 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} Update {{eachgrampanchayat.gramname}} Grampanchayat {% endblock title %}
+{% block gramactive %} active {% endblock gramactive %}
+{% block head %}
+<style>
+    .container {
+        width: 600px;
+        border-style: groove;
+    }
+</style>
+{% endblock head %}
+
+{% block body %}
+</br>
+<center>
+    <h2>Update Grampanchayat Details</h2>
+</center>
+<form class="container" method="post" action="{% url 'updateGrampanchayat' eachgrampanchayat.pk %}" enctype="multipart/form-data">
+
+    <center>
+        {% csrf_token %}
+
+
+        <div class="form-group">
+            <label for="gramname" class="form-label">Gram Name</label>
+            <input type="text" class="form-control" id="gramname" name="gramname" value="{{eachgrampanchayat.gramname}}" autocomplete="off" required>
+        </div>
+
+        <div class="form-group">
+            <label for="gramcontact" class="form-label">Gram Contact No.</label>
+            <input type="text" class="form-control" id="gramcontact" name="gramcontact" value="{{eachgrampanchayat.gramcontact}}" autocomplete="off" required>
+        </div>
+
+        <div class="form-group">
+            <label for="gramemail" class="form-label">Gram Email</label>
+            <input type="email" class="form-control" id="gramemail" name="gramemail" value="{{eachgrampanchayat.gramemail}}" autocomplete="off" required>
+        </div>
+
+        <div class="form-group">
+            <label for="gramaddress" class="form-label"> PIN Code</label>
+            <input type="number" class="form-control" id="gramaddress" name="gramaddress" value="{{eachgrampanchayat.gramaddress}}" autocomplete="off" required>
+        </div>
+
+        <button class="btn btn-primary " type="submit">Submit</button><br>
+    </center>
+</form><br>
+{% endblock body %}
