@@ -41,6 +41,7 @@ class Grampanchayat(models.Model):
     def __str__(self):
         return self.gramname
 
+
 class Gramadmin(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     grampanchayat = models.ForeignKey("Grampanchayat", on_delete=models.CASCADE)
@@ -48,8 +49,7 @@ class Gramadmin(models.Model):
     gramadminmobno = models.CharField(max_length=10)
     gramadminphoto = models.FileField(upload_to='gramadmin/', null=True)
 
-    def __str__(self):
-        return self.user.username
+
 
 
 class FamilyHead(models.Model):
@@ -66,8 +66,6 @@ class FamilyHead(models.Model):
     rationcardtype = models.CharField(max_length=10)
     rationcardno = models.CharField(max_length=25)
 
-    def __str__(self):
-        return self.user.username
 
 
 class Familymembers(models.Model):
@@ -96,8 +94,21 @@ class Authority(models.Model):
     authoritynmobno = models.CharField(max_length=10)
     authorityphoto = models.FileField(upload_to='authority/', null=True)
 
+
+
+
+class RawBirthDetail(models.Model):
+    childid = models.IntegerField(primary_key=True, serialize=False)
+    childname = models.CharField(max_length=50)
+    gender = models.CharField(max_length=10)
+    birthdate = models.DateField()
+    fathername = models.CharField(max_length=50)
+    mothername = models.CharField(max_length=50)
+    birthplace = models.CharField(max_length=30)
+    hospitalcertificate = models.FileField(upload_to='birth_proff/', null=False)
+
     def __str__(self):
-        return self.user.username
+        return self.childname
 
 
 class BirthDetail(models.Model):
@@ -131,7 +142,6 @@ class WaterConnection(models.Model):
     ownername = models.ForeignKey("FamilyHead", on_delete=models.CASCADE)
 
 
-
 class Houses(models.Model):
     houseid = models.IntegerField(primary_key=True)
     houseno = models.IntegerField(unique=True)
@@ -147,3 +157,19 @@ class Housetax(models.Model):
     housetypeid = models.IntegerField(primary_key=True)
     housetype = models.CharField(max_length=30, unique=True)
     hosetaxrate = models.IntegerField()
+
+
+class Notice(models.Model):
+    noticeid = models.IntegerField(primary_key=True)
+    gram = models.ForeignKey("Grampanchayat", on_delete=models.CASCADE)
+    noticename = models.CharField(max_length=50)
+    noticedescription = models.CharField(max_length=500)
+    noticephoto = models.FileField(upload_to='notice/', null=True)
+
+
+class Scheme(models.Model):
+    schemeid = models.IntegerField(primary_key=True)
+    gram = models.ForeignKey("Grampanchayat", on_delete=models.CASCADE)
+    schemename = models.CharField(max_length=50)
+    schemedescription = models.CharField(max_length=1000)
+    schemephoto = models.FileField(upload_to='scheme/', null=True)

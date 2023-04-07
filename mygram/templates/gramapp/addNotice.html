@@ -1,0 +1,40 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} Add Notice {% endblock title %}
+{% block notice&scheme %} active {% endblock notice&scheme %}
+{% block head %}
+    <style>
+        .container{
+            width: 600px;
+            border-style: groove;
+            }
+
+    </style>
+{% endblock head %}
+
+{% block body %}
+</br>
+<center><h2 >Add Notice</h2></center>
+<form class="container" method="post" action="" enctype="multipart/form-data">
+
+<center>
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="noticename" class="form-label">Notice Name:</label>
+        <input type="text" class="form-control" id="noticename" name="noticename" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="noticedescription" class="form-label">Notice Description:</label>
+        <textarea class="form-control" id="noticedescription" name="noticedescription"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="noticephoto" class="form-label">Notice :</label>
+        <input type="file" accept="image/*" class="form-control" id="noticephoto" name="noticephoto" required>
+    </div>
+
+    <button class="btn btn-primary " type="submit" >Submit</button>
+</center>
+</form>
+{% endblock body %}

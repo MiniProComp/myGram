@@ -1,0 +1,41 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} View Water Connections {% endblock title %}
+{% block wateractive %} active {% endblock wateractive %}
+{% block head %}
+    <style>
+
+    </style>
+{% endblock head %}
+{% block body %}
+
+
+
+
+<div class="container">
+    <h3 align="center">Water Connections</h3>
+    <div class="row justify-content-center">
+        {% if waterconnections %}
+    {% for waterconnection in waterconnections %}
+        <div class="col md-6">
+            <div class="card m-2" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title m-1">{{waterconnection.ownername.user}}</h5>
+                    <h4 class="card-subtitle m-1">{{waterconnection.waterconnectionno}}</h4>
+                    <p class="card-text m-1">{{waterconnection.waterconnectiontype}}</p>
+                    <p class="card-text m-1">{{waterconnection.region}}</p>
+                    <p class="card-text m-1">{{waterconnection.subregion}}</p>
+<!--                    <a href="{% url 'gramdetail' waterconnection.pk %}" class="btn btn-primary mt-2">Details</a>-->
+                </div>
+            </div>
+        </div>
+            {% endfor %}
+
+{% else %}
+ <h4>No Water Connections</h4>
+{% endif %}
+    </div>
+</div>
+
+
+{% endblock body %}viewHouses

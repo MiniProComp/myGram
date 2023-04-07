@@ -414,11 +414,6 @@ def viewFamilyDetails(request, pk):
         return render(request, 'gramapp/pageNotFound.html')
 
 
-def addScheme(request):
-    return render(request, 'gramapp/addScheme.html')
-
-
-
 def addHouse(request):
     current_user = request.user
     if current_user.is_staff:
@@ -450,6 +445,27 @@ def addHouse(request):
         return render(request, 'gramapp/pageNotFound.html')
 
 
+def viewHouses(request):
+    current_user = request.user
+    if current_user.is_staff:
+        gramadmin = Gramadmin.objects.get(user=current_user)
+        admingram = gramadmin.grampanchayat
+        houses = Houses.objects.all().filter(gram=admingram)
+        context = {'houses': houses}
+        return render(request, 'gramapp/viewHouses.html', context)
+    else:
+        return render(request, 'gramapp/pageNotFound.html')
+
+
+def houseDetails(request):
+    current_user = request.user
+    familyhead = FamilyHead.objects.get(user=current_user)
+    houses = Houses.objects.all().filter(ownername=familyhead)
+    context = {'houses': houses}
+
+    return render(request, 'gramapp/viewHouseDetails.html', context)
+
+
 def addHousetax(request):
     current_user = request.user
     if current_user.is_staff:
@@ -468,15 +484,6 @@ def addHousetax(request):
         return render(request, 'gramapp/addHousetax.html')
     else:
         return render(request, 'gramapp/pageNotFound.html')
-
-
-def houseDetails(request):
-    current_user = request.user
-    familyhead = FamilyHead.objects.get(user=current_user)
-    houses = Houses.objects.all().filter(ownername=familyhead)
-    context = {'houses': houses}
-
-    return render(request, 'gramapp/viewHouseDetails.html', context)
 
 
 def viewHouseTax(request, pk):
@@ -542,6 +549,18 @@ def addWaterTax(request):
         return render(request, 'gramapp/pageNotFound.html')
 
 
+def viewWaterConnections(request):
+    current_user = request.user
+    if current_user.is_staff:
+        gramadmin = Gramadmin.objects.get(user=current_user)
+        admingram = gramadmin.grampanchayat
+        waterconnections = WaterConnection.objects.all().filter(gram=admingram)
+        context = {'waterconnections': waterconnections}
+        return render(request, 'gramapp/viewWaterConnections.html', context)
+    else:
+        return render(request, 'gramapp/pageNotFound.html')
+
+
 def waterConnectionDetails(request):
     current_user = request.user
     familyhead = FamilyHead.objects.get(user=current_user)
@@ -559,3 +578,74 @@ def viewWaterTax(request, pk):
     context = {'waterconnection': waterconnection, 'waterconnectiontype': waterconnectiontype, 'total_watertax': total_watertax}
 
     return render(request, 'gramapp/viewWaterTax.html', context)
+
+
+def addNotice(request):
+    noticeid = 3001 if Notice.objects.count() == 0 else Notice.objects.aggregate(max=Max('noticeid'))["max"] + 1
+    current_user = request.user
+    gramadmin = Gramadmin.objects.get(user=current_user)
+    admingram = gramadmin.grampanchayat
+    if request.method == "POST":
+        gram = Grampanchayat.objects.get(gramname=admingram)
+        noticename = request.POST['noticename']
+        noticedescription = request.POST['noticedescription']
+        noticephoto = request.FILES['noticephoto']
+        fss = FileSystemStorage('media/notice/')
+
+        ins = Notice.objects.create(noticeid=noticeid, gram=gram,noticename=noticename,
+                                      noticedescription=noticedescription,noticephoto=noticephoto)
+        ins.save()
+        messages.success(request, '''Notice Successfully added...''')
+        return redirect('home1')
+    else:
+        print("no")
+
+    return render(request, 'gramapp/addNotice.html')
+
+
+def viewNotice(request):
+    current_user = request.user
+    familyhead= FamilyHead.objects.get(user=current_user)
+    familyheadgram = familyhead.grampanchayat
+    gram = Grampanchayat.objects.get(gramname=familyheadgram)
+
+    notices = Notice.objects.all().filter(gram=gram)
+    context = {'notices': notices}
+    return render(request, 'gramapp/viewNotice.html', context)
+
+
+def addScheme(request):
+    schemeid = 4001 if Scheme.objects.count() == 0 else Scheme.objects.aggregate(max=Max('schemeid'))["max"] + 1
+    current_user = request.user
+    gramadmin = Gramadmin.objects.get(user=current_user)
+    admingram = gramadmin.grampanchayat
+    if request.method == "POST":
+        gram = Grampanchayat.objects.get(gramname=admingram)
+        schemename = request.POST['schemename']
+        schemedescription = request.POST['schemedescription']
+        schemephoto = request.FILES['schemephoto']
+        fss = FileSystemStorage('media/scheme/')
+
+        ins = Scheme.objects.create(schemeid=schemeid, gram=gram,schemename=schemename,
+                                      schemedescription=schemedescription,schemephoto=schemephoto)
+        ins.save()
+        messages.success(request, '''Scheme Successfully added...''')
+        return redirect('home1')
+    else:
+        print("no")
+
+    return render(request, 'gramapp/addScheme.html')
+
+
+def viewScheme(request):
+    current_user = request.user
+    familyhead= FamilyHead.objects.get(user=current_user)
+    familyheadgram = familyhead.grampanchayat
+    gram = Grampanchayat.objects.get(gramname=familyheadgram)
+
+    schemes = Scheme.objects.all().filter(gram=gram)
+    context = {'schemes': schemes}
+    return render(request, 'gramapp/viewScheme.html', context)
+
+def applyScheme(request, pk):
+    return render(request,'gramapp/applyScheme.html')

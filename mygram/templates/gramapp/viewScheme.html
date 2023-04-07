@@ -1,0 +1,65 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} View Scheme {% endblock title %}
+{% block viewnotice&scheme %} active {% endblock viewnotice&scheme %}
+{% block head %}
+<style>
+div.gallery {
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  width: 80%;
+}
+
+div.gallery:hover {
+  border: 1px solid #777;
+}
+
+div.gallery img {
+  width: 40%;
+  height: auto;
+}
+
+div.desc {
+  padding: 15px;
+  text-align: center;
+}
+</style>
+{% endblock head %}
+{% block body %}
+
+
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        {% if schemes %}
+        {% for scheme in schemes %}
+        <div class="gallery">
+            <div align="center">
+                <h3 class="card-title m-1"><i><b><u>{{scheme.schemename}}</u></b></i></h3>
+            </div>
+            <div align="center">
+                <a target="_blank" href="{{scheme.schemephoto.url}}">
+                <img src="{{scheme.schemephoto.url}}" alt="No Image">
+                </a>
+            </div>
+
+            <div class="desc">
+                <h6 class="card-subtitle m-1">{{scheme.schemedescription}}</h6>
+            </div>
+            <div align="center">
+                 <a href="{% url 'applyScheme' scheme.pk %}" class="btn btn-outline-secondary mt-2">Apply</a>
+            </div><br>
+        </div><br>
+
+        {% endfor %}
+
+        {% else %}
+        <h4>No Notice</h4>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock body %}

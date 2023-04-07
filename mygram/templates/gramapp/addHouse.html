@@ -1,7 +1,7 @@
 {% extends 'gramapp/base1.html' %}
 
-{% block title %} addhouse {% endblock title %}
-{% block companyactive %} active {% endblock companyactive %}
+{% block title %} Add House {% endblock title %}
+{% block houseactive %} active {% endblock houseactive %}
 {% block head %}
     <style>
         .container{
@@ -19,13 +19,10 @@
 
 <center>
     {% csrf_token %}
-<!--    <div class="form-group">-->
-<!--        <label for="houseid" class="form-label">House id :</label>-->
-<!--        <input type="text" class="form-control" id="houseid" name="houseid" autocomplete="off" required>-->
-<!--    </div>-->
+
     <div class="form-group">
-        <label for="houseno" class="form-label">house number:</label>
-        <input type="text" class="form-control" id="houseno" name="houseno" autocomplete="off" required>
+        <label for="houseno" class="form-label">House number:</label>
+        <input type="number" class="form-control" id="houseno" name="houseno" autocomplete="off" required>
     </div>
     <div class="form-group">
         <label for="region" class="form-label">Region:</label>
@@ -43,7 +40,7 @@
             </select >    </div>
     <div class="form-group">
         <label for="housearea" class="form-label">House area in sq.ft:</label>
-        <input type="text" class="form-control" id="housearea" name="housearea" autocomplete="off" required>
+        <input type="number" class="form-control" id="housearea" name="housearea" autocomplete="off" required>
     </div>
     <div>
         <label for="ownername" class="form-label">Owner Nmae:</label><br>

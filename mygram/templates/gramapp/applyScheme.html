@@ -1,0 +1,51 @@
+{% extends 'gramapp/base1.html' %}
+
+{% block title %} Apply Scheme {% endblock title %}
+{% block viewnotice&scheme %} active {% endblock viewnotice&scheme %}
+{% block head %}
+    <style>
+        .container{
+            width: 600px;
+            border-style: groove;
+            }
+
+    </style>
+{% endblock head %}
+
+{% block body %}
+</br>
+<center><h3>Add Family Head Details</h3></center>
+<form class="container" method="post" action="" enctype="multipart/form-data">
+
+<center>
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="applicantfname" class="form-label">Applicant First Name</label>
+        <input type="text" class="form-control" id="applicantfname" name="applicantfname" autocomplete="off" required>
+    </div>
+
+     <div class="form-group">
+        <label for="applicantlname" class="form-label">Applicant Last Name</label>
+        <input type="text" class="form-control" id="applicantlname" name="applicantlname" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="applicantmobno" class="form-label">Applicant Mob No.</label>
+        <input type="tel" class="form-control" id="applicantmobno" name="applicantmobno" pattern="[0-9]{10}" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="applicantemail" class="form-label">Applicant Email</label>
+        <input type="email" class="form-control" id="applicantemail" name="applicantemail" autocomplete="off" required>
+    </div>
+
+    <div class="form-group">
+        <label for="applicantadharno" class="form-label">Applicant Aadhar Number</label>
+        <input type="tel" class="form-control" id="applicantadharno" name="applicantadharno" pattern="[0-9]{4}[0-9]{4}[0-9]{4}" placeholder="XXXX-XXXX-XXXX" autocomplete="off" required>
+    </div>
+
+    <button class="btn btn-primary " type="submit" >Submit</button>
+</center>
+</form>
+{% endblock body %}

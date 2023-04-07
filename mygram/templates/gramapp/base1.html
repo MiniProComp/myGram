@@ -18,9 +18,11 @@
 </head>
 
 <body>
+<header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="{% url 'home1' %}">
-            <img src="media/logo/mygram logo.png" width="70" height="35" class="d-inline-block align-top" alt="">
+            {% load static %}
+            <img src="{% static 'logo/mygram logo.png' %}" width="70" height="35" class="d-inline-block align-top" alt="">
         </a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -65,7 +67,7 @@
                     <div class="dropdown-menu" aria-labelledby="house">
                         <a class="dropdown-item" href="{% url 'addHousetax' %}">Add House Tax</a>
                         <a class="dropdown-item" href="{% url 'addHouse' %}">Add House</a>
-                        <a class="dropdown-item" href="">House Details</a>
+                        <a class="dropdown-item" href="{% url 'viewHouses' %}">View Houses</a>
                     </div>
 
                 </li>
@@ -78,24 +80,21 @@
                     <div class="dropdown-menu" aria-labelledby="waterconnection">
                         <a class="dropdown-item" href="{% url 'addWaterTax' %}">Add Water Tax</a>
                         <a class="dropdown-item" href="{% url 'addWaterConnection' %}">Add Water Connection</a>
-                        <a class="dropdown-item" href="">House Details</a>
+                        <a class="dropdown-item" href="{% url 'viewWaterConnections' %}">View Water Connections</a>
                     </div>
 
                 </li>
 
-                <li class="nav-item dropdown {% block Menu %}  {% endblock Menu %}">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink4" data-toggle="dropdown"
+                <li class="nav-item dropdown {% block notice&scheme %}  {% endblock notice&scheme %}">
+                    <a class="nav-link dropdown-toggle" href="#" id="notice&scheme" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                        Menu
+                        Notices & Schemes
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{% url 'addBirthDetails' %}">Add Birth Details</a>
-                        <a class="dropdown-item" href="">Add Marriage Info</a>
+                    <div class="dropdown-menu" aria-labelledby="notice&scheme">
+                        <a class="dropdown-item" href="{% url 'addNotice' %}">Add Notice</a>
                         <a class="dropdown-item" href="{% url 'addScheme' %}">Add Scheme</a>
                         <a class="dropdown-item" href="">Add Spot</a>
-                        <a class="dropdown-item" href="">Add Water Connection info</a>
                     </div>
-
                 </li>
 
                     {% endif %}
@@ -110,6 +109,18 @@
                         <a class="dropdown-item" href="{% url 'waterConnectionDetails' %}">View Water Connections</a>
                     </div>
                     </li>
+
+                 <li class="nav-item dropdown {% block viewnotice&scheme %}  {% endblock viewnotice&scheme %}">
+                    <a class="nav-link dropdown-toggle" href="#" id="notice&scheme1" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Notices & Schemes
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="notice&scheme1">
+                        <a class="dropdown-item" href="{% url 'viewNotice' %}">View Notice</a>
+                        <a class="dropdown-item" href="{% url 'viewScheme' %}">View Scheme</a>
+                    </div>
+
+                </li>
 
 
                     {% endif %}
@@ -154,7 +165,7 @@
         {% endif %}
 
     </nav>
-
+</header>
 
     {% for message in messages %}
     <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
